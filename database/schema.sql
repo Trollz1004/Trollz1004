@@ -127,6 +127,19 @@ CREATE TABLE payments (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
+CREATE TABLE payment_logs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    plan_id UUID REFERENCES subscription_plans(id),
+    square_checkout_id VARCHAR(255),
+    square_payment_id VARCHAR(255),
+    amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(50) CHECK (status IN ('pending', 'completed', 'failed', 'canceled')),
+    created_at TIMESTAMP DEFAULT NOW(),
+    completed_at TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
 -- ============================================================================
 -- MATCHING & DISCOVERY
 -- ============================================================================
