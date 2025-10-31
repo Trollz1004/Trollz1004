@@ -132,6 +132,7 @@ CREATE TABLE payment_logs (
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     plan_id UUID REFERENCES subscription_plans(id),
     square_checkout_id VARCHAR(255),
+    square_order_id VARCHAR(255),
     square_payment_id VARCHAR(255),
     amount DECIMAL(10, 2) NOT NULL,
     status VARCHAR(50) CHECK (status IN ('pending', 'completed', 'failed', 'canceled')),

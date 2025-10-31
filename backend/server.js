@@ -255,7 +255,20 @@ async function performMessageSafetyCheck(messageId, content, pool) {
             );
 
             const result = response.data.candidates[0].content.parts[0].text;
-            const safetyResult = JSON.parse(result);
+            
+            // Safely parse JSON with error handling
+            let safetyResult;
+            try {
+                safetyResult = JSON.parse(result);
+            } catch (parseError) {
+                logger.error('Failed to parse AI safety response:', parseError);
+                // Mark as unchecked if we can't parse the response
+                await pool.query(
+                    `UPDATE messages SET safety_checked = true, safety_status = 'unchecked' WHERE id = $1`,
+                    [messageId]
+                );
+                return;
+            }
 
             await pool.query(
                 `UPDATE messages 

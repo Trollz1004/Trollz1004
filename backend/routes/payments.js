@@ -56,8 +56,11 @@ router.post('/create-checkout', async (req, res) => {
 
         // Create payment link using Square Checkout API
         const idempotencyKey = uuidv4();
+        
+        // Convert to cents using integer arithmetic to avoid rounding errors
+        const priceInCents = Math.round(parseFloat(plan.price_monthly) * 100);
         const amountMoney = {
-            amount: Math.round(parseFloat(plan.price_monthly) * 100), // Convert to cents
+            amount: priceInCents,
             currency: 'USD'
         };
 
@@ -93,11 +96,11 @@ router.post('/create-checkout', async (req, res) => {
 
         const { result: checkoutResult } = await squareClient.checkoutApi.createPaymentLink(checkoutOptions);
 
-        // Log checkout creation
+        // Log checkout creation with both payment link ID and order ID
         await req.app.locals.pool.query(
-            `INSERT INTO payment_logs (user_id, plan_id, square_checkout_id, amount, status, created_at)
-             VALUES ($1, $2, $3, $4, 'pending', NOW())`,
-            [userId, planId, checkoutResult.paymentLink.id, plan.price_monthly]
+            `INSERT INTO payment_logs (user_id, plan_id, square_checkout_id, square_order_id, amount, status, created_at)
+             VALUES ($1, $2, $3, $4, $5, 'pending', NOW())`,
+            [userId, planId, checkoutResult.paymentLink.id, checkoutResult.paymentLink.orderId, plan.price_monthly]
         );
 
         logger.info(`Payment link created for user ${userId}, plan ${plan.name}`);
@@ -314,12 +317,12 @@ async function handlePaymentCreated(data, pool) {
     const payment = data.object.payment;
     logger.info(`Payment created: ${payment.id}, amount: ${payment.amountMoney.amount}`);
 
-    // Update payment log
+    // Update payment log using order ID
     if (payment.orderId) {
         await pool.query(
             `UPDATE payment_logs 
              SET square_payment_id = $1, status = 'completed', completed_at = NOW()
-             WHERE square_checkout_id = $2`,
+             WHERE square_order_id = $2`,
             [payment.id, payment.orderId]
         );
     }
@@ -329,11 +332,22 @@ async function handlePaymentUpdated(data, pool) {
     const payment = data.object.payment;
     logger.info(`Payment updated: ${payment.id}, status: ${payment.status}`);
 
+    // Map Square payment status to our status values
+    const statusMap = {
+        'COMPLETED': 'completed',
+        'PENDING': 'pending',
+        'FAILED': 'failed',
+        'CANCELED': 'canceled',
+        'CANCELLED': 'canceled'
+    };
+    
+    const mappedStatus = statusMap[payment.status] || 'pending';
+
     await pool.query(
         `UPDATE payment_logs 
          SET status = $1, updated_at = NOW()
          WHERE square_payment_id = $2`,
-        [payment.status.toLowerCase(), payment.id]
+        [mappedStatus, payment.id]
     );
 }
 
@@ -346,11 +360,22 @@ async function handleSubscriptionUpdated(data, pool) {
     const subscription = data.object.subscription;
     logger.info(`Subscription updated: ${subscription.id}, status: ${subscription.status}`);
 
+    // Map Square subscription status to our status values
+    const statusMap = {
+        'ACTIVE': 'active',
+        'CANCELED': 'cancelled',
+        'CANCELLED': 'cancelled',
+        'EXPIRED': 'expired',
+        'PAUSED': 'paused'
+    };
+    
+    const mappedStatus = statusMap[subscription.status] || 'active';
+
     await pool.query(
         `UPDATE user_subscriptions 
          SET status = $1, updated_at = NOW()
          WHERE square_subscription_id = $2`,
-        [subscription.status.toLowerCase(), subscription.id]
+        [mappedStatus, subscription.id]
     );
 }
 
