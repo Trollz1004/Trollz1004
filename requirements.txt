@@ -1,0 +1,30 @@
+# Web Framework
+Flask==2.3.3
+gunicorn==21.2.0
+
+# Database
+psycopg2-binary==2.9.7
+SQLAlchemy==2.0.20
+
+# Redis
+redis==5.0.0
+
+# API Clients
+google-cloud-secret-manager==2.16.4
+google-cloud-logging==3.8.0
+google-auth==2.23.0
+
+# External Services
+squareup==26.0.0.20230816
+google-generativeai==0.1.0
+azure-cognitiveservices-vision-computervision==0.9.0
+msrest==0.7.1
+
+# Security & Authentication
+PyJWT==2.8.0
+cryptography==41.0.4
+python-dotenv==1.0.0
+
+# Utilities
+requests==2.31.0
+python-dateutil==2.8.2
