@@ -1,0 +1,419 @@
+The user is asking me to enhance the VS Code prompt I just provided by incorporating information from their new document (which contains actual API keys and credentials for their YouAndINotAI project).
+They want me to:
+
+Use any useful info from the pasted document
+Add it to the VS Code prompt
+Focus on "store secure launch full code no place holder full production of all platforms"
+
+Looking at the new document, I can see:
+
+Real Gemini API Key: AIzaSyBuaA6sdJ2kvIeXiL1jY4Qm7StXAUwFWG4
+Real Square credentials:
+
+Access Token: EAAAlzPv9mOdHtwWwGJsCHXaG_5Ektf_rIvg4H6tiKRzTQSW9UHiVHUBDuHTOQYc
+Application ID: sq0idp-Carv59GQKuQHoIydJ1Wanw
+Location ID: LHPBX0P3TBTEC
+
+
+Real Azure Cognitive Key: CScbecGnFd4YLCWpvmdAZ5yxkV6U2O5L02xPcp6f2bEYIMiJesdtJQQJ99BHACYeBjFXJ3w3AAABACOGHJUX
+Database info: youandinotai_prod
+Port: 3000
+PM2 PID: 34584
+
+This is NOT a research question - they want me to enhance/modify the prompt I just created. I should NOT use the research tool here. This is a direct request to improve the prompt with their actual credentials.
+I should provide an enhanced version of the VS Code prompt that includes their real credentials and more specific configuration details. I'll maintain the same format but add the actual values they've provided.Here's the enhanced prompt with your actual credentials and configuration:
+GENERATE COMPLETE PRODUCTION CODE - ZERO PLACEHOLDERS - USE REAL CREDENTIALS
+
+Create a full-stack dating app "YouAndINotAI" with 100% working code using ACTUAL production credentials:
+
+## CRITICAL REQUIREMENTS
+- NO placeholders, NO TODOs, NO "// implement this" comments
+- ALL functions must be complete and working
+- Use REAL API keys provided below
+- ALL endpoints must be production-ready
+- Generate secure random values ONLY where credentials aren't provided
+
+## REAL PRODUCTION CREDENTIALS (Use These Exact Values)
+
+### Square Payment (LIVE PRODUCTION)
+SQUARE_ACCESS_TOKEN=EAAAlzPv9mOdHtwWwGJsCHXaG_5Ektf_rIvg4H6tiKRzTQSW9UHiVHUBDuHTOQYc
+SQUARE_APPLICATION_ID=sq0idp-Carv59GQKuQHoIydJ1Wanw
+SQUARE_LOCATION_ID=LHPBX0P3TBTEC
+
+### Google Gemini AI (LIVE)
+GEMINI_API_KEY=AIzaSyBuaA6sdJ2kvIeXiL1jY4Qm7StXAUwFWG4
+
+### Azure Cognitive Services (LIVE)
+AZURE_COGNITIVE_KEY=CScbecGnFd4YLCWpvmdAZ5yxkV6U2O5L02xPcp6f2bEYIMiJesdtJQQJ99BHACYeBjFXJ3w3AAABACOGHJUX
+
+### Database Configuration
+DATABASE_URL=postgresql://postgres:[GENERATE_SECURE_PASSWORD]@localhost:5432/youandinotai_prod
+REDIS_URL=redis://localhost:6379
+
+### Server Configuration
+PORT=3000
+NODE_ENV=production
+DOMAIN=youandinotai.com
+SERVER_IP=71.52.23.215
+
+### Security (Generate These)
+JWT_SECRET=[GENERATE_64_CHAR_RANDOM]
+JWT_REFRESH_SECRET=[GENERATE_64_CHAR_RANDOM]
+ENCRYPTION_KEY=[GENERATE_32_CHAR_RANDOM]
+
+## TECH STACK
+- Frontend: React 18.3 + TypeScript 5.6 + Tailwind CSS + Vite
+- Backend: Node.js 20 + Express.js + TypeScript
+- Database: PostgreSQL 16 with Drizzle ORM (DB: youandinotai_prod)
+- Cache: Redis 7
+- Payments: Square API (LIVE production mode)
+- AI: Google Gemini API (LIVE with real key)
+- Auth: JWT with refresh tokens + Argon2 hashing
+- Deployment: Docker Compose + PM2 (PID 34584) + Nginx
+- SSL: Let's Encrypt via Certbot
+
+## INFRASTRUCTURE DETAILS
+- Primary Domain: youandinotai.com
+- Admin Domain: youandinotai.online
+- Testing: youandinotai.duckdns.org
+- Server: 71.52.23.215
+- Cloudflare: Enabled with DNS proxy
+- PM2 Process: Running on port 3000, PID 34584
+
+## COMPLETE FEATURE SET
+
+### Core Dating Platform
+1. User authentication (JWT + refresh tokens, Argon2 hashing)
+2. Human verification (Government ID upload + selfie liveness detection)
+3. Real-time matching algorithm with scoring
+4. Square subscription payments ($9.99, $19.99, $29.99 tiers)
+5. Gemini AI icebreaker generation (3 per match)
+6. WebSocket real-time messaging with encryption
+7. Profile photo upload and verification
+8. User preferences and filtering
+9. Match queue system
+10. Reporting and blocking features
+
+### Admin Dashboard
+1. Real-time analytics (users, revenue, matches)
+2. Verification queue management
+3. Payment tracking and refunds
+4. User moderation tools
+5. System health monitoring
+6. Content moderation
+7. Support ticket system
+
+### AI Automation Agents (Separate Services)
+1. **ContentAI** - Every 6 hours
+   - Generate social media posts using Gemini API
+   - Create blog content
+   - Generate email campaigns
+   - Video script creation
+
+2. **SocialAI** - 5x daily (9AM, 12PM, 3PM, 6PM, 9PM)
+   - Post to Instagram, TikTok, Twitter, Facebook, Pinterest
+   - Auto-respond to comments
+   - Track engagement metrics
+
+3. **EmailAI** - Triggered + scheduled
+   - Welcome sequences
+   - Abandoned cart recovery
+   - Re-engagement campaigns
+   - Payment reminders
+
+4. **AnalyticsAI** - Every hour
+   - Collect user metrics
+   - Revenue tracking
+   - Generate insights
+   - Performance alerts
+
+5. **MasterAI** - Continuous
+   - Orchestrate all agents
+   - Health monitoring
+   - Error recovery
+   - Load balancing
+
+## FILE STRUCTURE (Generate ALL Files)
+youandinotai/
+├── apps/
+│   ├── web/                      # React frontend
+│   │   ├── src/
+│   │   │   ├── components/       # 25+ React components
+│   │   │   ├── pages/            # 10+ page components
+│   │   │   ├── hooks/            # Custom hooks
+│   │   │   ├── services/         # API clients
+│   │   │   ├── store/            # State management
+│   │   │   ├── utils/            # Helper functions
+│   │   │   └── types/            # TypeScript types
+│   │   ├── public/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   └── vite.config.ts
+│   └── api/                      # Express backend
+│       ├── src/
+│       │   ├── routes/           # All API routes
+│       │   │   ├── auth.ts
+│       │   │   ├── users.ts
+│       │   │   ├── matches.ts
+│       │   │   ├── messages.ts
+│       │   │   ├── payments.ts
+│       │   │   └── admin.ts
+│       │   ├── middleware/       # Auth, validation, rate limiting
+│       │   ├── services/         # Business logic
+│       │   ├── websocket/        # Socket.IO setup
+│       │   └── index.ts
+│       ├── package.json
+│       └── tsconfig.json
+├── packages/
+│   ├── database/                 # Drizzle ORM
+│   │   ├── schema/
+│   │   │   ├── users.ts
+│   │   │   ├── matches.ts
+│   │   │   ├── messages.ts
+│   │   │   ├── payments.ts
+│   │   │   ├── subscriptions.ts
+│   │   │   └── verifications.ts
+│   │   ├── migrations/
+│   │   └── seed.ts
+│   ├── shared/                   # Shared TypeScript types
+│   │   └── types/
+│   └── agents/                   # AI automation services
+│       ├── content-ai/
+│       │   └── index.ts
+│       ├── social-ai/
+│       │   └── index.ts
+│       ├── email-ai/
+│       │   └── index.ts
+│       ├── analytics-ai/
+│       │   └── index.ts
+│       └── master-ai/
+│           └── index.ts
+├── .env.production               # Real credentials file
+├── docker-compose.yml            # All services
+├── nginx.conf                    # SSL + reverse proxy
+├── ecosystem.config.js           # PM2 with all processes
+├── deploy.sh                     # One-command deploy
+└── README.md
+
+## IMPLEMENTATION REQUIREMENTS
+
+### Database Schema (Drizzle - Complete Tables)
+- **users**: id, email, password_hash, name, age, gender, location, bio, photos[], verified, created_at
+- **profiles**: user_id, preferences, interests[], looking_for, distance_preference
+- **matches**: id, user1_id, user2_id, score, status, matched_at
+- **messages**: id, from_user_id, to_user_id, content_encrypted, sent_at, read_at
+- **payments**: id, user_id, square_customer_id, square_payment_id, amount, status, created_at
+- **subscriptions**: id, user_id, tier, square_subscription_id, status, start_date, end_date
+- **verifications**: id, user_id, id_photo_url, selfie_url, status, verified_at, azure_response
+- **icebreakers**: id, match_id, content, generated_by_ai, used, created_at
+- **admin_actions**: id, admin_id, action_type, target_id, reason, timestamp
+- **analytics**: id, metric_type, value, metadata, recorded_at
+
+### Square Integration (Complete Implementation)
+```typescript
+import { Client, Environment } from 'square';
+
+const squareClient = new Client({
+  accessToken: 'EAAAlzPv9mOdHtwWwGJsCHXaG_5Ektf_rIvg4H6tiKRzTQSW9UHiVHUBDuHTOQYc',
+  environment: Environment.Production
+});
+
+// Create subscription
+async function createSubscription(customerId: string, tier: 'starter' | 'pro' | 'premium') {
+  const prices = { starter: 999, pro: 1999, premium: 2999 };
+  // COMPLETE implementation with error handling, webhooks, retries
+}
+
+// Handle webhook
+async function handleSquareWebhook(payload: any, signature: string) {
+  // COMPLETE webhook verification and processing
+}
+```
+
+### Gemini AI Integration (Complete Implementation)
+```typescript
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+const genAI = new GoogleGenerativeAI('AIzaSyBuaA6sdJ2kvIeXiL1jY4Qm7StXAUwFWG4');
+const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+
+async function generateIcebreakers(user1: User, user2: User): Promise<string[]> {
+  // COMPLETE implementation with rate limiting, retry logic, error handling
+  // Generate 3 personalized icebreakers based on profiles
+}
+```
+
+### Azure Cognitive Services (Human Verification)
+```typescript
+const AZURE_COGNITIVE_KEY = 'CScbecGnFd4YLCWpvmdAZ5yxkV6U2O5L02xPcp6f2bEYIMiJesdtJQQJ99BHACYeBjFXJ3w3AAABACOGHJUX';
+
+async function verifyIdDocument(imageUrl: string) {
+  // COMPLETE OCR and face detection implementation
+}
+
+async function verifySelfie(idPhoto: string, selfiePhoto: string) {
+  // COMPLETE liveness detection and face matching
+}
+```
+
+### Docker Compose (Complete Configuration)
+```yaml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: youandinotai_prod
+      POSTGRES_PASSWORD: [GENERATE_SECURE]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  api:
+    build: ./apps/api
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - api
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
+  redis_data:
+```
+
+### PM2 Ecosystem (Complete Configuration)
+```javascript
+module.exports = {
+  apps: [
+    {
+      name: 'youandinotai-api',
+      script: './apps/api/dist/index.js',
+      instances: 2,
+      exec_mode: 'cluster',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3000
+      }
+    },
+    {
+      name: 'content-ai',
+      script: './packages/agents/content-ai/dist/index.js',
+      cron_restart: '0 */6 * * *'
+    },
+    {
+      name: 'social-ai',
+      script: './packages/agents/social-ai/dist/index.js',
+      cron_restart: '0 9,12,15,18,21 * * *'
+    },
+    {
+      name: 'email-ai',
+      script: './packages/agents/email-ai/dist/index.js'
+    },
+    {
+      name: 'analytics-ai',
+      script: './packages/agents/analytics-ai/dist/index.js',
+      cron_restart: '0 * * * *'
+    }
+  ]
+};
+```
+
+### Deploy Script (Complete Bash Script)
+```bash
+#!/bin/bash
+set -e
+
+echo "🚀 Deploying YouAndINotAI to Production..."
+
+# Update system
+sudo apt-get update && sudo apt-get upgrade -y
+
+# Install dependencies
+sudo apt-get install -y docker.io docker-compose nginx certbot python3-certbot-nginx
+
+# Clone/pull code
+cd /opt/youandinotai || git clone [REPO] /opt/youandinotai
+git pull origin main
+
+# Build and start services
+docker-compose -f docker-compose.yml up -d --build
+
+# Run migrations
+docker-compose exec api npm run migrate
+
+# Configure Nginx + SSL
+sudo certbot --nginx -d youandinotai.com -d www.youandinotai.com --non-interactive --agree-tos -m admin@youandinotai.com
+
+# Start PM2
+pm2 start ecosystem.config.js
+pm2 save
+pm2 startup
+
+echo "✅ Deployment Complete!"
+echo "🌐 Site: https://youandinotai.com"
+echo "📊 Admin: https://youandinotai.com/admin"
+```
+
+## CODE GENERATION ORDER
+1. Generate ALL package.json files (root + workspaces)
+2. Generate ALL TypeScript configs
+3. Generate COMPLETE Drizzle schema (all 10+ tables with relations)
+4. Generate ALL database migrations
+5. Generate ALL backend API routes (complete implementations)
+6. Generate ALL React components (25+ components)
+7. Generate ALL AI agent services (complete implementations)
+8. Generate docker-compose.yml
+9. Generate nginx.conf with SSL
+10. Generate ecosystem.config.js
+11. Generate deploy.sh
+12. Generate .env.production with ALL values
+13. Generate README with setup instructions
+
+## OUTPUT RULES
+- Every file must be COMPLETE - no truncation
+- Every function must have FULL implementation
+- Use REAL credentials provided above
+- Generate secure random strings where needed
+- Include comprehensive error handling
+- Add logging to all critical operations
+- Include TypeScript types for everything
+- Add comments explaining business logic
+- NO "TODO", NO "...", NO placeholders
+
+START GENERATING NOW. Output each file with clear separation and file path comments.
+This prompt includes your real production credentials and specific configuration details for immediate deployment.RetryClaude can make mistakes. Please double-check responses.Concise

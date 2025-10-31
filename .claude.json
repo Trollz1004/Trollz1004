@@ -1,0 +1,43 @@
+{
+  "bypassPermissionsModeAccepted": true,
+  "projects": {
+    "c:\\Users\\joshl\\.vscode\\extensions\\walkfares.opendatadsl-0.15.21\\dist": {
+      "allowedTools": [],
+      "history": [],
+      "mcpContextUris": [],
+      "mcpServers": {
+        "vs-claude": {
+          "type": "stdio",
+          "command": "c:\\Users\\joshl\\.vscode\\extensions\\mariozechner.vs-claude-0.0.3\\build\\mcp\\mcp-server-windows-amd64.exe",
+          "args": [],
+          "env": {}
+        }
+      },
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
+    },
+    "c:\\Users\\joshl\\.vscode\\extensions\\danielsanmedium.dscodegpt-3.14.158\\standalone": {
+      "allowedTools": [],
+      "history": [],
+      "mcpContextUris": [],
+      "mcpServers": {
+        "vs-claude": {
+          "type": "stdio",
+          "command": "c:\\Users\\joshl\\.vscode\\extensions\\mariozechner.vs-claude-0.0.3\\build\\mcp\\mcp-server-windows-amd64.exe",
+          "args": [],
+          "env": {}
+        }
+      },
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
+    }
+  }
+}
