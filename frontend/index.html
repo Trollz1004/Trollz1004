@@ -1,220 +1,1118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouAndINotAI - God Tier Dating Platform</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!DOCTYPE html><!DOCTYPE html>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            min-height: 100vh;
-        }
+<html lang="en"><html lang="en">
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+<head><head>
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
+    <meta charset="UTF-8">    <meta charset="UTF-8">
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .nav {
-            display: flex;
+    <meta name="description" content="Premium Human-Verified Dating - Where Real Connections Happen. Anti-AI, 100% Human Dating Platform.">    <title>YouAndINotAI - God Tier Dating Platform</title>
+
+    <title>YouAndINotAI - Premium Human Dating Platform</title>    <style>
+
+            * {
+
+    <!-- Fonts -->            margin: 0;
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">            padding: 0;
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>            box-sizing: border-box;
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">        }
+
+    
+
+    <!-- Icons -->        body {
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    <style>            color: #fff;
+
+        :root {            min-height: 100vh;
+
+            --primary: #6366f1;        }
+
+            --primary-dark: #4f46e5;
+
+            --primary-light: #818cf8;        .container {
+
+            --secondary: #ec4899;            max-width: 1200px;
+
+            --secondary-dark: #db2777;            margin: 0 auto;
+
+            --accent: #f59e0b;            padding: 20px;
+
+            --success: #10b981;        }
+
+            --danger: #ef4444;
+
+            --dark: #0f172a;        header {
+
+            --dark-light: #1e293b;            display: flex;
+
+            --gray: #64748b;            justify-content: space-between;
+
+            --light: #f1f5f9;            align-items: center;
+
+            --white: #ffffff;            padding: 20px 0;
+
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);        }
+
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);        .logo {
+
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);            font-size: 24px;
+
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);            font-weight: bold;
+
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);        }
+
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);        .nav {
+
+        }            display: flex;
+
             gap: 20px;
-        }
 
-        .nav a {
-            color: #fff;
-            text-decoration: none;
+        * {        }
+
+            margin: 0;
+
+            padding: 0;        .nav a {
+
+            box-sizing: border-box;            color: #fff;
+
+        }            text-decoration: none;
+
             opacity: 0.9;
-            transition: opacity 0.3s;
-        }
 
-        .nav a:hover {
-            opacity: 1;
+        body {            transition: opacity 0.3s;
+
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;        }
+
+            background: var(--dark);
+
+            color: var(--white);        .nav a:hover {
+
+            line-height: 1.6;            opacity: 1;
+
+            overflow-x: hidden;        }
+
         }
 
         .hero {
-            text-align: center;
-            padding: 80px 20px;
-        }
 
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
+        /* Animated Background */            text-align: center;
 
-        .hero p {
-            font-size: 20px;
+        .bg-animation {            padding: 80px 20px;
+
+            position: fixed;        }
+
+            top: 0;
+
+            left: 0;        .hero h1 {
+
+            width: 100%;            font-size: 48px;
+
+            height: 100%;            margin-bottom: 20px;
+
+            z-index: -1;            font-weight: 900;
+
+            background: var(--gradient-hero);        }
+
             opacity: 0.9;
-            margin-bottom: 40px;
+
+        }        .hero p {
+
+            font-size: 20px;
+
+        .bg-animation::before {            opacity: 0.9;
+
+            content: '';            margin-bottom: 40px;
+
+            position: absolute;        }
+
+            width: 200%;
+
+            height: 200%;        .cta-buttons {
+
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);            display: flex;
+
+            background-size: 50px 50px;            gap: 20px;
+
+            animation: slide 60s linear infinite;            justify-content: center;
+
+        }            flex-wrap: wrap;
+
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        @keyframes slide {
 
-        .btn {
-            padding: 15px 40px;
-            font-size: 16px;
+            0% { transform: translate(0, 0); }        .btn {
+
+            100% { transform: translate(-50%, -50%); }            padding: 15px 40px;
+
+        }            font-size: 16px;
+
             font-weight: 600;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
+        /* Navigation */            border: none;
 
-        .btn-primary {
+        nav {            border-radius: 30px;
+
+            position: fixed;            cursor: pointer;
+
+            top: 0;            transition: transform 0.3s, box-shadow 0.3s;
+
+            left: 0;        }
+
+            right: 0;
+
+            background: rgba(15, 23, 42, 0.95);        .btn:hover {
+
+            backdrop-filter: blur(20px);            transform: translateY(-2px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+
+            z-index: 1000;        }
+
+            transition: all 0.3s ease;
+
+        }        .btn-primary {
+
             background: #fff;
-            color: #667eea;
+
+        nav.scrolled {            color: #667eea;
+
+            box-shadow: var(--shadow-lg);        }
+
         }
 
         .btn-secondary {
-            background: transparent;
-            color: #fff;
-            border: 2px solid #fff;
-        }
 
-        .features {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+        .nav-container {            background: transparent;
+
+            max-width: 1400px;            color: #fff;
+
+            margin: 0 auto;            border: 2px solid #fff;
+
+            padding: 1rem 2rem;        }
+
+            display: flex;
+
+            justify-content: space-between;        .features {
+
+            align-items: center;            background: rgba(255, 255, 255, 0.1);
+
+        }            border-radius: 20px;
+
             padding: 60px 40px;
-            margin: 40px 0;
-            backdrop-filter: blur(10px);
-        }
 
-        .features h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
+        .logo {            margin: 40px 0;
+
+            font-family: 'Playfair Display', serif;            backdrop-filter: blur(10px);
+
+            font-size: 1.75rem;        }
+
+            font-weight: 900;
+
+            background: var(--gradient-1);        .features h2 {
+
+            -webkit-background-clip: text;            text-align: center;
+
+            -webkit-text-fill-color: transparent;            font-size: 36px;
+
+            background-clip: text;            margin-bottom: 40px;
+
+            letter-spacing: -0.5px;        }
+
         }
 
         .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+
+        .nav-links {            display: grid;
+
+            display: flex;            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 2.5rem;            gap: 30px;
+
+            align-items: center;        }
+
         }
 
         .feature {
-            text-align: center;
-        }
 
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+        .nav-links a {            text-align: center;
+
+            color: var(--white);        }
+
+            text-decoration: none;
+
+            font-weight: 500;        .feature-icon {
+
+            font-size: 0.95rem;            font-size: 48px;
+
+            transition: all 0.3s ease;            margin-bottom: 15px;
+
+            position: relative;        }
+
         }
 
         .feature h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
 
-        .feature p {
-            opacity: 0.9;
-            line-height: 1.6;
-        }
+        .nav-links a::after {            font-size: 20px;
 
-        .pricing {
+            content: '';            margin-bottom: 10px;
+
+            position: absolute;        }
+
+            bottom: -5px;
+
+            left: 0;        .feature p {
+
+            width: 0;            opacity: 0.9;
+
+            height: 2px;            line-height: 1.6;
+
+            background: var(--gradient-1);        }
+
+            transition: width 0.3s ease;
+
+        }        .pricing {
+
             padding: 60px 20px;
-        }
 
-        .pricing h2 {
+        .nav-links a:hover::after {        }
+
+            width: 100%;
+
+        }        .pricing h2 {
+
             text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
+
+        .nav-cta {            font-size: 36px;
+
+            display: flex;            margin-bottom: 40px;
+
+            gap: 1rem;        }
+
         }
 
         .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
 
-        .pricing-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, border-color 0.3s;
+        /* Buttons */            display: grid;
+
+        .btn {            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+            padding: 0.875rem 2rem;            gap: 30px;
+
+            font-size: 1rem;        }
+
+            font-weight: 600;
+
+            border: none;        .pricing-card {
+
+            border-radius: 50px;            background: rgba(255, 255, 255, 0.1);
+
+            cursor: pointer;            border-radius: 20px;
+
+            transition: all 0.3s ease;            padding: 40px;
+
+            text-decoration: none;            text-align: center;
+
+            display: inline-flex;            backdrop-filter: blur(10px);
+
+            align-items: center;            border: 2px solid rgba(255, 255, 255, 0.2);
+
+            gap: 0.5rem;            transition: transform 0.3s, border-color 0.3s;
+
+            white-space: nowrap;        }
+
         }
 
         .pricing-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.5);
+
+        .btn-primary {            transform: translateY(-5px);
+
+            background: var(--gradient-1);            border-color: rgba(255, 255, 255, 0.5);
+
+            color: var(--white);        }
+
+            box-shadow: var(--shadow-lg);
+
+        }        .pricing-card.featured {
+
+            border-color: #fff;
+
+        .btn-primary:hover {            transform: scale(1.05);
+
+            transform: translateY(-3px);        }
+
+            box-shadow: var(--shadow-xl);
+
+        }        .pricing-card h3 {
+
+            font-size: 28px;
+
+        .btn-outline {            margin-bottom: 10px;
+
+            background: transparent;        }
+
+            color: var(--white);
+
+            border: 2px solid rgba(255, 255, 255, 0.3);        .price {
+
+        }            font-size: 48px;
+
+            font-weight: bold;
+
+        .btn-outline:hover {            margin: 20px 0;
+
+            border-color: var(--white);        }
+
+            background: rgba(255, 255, 255, 0.1);
+
+        }        .price span {
+
+            font-size: 20px;
+
+        .btn-glass {            opacity: 0.8;
+
+            background: rgba(255, 255, 255, 0.1);        }
+
+            backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);        .pricing-features {
+
+            color: var(--white);            list-style: none;
+
+        }            margin: 30px 0;
+
+            text-align: left;
+
+        .btn-glass:hover {        }
+
+            background: rgba(255, 255, 255, 0.2);
+
+        }        .pricing-features li {
+
+            padding: 10px 0;
+
+        /* Hero Section */            opacity: 0.9;
+
+        .hero {        }
+
+            min-height: 100vh;
+
+            display: flex;        .pricing-features li:before {
+
+            align-items: center;            content: "✓ ";
+
+            justify-content: center;            margin-right: 10px;
+
+            padding: 8rem 2rem 4rem;        }
+
+            position: relative;
+
+        }        footer {
+
+            text-align: center;
+
+        .hero-content {            padding: 40px 20px;
+
+            max-width: 1400px;            opacity: 0.8;
+
+            width: 100%;        }
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;        .modal {
+
+            gap: 4rem;            display: none;
+
+            align-items: center;            position: fixed;
+
+        }            top: 0;
+
+            left: 0;
+
+        .hero-text h1 {            width: 100%;
+
+            font-family: 'Playfair Display', serif;            height: 100%;
+
+            font-size: 4.5rem;            background: rgba(0, 0, 0, 0.8);
+
+            font-weight: 900;            justify-content: center;
+
+            line-height: 1.1;            align-items: center;
+
+            margin-bottom: 1.5rem;            z-index: 1000;
+
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);        }
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;        .modal.active {
+
+            background-clip: text;            display: flex;
+
+        }        }
+
+
+
+        .hero-text .highlight {        .modal-content {
+
+            background: var(--gradient-2);            background: #fff;
+
+            -webkit-background-clip: text;            color: #333;
+
+            -webkit-text-fill-color: transparent;            padding: 40px;
+
+            background-clip: text;            border-radius: 20px;
+
+        }            max-width: 400px;
+
+            width: 90%;
+
+        .hero-text p {        }
+
+            font-size: 1.25rem;
+
+            color: rgba(255, 255, 255, 0.9);        .modal-content h2 {
+
+            margin-bottom: 2.5rem;            margin-bottom: 20px;
+
+            line-height: 1.8;            color: #667eea;
+
+        }        }
+
+
+
+        .hero-stats {        .form-group {
+
+            display: flex;            margin-bottom: 20px;
+
+            gap: 3rem;        }
+
+            margin-bottom: 3rem;
+
+        }        .form-group label {
+
+            display: block;
+
+        .stat {            margin-bottom: 5px;
+
+            text-align: left;            font-weight: 600;
+
+        }        }
+
+
+
+        .stat-number {        .form-group input {
+
+            font-size: 2.5rem;            width: 100%;
+
+            font-weight: 900;            padding: 12px;
+
+            background: var(--gradient-3);            border: 2px solid #ddd;
+
+            -webkit-background-clip: text;            border-radius: 8px;
+
+            -webkit-text-fill-color: transparent;            font-size: 16px;
+
+            background-clip: text;        }
+
+            display: block;
+
+        }        .form-group input:focus {
+
+            outline: none;
+
+        .stat-label {            border-color: #667eea;
+
+            color: rgba(255, 255, 255, 0.7);        }
+
+            font-size: 0.95rem;
+
+            font-weight: 500;        .close-modal {
+
+        }            float: right;
+
+            font-size: 28px;
+
+        .hero-cta {            cursor: pointer;
+
+            display: flex;            color: #999;
+
+            gap: 1.5rem;        }
+
+            flex-wrap: wrap;
+
+        }        @media (max-width: 768px) {
+
+            .hero h1 {
+
+        .hero-visual {                font-size: 32px;
+
+            position: relative;            }
+
+            height: 600px;
+
+        }            .hero p {
+
+                font-size: 16px;
+
+        .phone-mockup {            }
+
+            position: absolute;
+
+            width: 300px;            .cta-buttons {
+
+            height: 600px;                flex-direction: column;
+
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);            }
+
+            backdrop-filter: blur(20px);        }
+
+            border-radius: 40px;    </style>
+
+            border: 1px solid rgba(255,255,255,0.2);</head>
+
+            box-shadow: var(--shadow-xl);<body>
+
+            padding: 15px;    <div class="container">
+
+            animation: float 6s ease-in-out infinite;        <header>
+
+        }            <div class="logo">YouAndINotAI ❤️</div>
+
+            <nav class="nav">
+
+        @keyframes float {                <a href="#features">Features</a>
+
+            0%, 100% { transform: translateY(0px) rotate(0deg); }                <a href="#pricing">Pricing</a>
+
+            50% { transform: translateY(-20px) rotate(2deg); }                <a href="#" onclick="openModal('login')">Login</a>
+
+        }            </nav>
+
+        </header>
+
+        .phone-screen {
+
+            width: 100%;        <section class="hero">
+
+            height: 100%;            <h1>Find Your Perfect Match with AI</h1>
+
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);            <p>The world's most advanced dating platform powered by cutting-edge AI technology</p>
+
+            border-radius: 30px;            <div class="cta-buttons">
+
+            overflow: hidden;                <button class="btn btn-primary" onclick="openModal('signup')">Get Started Free</button>
+
+            position: relative;                <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Learn More</button>
+
+        }            </div>
+
+        </section>
+
+        .profile-card {
+
+            position: absolute;        <section id="features" class="features">
+
+            width: 90%;            <h2>God Tier Features</h2>
+
+            height: 85%;            <div class="feature-grid">
+
+            top: 50%;                <div class="feature">
+
+            left: 50%;                    <div class="feature-icon">🔮</div>
+
+            transform: translate(-50%, -50%);                    <h3>AI-Powered Matching</h3>
+
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);                    <p>Advanced algorithms analyze compatibility for perfect matches</p>
+
+            border-radius: 20px;                </div>
+
+            padding: 20px;                <div class="feature">
+
+            display: flex;                    <div class="feature-icon">🛡️</div>
+
+            flex-direction: column;                    <h3>Safety First</h3>
+
+            justify-content: flex-end;                    <p>Real-time AI safety monitoring protects you from scams and spam</p>
+
+            box-shadow: var(--shadow-xl);                </div>
+
+        }                <div class="feature">
+
+                    <div class="feature-icon">💎</div>
+
+        .profile-info {                    <h3>Verified Profiles</h3>
+
+            background: rgba(0, 0, 0, 0.4);                    <p>Face verification and trust scores ensure authentic connections</p>
+
+            backdrop-filter: blur(10px);                </div>
+
+            padding: 15px;                <div class="feature">
+
+            border-radius: 15px;                    <div class="feature-icon">🎭</div>
+
+        }                    <h3>Dynamic Vibes</h3>
+
+                    <p>AI generates your unique dating vibe based on your activity</p>
+
+        .profile-name {                </div>
+
+            font-size: 1.5rem;                <div class="feature">
+
+            font-weight: 700;                    <div class="feature-icon">📅</div>
+
+            margin-bottom: 0.25rem;                    <h3>AI Date Concierge</h3>
+
+        }                    <p>Personal AI assistant suggests perfect date ideas</p>
+
+                </div>
+
+        .profile-details {                <div class="feature">
+
+            font-size: 0.9rem;                    <div class="feature-icon">🤖</div>
+
+            opacity: 0.9;                    <h3>Relationship Coach</h3>
+
+            display: flex;                    <p>AI coach provides real-time conversation advice</p>
+
+            gap: 10px;                </div>
+
+        }            </div>
+
+        </section>
+
+        .verified-badge {
+
+            display: inline-flex;        <section id="pricing" class="pricing">
+
+            align-items: center;            <h2>Choose Your Plan</h2>
+
+            gap: 5px;            <div class="pricing-grid">
+
+            background: var(--success);                <div class="pricing-card">
+
+            padding: 3px 10px;                    <h3>Basic</h3>
+
+            border-radius: 20px;                    <div class="price">$9.99<span>/mo</span></div>
+
+            font-size: 0.8rem;                    <ul class="pricing-features">
+
+            font-weight: 600;                        <li>Unlimited likes</li>
+
+            margin-top: 10px;                        <li>See who liked you</li>
+
+        }                        <li>5 super likes per day</li>
+
+                        <li>Priority matching</li>
+
+        /* Features Section */                    </ul>
+
+        .features {                    <button class="btn btn-primary" onclick="selectPlan('basic')">Get Started</button>
+
+            padding: 6rem 2rem;                </div>
+
+            background: var(--dark);
+
+            position: relative;                <div class="pricing-card featured">
+
+        }                    <h3>Premium</h3>
+
+                    <div class="price">$19.99<span>/mo</span></div>
+
+        .section-header {                    <ul class="pricing-features">
+
+            text-align: center;                        <li>All Basic features</li>
+
+            max-width: 800px;                        <li>AI Date Concierge</li>
+
+            margin: 0 auto 4rem;                        <li>Read receipts</li>
+
+        }                        <li>Advanced filters</li>
+
+                        <li>Profile boost</li>
+
+        .section-title {                    </ul>
+
+            font-family: 'Playfair Display', serif;                    <button class="btn btn-primary" onclick="selectPlan('premium')">Most Popular</button>
+
+            font-size: 3rem;                </div>
+
+            font-weight: 900;
+
+            margin-bottom: 1rem;                <div class="pricing-card">
+
+        }                    <h3>Elite</h3>
+
+                    <div class="price">$29.99<span>/mo</span></div>
+
+        .section-subtitle {                    <ul class="pricing-features">
+
+            font-size: 1.25rem;                        <li>All Premium features</li>
+
+            color: rgba(255, 255, 255, 0.7);                        <li>AI Relationship Coach</li>
+
+        }                        <li>Priority support</li>
+
+                        <li>Exclusive events</li>
+
+        .features-grid {                        <li>VIP badge</li>
+
+            max-width: 1400px;                    </ul>
+
+            margin: 0 auto;                    <button class="btn btn-primary" onclick="selectPlan('elite')">Go Elite</button>
+
+            display: grid;                </div>
+
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));            </div>
+
+            gap: 2rem;        </section>
+
+        }
+
+        <footer>
+
+        .feature-card {            <p>&copy; 2024 YouAndINotAI. All rights reserved.</p>
+
+            background: rgba(255, 255, 255, 0.05);            <p>Made with ❤️ and cutting-edge AI</p>
+
+            backdrop-filter: blur(20px);        </footer>
+
+            border: 1px solid rgba(255, 255, 255, 0.1);    </div>
+
+            border-radius: 20px;
+
+            padding: 2.5rem;    <!-- Signup Modal -->
+
+            transition: all 0.3s ease;    <div id="signup-modal" class="modal">
+
+            position: relative;        <div class="modal-content">
+
+            overflow: hidden;            <span class="close-modal" onclick="closeModal('signup')">&times;</span>
+
+        }            <h2>Create Account</h2>
+
+            <form id="signup-form">
+
+        .feature-card::before {                <div class="form-group">
+
+            content: '';                    <label>Email</label>
+
+            position: absolute;                    <input type="email" id="signup-email" required>
+
+            top: 0;                </div>
+
+            left: 0;                <div class="form-group">
+
+            right: 0;                    <label>Password</label>
+
+            height: 4px;                    <input type="password" id="signup-password" required>
+
+            background: var(--gradient-1);                </div>
+
+            transform: scaleX(0);                <div class="form-group">
+
+            transition: transform 0.3s ease;                    <label>First Name</label>
+
+        }                    <input type="text" id="signup-firstname" required>
+
+                </div>
+
+        .feature-card:hover::before {                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+
+            transform: scaleX(1);            </form>
+
+        }        </div>
+
+    </div>
+
+        .feature-card:hover {
+
+            transform: translateY(-10px);    <!-- Login Modal -->
+
+            box-shadow: var(--shadow-xl);    <div id="login-modal" class="modal">
+
+            background: rgba(255, 255, 255, 0.08);        <div class="modal-content">
+
+        }            <span class="close-modal" onclick="closeModal('login')">&times;</span>
+
+            <h2>Welcome Back</h2>
+
+        .feature-icon {            <form id="login-form">
+
+            width: 70px;                <div class="form-group">
+
+            height: 70px;                    <label>Email</label>
+
+            background: var(--gradient-1);                    <input type="email" id="login-email" required>
+
+            border-radius: 20px;                </div>
+
+            display: flex;                <div class="form-group">
+
+            align-items: center;                    <label>Password</label>
+
+            justify-content: center;                    <input type="password" id="login-password" required>
+
+            font-size: 2rem;                </div>
+
+            margin-bottom: 1.5rem;                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+
+        }            </form>
+
+        </div>
+
+        .feature-title {    </div>
+
+            font-size: 1.5rem;
+
+            font-weight: 700;    <script src="js/app.js"></script>
+
+            margin-bottom: 1rem;</body>
+
+        }</html>
+
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-light) 100%);
+        }
+
+        .pricing-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
         }
 
         .pricing-card.featured {
-            border-color: #fff;
+            background: var(--gradient-1);
+            border-color: var(--white);
             transform: scale(1.05);
         }
 
-        .pricing-card h3 {
-            font-size: 28px;
-            margin-bottom: 10px;
+        .pricing-card:not(.featured):hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-light);
         }
 
-        .price {
-            font-size: 48px;
-            font-weight: bold;
-            margin: 20px 0;
+        .pricing-badge {
+            background: var(--gradient-2);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1.5rem;
         }
 
-        .price span {
-            font-size: 20px;
-            opacity: 0.8;
+        .pricing-name {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 4rem;
+            font-weight: 900;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-period {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 2rem;
         }
 
         .pricing-features {
             list-style: none;
-            margin: 30px 0;
+            margin: 2rem 0;
             text-align: left;
         }
 
         .pricing-features li {
-            padding: 10px 0;
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        /* Trust Section */
+        .trust {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .trust-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .trust-item i {
+            font-size: 3rem;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .trust-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .trust-description {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: var(--gradient-hero);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
             opacity: 0.9;
         }
 
-        .pricing-features li:before {
-            content: "✓ ";
-            margin-right: 10px;
-        }
-
+        /* Footer */
         footer {
-            text-align: center;
-            padding: 40px 20px;
-            opacity: 0.8;
+            background: var(--dark);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-1);
+            transform: translateY(-3px);
+        }
+
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -223,9 +1121,10 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
+            backdrop-filter: blur(10px);
+            z-index: 2000;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
         }
 
         .modal.active {
@@ -233,211 +1132,771 @@
         }
 
         .modal-content {
-            background: #fff;
-            color: #333;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 400px;
+            background: var(--dark-light);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 500px;
             width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .modal-content h2 {
-            margin-bottom: 20px;
-            color: #667eea;
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 0.5rem;
             font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .form-group input {
+        .form-input {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--primary-light);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .close-modal {
-            float: right;
-            font-size: 28px;
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: var(--white);
+            font-size: 1rem;
             cursor: pointer;
-            color: #999;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                height: 400px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .phone-mockup {
+                position: relative;
+            }
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 32px;
+            .nav-links {
+                display: none;
             }
 
-            .hero p {
-                font-size: 16px;
+            .hero-text h1 {
+                font-size: 2.5rem;
             }
 
-            .cta-buttons {
-                flex-direction: column;
+            .section-title {
+                font-size: 2rem;
             }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .features-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success/Error Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .message.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">YouAndINotAI ❤️</div>
-            <nav class="nav">
+    <div class="bg-animation"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">YouAndINotAI</div>
+            <div class="nav-links">
                 <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#" onclick="openModal('login')">Login</a>
-            </nav>
-        </header>
-
-        <section class="hero">
-            <h1>Find Your Perfect Match with AI</h1>
-            <p>The world's most advanced dating platform powered by cutting-edge AI technology</p>
-            <div class="cta-buttons">
-                <button class="btn btn-primary" onclick="openModal('signup')">Get Started Free</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Learn More</button>
+                <a href="#about">About</a>
             </div>
-        </section>
-
-        <section id="features" class="features">
-            <h2>God Tier Features</h2>
-            <div class="feature-grid">
-                <div class="feature">
-                    <div class="feature-icon">🔮</div>
-                    <h3>AI-Powered Matching</h3>
-                    <p>Advanced algorithms analyze compatibility for perfect matches</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Safety First</h3>
-                    <p>Real-time AI safety monitoring protects you from scams and spam</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">💎</div>
-                    <h3>Verified Profiles</h3>
-                    <p>Face verification and trust scores ensure authentic connections</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🎭</div>
-                    <h3>Dynamic Vibes</h3>
-                    <p>AI generates your unique dating vibe based on your activity</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">📅</div>
-                    <h3>AI Date Concierge</h3>
-                    <p>Personal AI assistant suggests perfect date ideas</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🤖</div>
-                    <h3>Relationship Coach</h3>
-                    <p>AI coach provides real-time conversation advice</p>
-                </div>
+            <div class="nav-cta">
+                <button class="btn btn-outline" onclick="openModal('login')">Sign In</button>
+                <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <section id="pricing" class="pricing">
-            <h2>Choose Your Plan</h2>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Basic</h3>
-                    <div class="price">$9.99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>Unlimited likes</li>
-                        <li>See who liked you</li>
-                        <li>5 super likes per day</li>
-                        <li>Priority matching</li>
-                    </ul>
-                    <button class="btn btn-primary" onclick="selectPlan('basic')">Get Started</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>
+                    Find Real Love.<br>
+                    <span class="highlight">100% Human.</span>
+                </h1>
+                <p>
+                    The world's first premium dating platform with AI-powered matching 
+                    and human verification. Where authentic connections happen.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Human Verified</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Active Members</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">12K+</span>
+                        <span class="stat-label">Success Stories</span>
+                    </div>
                 </div>
 
-                <div class="pricing-card featured">
-                    <h3>Premium</h3>
-                    <div class="price">$19.99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>All Basic features</li>
-                        <li>AI Date Concierge</li>
-                        <li>Read receipts</li>
-                        <li>Advanced filters</li>
-                        <li>Profile boost</li>
-                    </ul>
-                    <button class="btn btn-primary" onclick="selectPlan('premium')">Most Popular</button>
-                </div>
-
-                <div class="pricing-card">
-                    <h3>Elite</h3>
-                    <div class="price">$29.99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li>All Premium features</li>
-                        <li>AI Relationship Coach</li>
-                        <li>Priority support</li>
-                        <li>Exclusive events</li>
-                        <li>VIP badge</li>
-                    </ul>
-                    <button class="btn btn-primary" onclick="selectPlan('elite')">Go Elite</button>
+                <div class="hero-cta">
+                    <button class="btn btn-primary" onclick="openModal('signup')">
+                        <i class="fas fa-rocket"></i>
+                        Start Your Journey
+                    </button>
+                    <button class="btn btn-glass" onclick="scrollToSection('how-it-works')">
+                        <i class="fas fa-play-circle"></i>
+                        See How It Works
+                    </button>
                 </div>
             </div>
-        </section>
 
-        <footer>
-            <p>&copy; 2024 YouAndINotAI. All rights reserved.</p>
-            <p>Made with ❤️ and cutting-edge AI</p>
-        </footer>
-    </div>
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="profile-card">
+                            <div class="profile-info">
+                                <div class="profile-name">Sarah, 28</div>
+                                <div class="profile-details">
+                                    <span><i class="fas fa-map-marker-alt"></i> San Francisco</span>
+                                    <span><i class="fas fa-briefcase"></i> Designer</span>
+                                </div>
+                                <div class="verified-badge">
+                                    <i class="fas fa-check-circle"></i>
+                                    Human Verified
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2 class="section-title">Why Choose YouAndINotAI?</h2>
+            <p class="section-subtitle">Premium features designed for genuine connections</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3 class="feature-title">Human Verification</h3>
+                <p class="feature-description">
+                    Every user is verified through our advanced AI detection and human review process. 
+                    No bots, no fake profiles—just real people.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">AI-Powered Matching</h3>
+                <p class="feature-description">
+                    Our Gemini AI analyzes compatibility, interests, and values to suggest the most 
+                    compatible matches for you.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="feature-title">Privacy First</h3>
+                <p class="feature-description">
+                    Your data is encrypted end-to-end. Control who sees your profile and information. 
+                    We never sell your data.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 class="feature-title">Real-Time Chat</h3>
+                <p class="feature-description">
+                    Connect instantly with your matches through our secure real-time messaging system. 
+                    Share photos, voice messages, and more.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="feature-title">Gamified Experience</h3>
+                <p class="feature-description">
+                    Earn gems, unlock achievements, and climb the leaderboard. Stay engaged 
+                    with daily challenges and rewards.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="feature-title">24/7 Support</h3>
+                <p class="feature-description">
+                    Premium members get priority support from our relationship experts and 
+                    technical team. We're here to help.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="section-header">
+            <h2 class="section-title">Built on Trust & Safety</h2>
+            <p class="section-subtitle">Your security is our priority</p>
+        </div>
+
+        <div class="trust-grid">
+            <div class="trust-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3 class="trust-title">SSL Encrypted</h3>
+                <p class="trust-description">All data transmitted with bank-level encryption</p>
+            </div>
+
+            <div class="trust-item">
+                <i class="fas fa-user-check"></i>
+                <h3 class="trust-title">ID Verification</h3>
+                <p class="trust-description">Optional government ID verification available</p>
+            </div>
+
+            <div class="trust-item">
+                <i class="fas fa-eye-slash"></i>
+                <h3 class="trust-title">Private Browsing</h3>
+                <p class="trust-description">Browse anonymously with incognito mode</p>
+            </div>
+
+            <div class="trust-item">
+                <i class="fas fa-ban"></i>
+                <h3 class="trust-title">Block & Report</h3>
+                <p class="trust-description">Easy tools to block and report suspicious users</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="section-header">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <p class="section-subtitle">Unlock premium features and find your perfect match</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-name">Basic</div>
+                <div class="pricing-price">$9.99</div>
+                <div class="pricing-period">per month</div>
+                
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Unlimited Likes</li>
+                    <li><i class="fas fa-check"></i> See Who Liked You</li>
+                    <li><i class="fas fa-check"></i> 5 Super Likes/Day</li>
+                    <li><i class="fas fa-check"></i> Read Receipts</li>
+                    <li><i class="fas fa-check"></i> Basic Filters</li>
+                    <li><i class="fas fa-check"></i> Email Support</li>
+                </ul>
+                
+                <button class="btn btn-outline" onclick="selectPlan('basic')">
+                    Choose Basic
+                </button>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="pricing-badge">MOST POPULAR</div>
+                <div class="pricing-name">Premium</div>
+                <div class="pricing-price">$19.99</div>
+                <div class="pricing-period">per month</div>
+                
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Everything in Basic</li>
+                    <li><i class="fas fa-check"></i> AI-Powered Matching</li>
+                    <li><i class="fas fa-check"></i> Unlimited Super Likes</li>
+                    <li><i class="fas fa-check"></i> Advanced Filters</li>
+                    <li><i class="fas fa-check"></i> Incognito Mode</li>
+                    <li><i class="fas fa-check"></i> Rewind Last Swipe</li>
+                    <li><i class="fas fa-check"></i> Priority Support</li>
+                </ul>
+                
+                <button class="btn btn-primary" onclick="selectPlan('premium')">
+                    Choose Premium
+                </button>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-name">VIP</div>
+                <div class="pricing-price">$29.99</div>
+                <div class="pricing-period">per month</div>
+                
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Everything in Premium</li>
+                    <li><i class="fas fa-check"></i> Profile Boost (2x/month)</li>
+                    <li><i class="fas fa-check"></i> Verified Badge</li>
+                    <li><i class="fas fa-check"></i> See Profile Viewers</li>
+                    <li><i class="fas fa-check"></i> Compatibility Insights</li>
+                    <li><i class="fas fa-check"></i> Message Before Match</li>
+                    <li><i class="fas fa-check"></i> VIP Support 24/7</li>
+                    <li><i class="fas fa-check"></i> Exclusive Events</li>
+                </ul>
+                
+                <button class="btn btn-outline" onclick="selectPlan('vip')">
+                    Choose VIP
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Find Your Match?</h2>
+            <p class="cta-text">
+                Join thousands of verified humans finding real connections every day. 
+                Your perfect match is waiting.
+            </p>
+            <button class="btn btn-glass" onclick="openModal('signup')" style="font-size: 1.25rem; padding: 1.25rem 3rem;">
+                <i class="fas fa-heart"></i>
+                Join Now - It's Free!
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YouAndINotAI</h3>
+                <p>The premium dating platform where real humans find real love.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul class="footer-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#safety">Safety</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#press">Press</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#cookies">Cookie Policy</a></li>
+                    <li><a href="#guidelines">Community Guidelines</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 YouAndINotAI. All rights reserved. EIN: 33-4655313</p>
+        </div>
+    </footer>
 
     <!-- Signup Modal -->
-    <div id="signup-modal" class="modal">
+    <div class="modal" id="signupModal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('signup')">&times;</span>
-            <h2>Create Account</h2>
-            <form id="signup-form">
+            <button class="modal-close" onclick="closeModal('signup')">&times;</button>
+            <h2 class="modal-title">Create Your Account</h2>
+            
+            <div class="message" id="signupMessage"></div>
+            
+            <form id="signupForm" onsubmit="handleSignup(event)">
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" id="signup-email" required>
+                    <input type="email" class="form-input" name="email" placeholder="your@email.com" required>
                 </div>
+                
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="signup-password" required>
+                    <input type="password" class="form-input" name="password" placeholder="Min. 8 characters" required minlength="8">
                 </div>
+                
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" id="signup-firstname" required>
+                    <input type="text" class="form-input" name="firstName" placeholder="John" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+                
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" class="form-input" name="lastName" placeholder="Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" class="form-input" name="dateOfBirth" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select class="form-select" name="gender" required>
+                        <option value="">Select...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="non-binary">Non-Binary</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Looking For</label>
+                    <select class="form-select" name="lookingFor" required>
+                        <option value="">Select...</option>
+                        <option value="male">Men</option>
+                        <option value="female">Women</option>
+                        <option value="all">Everyone</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="signupBtn">
+                    Create Account
+                </button>
             </form>
+            
+            <p style="text-align: center; margin-top: 1.5rem; color: rgba(255,255,255,0.7);">
+                Already have an account? 
+                <a href="#" onclick="closeModal('signup'); openModal('login'); return false;" style="color: var(--primary-light);">Sign In</a>
+            </p>
         </div>
     </div>
 
     <!-- Login Modal -->
-    <div id="login-modal" class="modal">
+    <div class="modal" id="loginModal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('login')">&times;</span>
-            <h2>Welcome Back</h2>
-            <form id="login-form">
+            <button class="modal-close" onclick="closeModal('login')">&times;</button>
+            <h2 class="modal-title">Welcome Back!</h2>
+            
+            <div class="message" id="loginMessage"></div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" id="login-email" required>
+                    <input type="email" class="form-input" name="email" placeholder="your@email.com" required>
                 </div>
+                
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="login-password" required>
+                    <input type="password" class="form-input" name="password" placeholder="Your password" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="loginBtn">
+                    Sign In
+                </button>
             </form>
+            
+            <p style="text-align: center; margin-top: 1.5rem; color: rgba(255,255,255,0.7);">
+                Don't have an account? 
+                <a href="#" onclick="closeModal('login'); openModal('signup'); return false;" style="color: var(--primary-light);">Create Account</a>
+            </p>
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script>
+        // API Configuration
+        const API_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:8080' 
+            : 'https://youandinotai-v8-evixli3wza-uc.a.run.app';
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Modal functions
+        function openModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Smooth scroll function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Show message function
+        function showMessage(elementId, message, type) {
+            const messageEl = document.getElementById(elementId);
+            messageEl.textContent = message;
+            messageEl.className = `message ${type} active`;
+            setTimeout(() => {
+                messageEl.classList.remove('active');
+            }, 5000);
+        }
+
+        // Handle Signup
+        async function handleSignup(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('signupBtn');
+            const originalText = btn.innerHTML;
+
+            try {
+                btn.innerHTML = '<span class="loading"></span> Creating account...';
+                btn.disabled = true;
+
+                const formData = {
+                    email: form.email.value,
+                    password: form.password.value,
+                    firstName: form.firstName.value,
+                    lastName: form.lastName.value,
+                    dateOfBirth: form.dateOfBirth.value,
+                    gender: form.gender.value,
+                    lookingFor: form.lookingFor.value
+                };
+
+                const response = await fetch(`${API_URL}/api/auth/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showMessage('signupMessage', 'Account created successfully! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/app/dashboard.html';
+                    }, 1500);
+                } else {
+                    showMessage('signupMessage', data.error || 'Signup failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showMessage('signupMessage', 'Network error. Please check your connection and try again.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // Handle Login
+        async function handleLogin(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('loginBtn');
+            const originalText = btn.innerHTML;
+
+            try {
+                btn.innerHTML = '<span class="loading"></span> Signing in...';
+                btn.disabled = true;
+
+                const formData = {
+                    email: form.email.value,
+                    password: form.password.value
+                };
+
+                const response = await fetch(`${API_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showMessage('loginMessage', 'Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/app/dashboard.html';
+                    }, 1500);
+                } else {
+                    showMessage('loginMessage', data.error || 'Login failed. Please check your credentials.', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('loginMessage', 'Network error. Please check your connection and try again.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // Handle Plan Selection
+        function selectPlan(plan) {
+            localStorage.setItem('selectedPlan', plan);
+            openModal('signup');
+        }
+
+        // Set minimum date for date of birth (18 years ago)
+        const today = new Date();
+        const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        const dateInput = document.querySelector('input[name="dateOfBirth"]');
+        if (dateInput) {
+            dateInput.max = maxDate.toISOString().split('T')[0];
+        }
+    </script>
 </body>
 </html>
