@@ -237,6 +237,67 @@ app.use('/api/admin', authenticateToken, requireAdmin, adminRoutes);
 // Store active user connections
 const activeUsers = new Map();
 
+// AI Safety Check Function
+async function performMessageSafetyCheck(messageId, content, pool) {
+    try {
+        // Gemini AI safety check for scams, spam, inappropriate content
+        if (process.env.GEMINI_API_KEY) {
+            const axios = require('axios');
+            const response = await axios.post(
+                `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
+                {
+                    contents: [{
+                        parts: [{
+                            text: `Analyze this dating app message for safety issues. Respond with JSON only: {"safe": true/false, "issues": ["list of issues"], "severity": "low/medium/high"}. Message: "${content}"`
+                        }]
+                    }]
+                }
+            );
+
+            const result = response.data.candidates[0].content.parts[0].text;
+            
+            // Safely parse JSON with error handling
+            let safetyResult;
+            try {
+                safetyResult = JSON.parse(result);
+            } catch (parseError) {
+                logger.error('Failed to parse AI safety response:', parseError);
+                // Mark as unchecked if we can't parse the response
+                await pool.query(
+                    `UPDATE messages SET safety_checked = true, safety_status = 'unchecked' WHERE id = $1`,
+                    [messageId]
+                );
+                return;
+            }
+
+            await pool.query(
+                `UPDATE messages 
+                 SET safety_checked = true, safety_status = $1
+                 WHERE id = $2`,
+                [safetyResult.safe ? 'safe' : 'flagged', messageId]
+            );
+
+            if (!safetyResult.safe && safetyResult.severity === 'high') {
+                // Create safety alert
+                await pool.query(
+                    `INSERT INTO safety_alerts (message_id, alert_type, severity, ai_analysis, created_at)
+                     VALUES ($1, $2, $3, $4, NOW())`,
+                    [messageId, safetyResult.issues[0] || 'unknown', safetyResult.severity, JSON.stringify(safetyResult)]
+                );
+            }
+        } else {
+            // Mark as checked but no AI analysis
+            await pool.query(
+                `UPDATE messages SET safety_checked = true, safety_status = 'unchecked' WHERE id = $1`,
+                [messageId]
+            );
+        }
+    } catch (error) {
+        logger.error('AI safety check failed:', error);
+        // Don't block message, just log error
+    }
+}
+
 io.use(async (socket, next) => {
     try {
         const token = socket.handshake.auth.token;
@@ -276,9 +337,11 @@ io.on('connection', (socket) => {
 
             const message = result.rows[0];
 
-            // TODO: AI Safety check (implement in production)
-            // const safetyCheck = await checkMessageSafety(content);
-            // if (!safetyCheck.safe) { return; }
+            // AI Safety check - check for scams, spam, inappropriate content
+            // This runs asynchronously and updates the message status
+            performMessageSafetyCheck(message.id, content, pool).catch(err => {
+                logger.error('Safety check error:', err);
+            });
 
             // Send to recipient if online
             const recipientSocketId = activeUsers.get(recipientId);
