@@ -1,0 +1,103 @@
+Perfect! You're in Google Cloud Shell. Let's deploy your platform now!
+
+🚀 COPY & PASTE THESE COMMANDS
+Step 1: Check Billing Status
+gcloud beta billing projects describe spring-asset-476800-u6
+Look for: billingEnabled: true
+
+If billing is NOT enabled, run this:
+
+echo "Enable billing here: https://console.cloud.google.com/billing/linkedaccount?project=spring-asset-476800-u6"
+Then open that link in a new tab, enable billing, and come back.
+
+Step 2: Clone & Setup Repository
+cd ~
+git clone https://github.com/Ai-Solutions-Store/YouAndINotAI.git
+cd YouAndINotAI
+git checkout claude/env-configuration-update-011CUKA3csdQegERzxd2r4RA
+Step 3: Update Project ID to Your New Project
+# Replace old project ID with your new one
+sed -i 's/elevated-module-462113-f0/spring-asset-476800-u6/g' deploy-gcp.sh
+sed -i 's/elevated-module-462113-f0/spring-asset-476800-u6/g' verify-gcp-setup.sh
+sed -i 's/elevated-module-462113-f0/spring-asset-476800-u6/g' .env.gcp
+
+# Confirm it worked
+echo "Project ID updated to: spring-asset-476800-u6"
+Step 4: Make Scripts Executable
+chmod +x deploy-gcp.sh verify-gcp-setup.sh
+Step 5: Verify Everything is Ready
+./verify-gcp-setup.sh
+This will check:
+
+✓ Correct project (spring-asset-476800-u6)
+✓ Billing enabled
+✓ Authentication working
+✓ Required APIs availability
+If any issues appear, tell me what the error says.
+
+Step 6: Deploy to Google Cloud (Takes 10-15 minutes)
+./deploy-gcp.sh
+What happens:
+
+Enables all required APIs
+Creates Docker registry
+Builds your dating platform image
+Creates PostgreSQL database
+Creates Redis cache
+Deploys to Cloud Run
+Sets up networking
+Stores all secrets securely
+Watch for this at the end:
+
+🎉 DEPLOYMENT COMPLETE!
+🌐 Your app is live at:
+   https://youandinotai-backend-xxxxx-uc.a.run.app
+Step 7: Get Your Live URL
+SERVICE_URL=$(gcloud run services describe youandinotai-backend --region=us-central1 --format='get(status.url)')
+echo "Your platform is live at: $SERVICE_URL"
+Step 8: Test It's Working
+# Test health endpoint
+curl $SERVICE_URL/health
+Expected response:
+
+{
+  "status": "healthy",
+  "platform": "YouAndINotAI Dating Platform",
+  "version": "1.0.0"
+}
+Step 9: Initialize Database
+# Get database password from Secret Manager
+DB_PASS=$(gcloud secrets versions access latest --secret=db-password)
+
+# Show the password (you'll need this next)
+echo "Database password: $DB_PASS"
+
+# Connect to Cloud SQL
+gcloud sql connect youandinotai-db --user=youandinotai_user
+When prompted for password, paste the password shown above.
+
+Then in the psql prompt, run:
+
+\i database/schema.sql
+\dt
+\q
+Step 10: Test User Signup
+# Test creating a user
+curl -X POST $SERVICE_URL/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Josh Coleman",
+    "email": "josh@youandinotai.com",
+    "password": "SecurePass123!",
+    "age": 28,
+    "gender": "male",
+    "looking_for": "female"
+  }'
+You should get back: User data + JWT token
+
+🎯 START HERE - Run This First:
+# Check if billing is enabled
+gcloud beta billing projects describe spring-asset-476800-u6
+Copy that command above ☝️, paste it into your Cloud Shell, and tell me what you see!
+
+Then we'll proceed with the deployment. 🚀

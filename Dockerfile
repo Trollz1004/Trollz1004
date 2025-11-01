@@ -1,18 +1,60 @@
-FROM python:3.11-slim
+# YouAndINotAI - Production Dockerfile for GCP Cloud Run
+# Multi-stage build for optimization
+
+# ============================================================================
+# Stage 1: Build
+# ============================================================================
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY requirements.txt .
+# Copy package files
+COPY backend/package*.json ./
 
-# Install dependencies with version pinning and without recommended packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc=4:12.2.0-3 \
-    && rm -rf /var/lib/apt/lists/*
+# Install dependencies
+RUN npm ci --only=production
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy application code
+COPY backend/ ./
 
-COPY . .
+# ============================================================================
+# Stage 2: Production
+# ============================================================================
+FROM node:18-alpine
 
-EXPOSE 8000
+# Install dumb-init for proper signal handling
+RUN apk add --no-cache dumb-init
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+# Create app directory
+WORKDIR /app
+
+# Copy dependencies from builder
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+
+# Copy application code
+COPY backend/ ./
+
+# Copy frontend files
+COPY frontend/ ./frontend/
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
+
+# Switch to non-root user
+USER nodejs
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start application
+CMD ["node", "server.js"]
