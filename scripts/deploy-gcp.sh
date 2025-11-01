@@ -44,7 +44,7 @@ log_error() {
 }
 
 check_command() {
-    if ! command -v $1 &> /dev/null; then
+    if ! command -v "$1" &> /dev/null; then
         log_error "$1 is not installed"
         exit 1
     fi
@@ -69,11 +69,11 @@ if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" | grep -q
 fi
 
 # Set project
-gcloud config set project $PROJECT_ID
+gcloud config set project "$PROJECT_ID"
 
 # Check billing
 log_info "Checking billing status..."
-BILLING_ENABLED=$(gcloud beta billing projects describe $PROJECT_ID --format="value(billingEnabled)" 2>/dev/null || echo "false")
+BILLING_ENABLED=$(gcloud beta billing projects describe "$PROJECT_ID" --format="value(billingEnabled)" 2>/dev/null || echo "false")
 
 if [ "$BILLING_ENABLED" != "True" ]; then
     log_error "Billing is not enabled for project $PROJECT_ID"
@@ -102,7 +102,7 @@ REQUIRED_APIS=(
 
 for api in "${REQUIRED_APIS[@]}"; do
     log_info "Enabling $api..."
-    gcloud services enable $api --project=$PROJECT_ID 2>&1 | grep -v "already enabled" || true
+    gcloud services enable "$api" --project="$PROJECT_ID" 2>&1 | grep -v "already enabled" || true
 done
 
 log_success "All APIs enabled"
@@ -113,13 +113,13 @@ log_success "All APIs enabled"
 
 log_info "Setting up Artifact Registry..."
 
-if ! gcloud artifacts repositories describe $REPOSITORY_NAME --location=$REGION --project=$PROJECT_ID &> /dev/null; then
+if ! gcloud artifacts repositories describe "$REPOSITORY_NAME" --location="$REGION" --project="$PROJECT_ID" &> /dev/null; then
     log_info "Creating Artifact Registry repository..."
-    gcloud artifacts repositories create $REPOSITORY_NAME \
+    gcloud artifacts repositories create "$REPOSITORY_NAME" \
         --repository-format=docker \
-        --location=$REGION \
+        --location="$REGION" \
         --description="YouAndINotAI Docker images" \
-        --project=$PROJECT_ID
+        --project="$PROJECT_ID"
     log_success "Artifact Registry created"
 else
     log_info "Artifact Registry already exists"
@@ -131,16 +131,16 @@ fi
 
 log_info "Setting up Cloud SQL PostgreSQL..."
 
-if ! gcloud sql instances describe $DB_INSTANCE_NAME --project=$PROJECT_ID &> /dev/null; then
+if ! gcloud sql instances describe "$DB_INSTANCE_NAME" --project="$PROJECT_ID" &> /dev/null; then
     log_info "Creating Cloud SQL instance (this may take 5-10 minutes)..."
 
     # Generate strong password
     DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
 
-    gcloud sql instances create $DB_INSTANCE_NAME \
+    gcloud sql instances create "$DB_INSTANCE_NAME" \
         --database-version=POSTGRES_16 \
         --tier=db-f1-micro \
-        --region=$REGION \
+        --region="$REGION" \
         --network=default \
         --backup \
         --backup-start-time=03:00 \
@@ -148,30 +148,30 @@ if ! gcloud sql instances describe $DB_INSTANCE_NAME --project=$PROJECT_ID &> /d
         --transaction-log-retention-days=7 \
         --enable-bin-log \
         --database-flags=cloudsql.enable_pgaudit=on \
-        --project=$PROJECT_ID
+        --project="$PROJECT_ID"
 
     # Set root password
     gcloud sql users set-password postgres \
-        --instance=$DB_INSTANCE_NAME \
+        --instance="$DB_INSTANCE_NAME" \
         --password="$DB_PASSWORD" \
-        --project=$PROJECT_ID
+        --project="$PROJECT_ID"
 
     # Create application database
     gcloud sql databases create youandinotai \
-        --instance=$DB_INSTANCE_NAME \
-        --project=$PROJECT_ID
+        --instance="$DB_INSTANCE_NAME" \
+        --project="$PROJECT_ID"
 
     # Create application user
     gcloud sql users create youandinotai_user \
-        --instance=$DB_INSTANCE_NAME \
+        --instance="$DB_INSTANCE_NAME" \
         --password="$DB_PASSWORD" \
-        --project=$PROJECT_ID
+        --project="$PROJECT_ID"
 
     # Store password in Secret Manager
     echo -n "$DB_PASSWORD" | gcloud secrets create db-password \
         --data-file=- \
         --replication-policy=automatic \
-        --project=$PROJECT_ID
+        --project="$PROJECT_ID"
 
     log_success "Cloud SQL instance created"
 else
@@ -179,7 +179,7 @@ else
 fi
 
 # Get Cloud SQL connection name
-DB_CONNECTION_NAME=$(gcloud sql instances describe $DB_INSTANCE_NAME --format="value(connectionName)" --project=$PROJECT_ID)
+DB_CONNECTION_NAME=$(gcloud sql instances describe "$DB_INSTANCE_NAME" --format="value(connectionName)" --project="$PROJECT_ID")
 
 # ============================================================================
 # Setup Redis (Memorystore)
@@ -187,15 +187,15 @@ DB_CONNECTION_NAME=$(gcloud sql instances describe $DB_INSTANCE_NAME --format="v
 
 log_info "Setting up Redis (Memorystore)..."
 
-if ! gcloud redis instances describe $REDIS_INSTANCE_NAME --region=$REGION --project=$PROJECT_ID &> /dev/null; then
+if ! gcloud redis instances describe "$REDIS_INSTANCE_NAME" --region="$REGION" --project="$PROJECT_ID" &> /dev/null; then
     log_info "Creating Redis instance (this may take 3-5 minutes)..."
 
-    gcloud redis instances create $REDIS_INSTANCE_NAME \
+    gcloud redis instances create "$REDIS_INSTANCE_NAME" \
         --size=1 \
-        --region=$REGION \
+        --region="$REGION" \
         --redis-version=redis_7_0 \
         --tier=basic \
-        --project=$PROJECT_ID
+        --project="$PROJECT_ID"
 
     log_success "Redis instance created"
 else
@@ -203,8 +203,8 @@ else
 fi
 
 # Get Redis host and port
-REDIS_HOST=$(gcloud redis instances describe $REDIS_INSTANCE_NAME --region=$REGION --format="value(host)" --project=$PROJECT_ID)
-REDIS_PORT=$(gcloud redis instances describe $REDIS_INSTANCE_NAME --region=$REGION --format="value(port)" --project=$PROJECT_ID)
+REDIS_HOST=$(gcloud redis instances describe "$REDIS_INSTANCE_NAME" --region="$REGION" --format="value(host)" --project="$PROJECT_ID")
+REDIS_PORT=$(gcloud redis instances describe "$REDIS_INSTANCE_NAME" --region="$REGION" --format="value(port)" --project="$PROJECT_ID")
 
 # ============================================================================
 # Setup VPC Connector
@@ -212,14 +212,14 @@ REDIS_PORT=$(gcloud redis instances describe $REDIS_INSTANCE_NAME --region=$REGI
 
 log_info "Setting up VPC Connector..."
 
-if ! gcloud compute networks vpc-access connectors describe $VPC_CONNECTOR_NAME --region=$REGION --project=$PROJECT_ID &> /dev/null; then
+if ! gcloud compute networks vpc-access connectors describe "$VPC_CONNECTOR_NAME" --region="$REGION" --project="$PROJECT_ID" &> /dev/null; then
     log_info "Creating VPC connector..."
 
-    gcloud compute networks vpc-access connectors create $VPC_CONNECTOR_NAME \
-        --region=$REGION \
+    gcloud compute networks vpc-access connectors create "$VPC_CONNECTOR_NAME" \
+        --region="$REGION" \
         --range=10.8.0.0/28 \
         --network=default \
-        --project=$PROJECT_ID
+        --project="$PROJECT_ID"
 
     log_success "VPC connector created"
 else
@@ -236,29 +236,29 @@ create_or_update_secret() {
     local SECRET_NAME=$1
     local SECRET_VALUE=$2
 
-    if gcloud secrets describe $SECRET_NAME --project=$PROJECT_ID &> /dev/null; then
+    if gcloud secrets describe "$SECRET_NAME" --project="$PROJECT_ID" &> /dev/null; then
         # Secret exists, add new version
-        echo -n "$SECRET_VALUE" | gcloud secrets versions add $SECRET_NAME \
+        echo -n "$SECRET_VALUE" | gcloud secrets versions add "$SECRET_NAME" \
             --data-file=- \
-            --project=$PROJECT_ID
+            --project="$PROJECT_ID"
         log_info "Updated secret: $SECRET_NAME"
     else
         # Create new secret
-        echo -n "$SECRET_VALUE" | gcloud secrets create $SECRET_NAME \
+        echo -n "$SECRET_VALUE" | gcloud secrets create "$SECRET_NAME" \
             --data-file=- \
             --replication-policy=automatic \
-            --project=$PROJECT_ID
+            --project="$PROJECT_ID"
         log_info "Created secret: $SECRET_NAME"
     fi
 }
 
 # Generate JWT secrets if they don't exist
-if ! gcloud secrets describe jwt-secret --project=$PROJECT_ID &> /dev/null; then
+if ! gcloud secrets describe jwt-secret --project="$PROJECT_ID" &> /dev/null; then
     JWT_SECRET=$(openssl rand -base64 32)
     create_or_update_secret "jwt-secret" "$JWT_SECRET"
 fi
 
-if ! gcloud secrets describe jwt-refresh-secret --project=$PROJECT_ID &> /dev/null; then
+if ! gcloud secrets describe jwt-refresh-secret --project="$PROJECT_ID" &> /dev/null; then
     JWT_REFRESH_SECRET=$(openssl rand -base64 32)
     create_or_update_secret "jwt-refresh-secret" "$JWT_REFRESH_SECRET"
 fi
@@ -283,10 +283,10 @@ PLACEHOLDER_SECRETS=(
 for secret_pair in "${PLACEHOLDER_SECRETS[@]}"; do
     IFS=':' read -r secret_name placeholder_value <<< "$secret_pair"
 
-    if ! gcloud secrets describe $secret_name --project=$PROJECT_ID &> /dev/null; then
+    if ! gcloud secrets describe "$secret_name" --project="$PROJECT_ID" &> /dev/null; then
         create_or_update_secret "$secret_name" "$placeholder_value"
         log_warning "Created placeholder for: $secret_name"
-        log_warning "Update with: echo -n 'YOUR_ACTUAL_VALUE' | gcloud secrets versions add $secret_name --data-file=- --project=$PROJECT_ID"
+        log_warning "Update with: echo -n 'YOUR_ACTUAL_VALUE' | gcloud secrets versions add \"$secret_name\" --data-file=- --project=\"$PROJECT_ID\""
     fi
 done
 
@@ -301,16 +301,16 @@ log_info "Building Docker image..."
 IMAGE_NAME="$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY_NAME/$SERVICE_NAME:latest"
 
 # Configure Docker to use gcloud as credential helper
-gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
+gcloud auth configure-docker "$REGION-docker.pkg.dev" --quiet
 
 # Build image
 docker build \
-    -t $IMAGE_NAME \
+    -t "$IMAGE_NAME" \
     -f Dockerfile \
     .
 
 log_info "Pushing Docker image..."
-docker push $IMAGE_NAME
+docker push "$IMAGE_NAME"
 
 log_success "Docker image built and pushed"
 
@@ -320,9 +320,9 @@ log_success "Docker image built and pushed"
 
 log_info "Deploying to Cloud Run..."
 
-gcloud run deploy $SERVICE_NAME \
-    --image=$IMAGE_NAME \
-    --region=$REGION \
+gcloud run deploy "$SERVICE_NAME" \
+    --image="$IMAGE_NAME" \
+    --region="$REGION" \
     --platform=managed \
     --allow-unauthenticated \
     --memory=2Gi \
@@ -331,15 +331,15 @@ gcloud run deploy $SERVICE_NAME \
     --max-instances=10 \
     --concurrency=80 \
     --timeout=300 \
-    --vpc-connector=$VPC_CONNECTOR_NAME \
+    --vpc-connector="$VPC_CONNECTOR_NAME" \
     --vpc-egress=private-ranges-only \
     --set-env-vars="NODE_ENV=production,GCP_PROJECT_ID=$PROJECT_ID,GCP_REGION=$REGION,REDIS_HOST=$REDIS_HOST,REDIS_PORT=$REDIS_PORT" \
     --set-secrets="DATABASE_URL=db-password:latest,JWT_SECRET=jwt-secret:latest,JWT_REFRESH_SECRET=jwt-refresh-secret:latest,SQUARE_ACCESS_TOKEN=square-access-token:latest,SQUARE_LOCATION_ID=square-location-id:latest,GEMINI_API_KEY=gemini-api-key:latest,AZURE_FACE_KEY=azure-face-key:latest,GMAIL_PASSWORD=gmail-password:latest" \
-    --add-cloudsql-instances=$DB_CONNECTION_NAME \
-    --project=$PROJECT_ID
+    --add-cloudsql-instances="$DB_CONNECTION_NAME" \
+    --project="$PROJECT_ID"
 
 # Get service URL
-SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region=$REGION --format="value(status.url)" --project=$PROJECT_ID)
+SERVICE_URL=$(gcloud run services describe "$SERVICE_NAME" --region="$REGION" --format="value(status.url)" --project="$PROJECT_ID")
 
 log_success "Deployed to Cloud Run"
 
@@ -349,7 +349,7 @@ log_success "Deployed to Cloud Run"
 
 log_info "Setting up database schema..."
 log_warning "Manual step required: Connect to Cloud SQL and run database/schema.sql"
-log_info "Connection command: gcloud sql connect $DB_INSTANCE_NAME --user=youandinotai_user --database=youandinotai --project=$PROJECT_ID"
+log_info "Connection command: gcloud sql connect \"$DB_INSTANCE_NAME\" --user=youandinotai_user --database=youandinotai --project=\"$PROJECT_ID\""
 
 # ============================================================================
 # Deployment Complete
