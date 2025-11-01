@@ -154,7 +154,7 @@ Required environment variables (stored in Secret Manager):
 
 ```bash
 # View logs
-gcloud run logs read youandinotai-app --region=us-central1
+gcloud run logs read youandinotai-app --region=us-east1
 
 # Health check
 curl https://your-app-url.run.app/health

@@ -62,13 +62,13 @@ Your app is now live at: `https://youandinotai-app-XXXX.run.app`
 
 ```bash
 # View logs
-gcloud run logs read youandinotai-app --region=us-central1
+gcloud run logs read youandinotai-app --region=us-east1
 
 # Health check
 curl https://YOUR-APP-URL/health
 
 # View metrics
-gcloud run services describe youandinotai-app --region=us-central1
+gcloud run services describe youandinotai-app --region=us-east1
 ```
 
 ## 🆘 Need Help?

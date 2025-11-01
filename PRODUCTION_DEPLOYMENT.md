@@ -78,7 +78,7 @@ chmod +x scripts/verify-production.sh
 Connect to Cloud SQL and run the schema:
 
 ```bash
-gcloud sql connect youandinotai-db --user=youandinotai_user --database=youandinotai --project=spring-asset-476800-u6
+gcloud sql connect youandinotai-db --user=youandinotai_user --database=youandinotai --project=pelagic-bison-476817-k7
 ```
 
 Then in the PostgreSQL prompt:
@@ -91,12 +91,12 @@ Then in the PostgreSQL prompt:
 If you need to update any secret after deployment:
 
 ```bash
-echo -n 'YOUR_NEW_VALUE' | gcloud secrets versions add SECRET_NAME --data-file=- --project=spring-asset-476800-u6
+echo -n 'YOUR_NEW_VALUE' | gcloud secrets versions add SECRET_NAME --data-file=- --project=pelagic-bison-476817-k7
 ```
 
 Example:
 ```bash
-echo -n 'sq0atp-XXXXX' | gcloud secrets versions add square-access-token --data-file=- --project=spring-asset-476800-u6
+echo -n 'sq0atp-XXXXX' | gcloud secrets versions add square-access-token --data-file=- --project=pelagic-bison-476817-k7
 ```
 
 ## Post-Deployment Configuration
@@ -117,14 +117,14 @@ echo -n 'sq0atp-XXXXX' | gcloud secrets versions add square-access-token --data-
 ### Configure Custom Domain (Optional)
 
 ```bash
-gcloud run domain-mappings create --service=youandinotai-app --domain=youandinotai.com --region=us-central1 --project=spring-asset-476800-u6
+gcloud run domain-mappings create --service=youandinotai-app --domain=youandinotai.com --region=us-east1 --project=pelagic-bison-476817-k7
 ```
 
 ## Monitoring and Logs
 
 ### View Logs
 ```bash
-gcloud run logs read youandinotai-app --region=us-central1 --project=spring-asset-476800-u6
+gcloud run logs read youandinotai-app --region=us-east1 --project=pelagic-bison-476817-k7
 ```
 
 ### Health Check
@@ -134,7 +134,7 @@ curl https://your-cloud-run-url/health
 
 ### Monitor Metrics
 ```bash
-gcloud monitoring dashboards list --project=spring-asset-476800-u6
+gcloud monitoring dashboards list --project=pelagic-bison-476817-k7
 ```
 
 ## Production Checklist
@@ -162,22 +162,22 @@ gcloud monitoring dashboards list --project=spring-asset-476800-u6
 
 ### Service won't start
 ```bash
-gcloud run logs read youandinotai-app --region=us-central1 --limit=50
+gcloud run logs read youandinotai-app --region=us-east1 --limit=50
 ```
 
 ### Database connection issues
 ```bash
-gcloud sql instances describe youandinotai-db --project=spring-asset-476800-u6
+gcloud sql instances describe youandinotai-db --project=pelagic-bison-476817-k7
 ```
 
 ### Secret not found
 ```bash
-gcloud secrets list --project=spring-asset-476800-u6
+gcloud secrets list --project=pelagic-bison-476817-k7
 ```
 
 ### Update service configuration
 ```bash
-gcloud run services update youandinotai-app --region=us-central1 --project=spring-asset-476800-u6
+gcloud run services update youandinotai-app --region=us-east1 --project=pelagic-bison-476817-k7
 ```
 
 ## Support

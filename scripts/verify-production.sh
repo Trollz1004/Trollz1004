@@ -14,8 +14,8 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-PROJECT_ID="${GCP_PROJECT_ID:-spring-asset-476800-u6}"
-REGION="${GCP_REGION:-us-central1}"
+PROJECT_ID="${GCP_PROJECT_ID:-pelagic-bison-476817-k7}"
+REGION="${GCP_REGION:-us-east1}"
 
 log_info() {
     echo -e "${BLUE}[INFO]${NC} $1"

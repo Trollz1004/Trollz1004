@@ -15,9 +15,10 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-PROJECT_ID="${GCP_PROJECT_ID:-spring-asset-476800-u6}"
-REGION="${GCP_REGION:-us-central1}"
+PROJECT_ID="${GCP_PROJECT_ID:-pelagic-bison-476817-k7}"
+REGION="${GCP_REGION:-us-east1}"
 SERVICE_NAME="youandinotai-app"
+SERVICE_ACCOUNT_NAME="youandinotai-sa"
 DB_INSTANCE_NAME="youandinotai-db"
 REDIS_INSTANCE_NAME="youandinotai-redis"
 VPC_CONNECTOR_NAME="youandinotai-connector"
