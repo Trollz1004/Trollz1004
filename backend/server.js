@@ -16,6 +16,7 @@ const rateLimit = require('express-rate-limit');
 const { Pool } = require('pg');
 const Redis = require('ioredis');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -305,7 +306,6 @@ io.use(async (socket, next) => {
             return next(new Error('Authentication error'));
         }
 
-        const jwt = require('jsonwebtoken');
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         socket.userId = decoded.userId;
         next();
