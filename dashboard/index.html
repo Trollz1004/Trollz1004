@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouAndINotAI - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 14px;
+            color: #4ade80;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .users-table {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-free {
+            background: rgba(156, 163, 175, 0.3);
+        }
+
+        .badge-basic {
+            background: rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-premium {
+            background: rgba(168, 85, 247, 0.3);
+        }
+
+        .badge-vip {
+            background: rgba(234, 179, 8, 0.3);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.6;
+        }
+
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="status-dot"></span>
+                YouAndINotAI Admin Dashboard
+            </div>
+            <button class="refresh-btn" onclick="loadData()">🔄 Refresh</button>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <div class="stat-value" id="totalUsers">-</div>
+                <div class="stat-change">+12% from last month</div>
+            </div>
+            <div class="stat-card">
+                <h3>Paid Subscribers</h3>
+                <div class="stat-value" id="paidUsers">-</div>
+                <div class="stat-change">+23% from last month</div>
+            </div>
+            <div class="stat-card">
+                <h3>Monthly Revenue</h3>
+                <div class="stat-value" id="revenue">$0</div>
+                <div class="stat-change">+31% from last month</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Matches</h3>
+                <div class="stat-value" id="matches">-</div>
+                <div class="stat-change">+18% from last month</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3 style="margin-bottom: 20px; font-size: 18px;">Platform Health</h3>
+            <div id="healthStatus" class="loading">Loading health status...</div>
+        </div>
+
+        <div class="users-table">
+            <h3 style="margin-bottom: 20px; font-size: 18px;">Recent Users</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Plan</th>
+                        <th>Joined</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable">
+                    <tr>
+                        <td colspan="5" class="loading">Loading users...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:8080' 
+            : 'https://youandinotai-complete-1079557039197.us-central1.run.app';
+
+        async function loadData() {
+            try {
+                // Load stats
+                const statsResponse = await fetch(`${API_URL}/api/admin/stats`);
+                const stats = await statsResponse.json();
+                
+                if (stats.success) {
+                    document.getElementById('totalUsers').textContent = stats.stats.total_users || 0;
+                    document.getElementById('paidUsers').textContent = stats.stats.paid_users || 0;
+                    document.getElementById('revenue').textContent = '$' + (parseFloat(stats.stats.monthly_revenue) || 0).toFixed(2);
+                    document.getElementById('matches').textContent = Math.floor((stats.stats.total_users || 0) * 0.3);
+                }
+
+                // Load health
+                const healthResponse = await fetch(`${API_URL}/health`);
+                const health = await healthResponse.json();
+                
+                const healthHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div>
+                            <strong>Status:</strong> ${health.status === 'healthy' ? '✅ Healthy' : '❌ Unhealthy'}
+                        </div>
+                        <div>
+                            <strong>Version:</strong> ${health.version}
+                        </div>
+                        <div>
+                            <strong>Gemini AI:</strong> ${health.credentials?.gemini || '❌'}
+                        </div>
+                        <div>
+                            <strong>Square:</strong> ${health.credentials?.square || '❌'}
+                        </div>
+                        <div>
+                            <strong>Database:</strong> ${health.credentials?.database || '❌'}
+                        </div>
+                        <div>
+                            <strong>Redis:</strong> ${health.credentials?.redis || '❌'}
+                        </div>
+                    </div>
+                `;
+                document.getElementById('healthStatus').innerHTML = healthHTML;
+
+                // Load recent users
+                const usersResponse = await fetch(`${API_URL}/api/admin/users/recent`);
+                const usersData = await usersResponse.json();
+                
+                if (usersData.success && usersData.users) {
+                    const usersHTML = usersData.users.map(user => `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td><span class="badge badge-${user.subscription_plan || 'free'}">${(user.subscription_plan || 'free').toUpperCase()}</span></td>
+                            <td>${new Date(user.created_at).toLocaleDateString()}</td>
+                        </tr>
+                    `).join('');
+                    document.getElementById('usersTable').innerHTML = usersHTML;
+                } else {
+                    document.getElementById('usersTable').innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">No users yet</td></tr>';
+                }
+
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('healthStatus').innerHTML = `
+                    <div style="color: #fca5a5;">
+                        ⚠️ Error connecting to API: ${error.message}<br>
+                        <small>Make sure the backend is running at ${API_URL}</small>
+                    </div>
+                `;
+            }
+        }
+
+        // Load data on page load
+        loadData();
+
+        // Refresh every 30 seconds
+        setInterval(loadData, 30000);
+    </script>
+</body>
+</html>

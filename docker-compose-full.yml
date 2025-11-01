@@ -47,7 +47,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgresql://postgres:ezg0/ZqobdoeN5vBRl8Uj9CSy59MiPYTbZDK0zUvXzY=@postgres:5432/youandinotai_prod
+      - DATABASE_URL=postgresql://postgres:ezg0%2FZqobdoeN5vBRl8Uj9CSy59MiPYTbZDK0zUvXzY%3D@postgres:5432/youandinotai_prod?sslmode=disable
       - REDIS_URL=redis://redis:6379
       - PORT=8080
       - NODE_ENV=production
