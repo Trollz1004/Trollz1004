@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouAndINotAI - Only Human Connections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-light: #f8fafc; /* slate-50 */
+            --bg-dark: #0f172a; /* slate-900 */
+            --text-light: #0f172a;
+            --text-dark: #f8fafc;
+            --card-light: #ffffff;
+            --card-dark: #1e293b; /* slate-800 */
+            --border-light: #e2e8f0; /* slate-200 */
+            --border-dark: #334155; /* slate-700 */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+        
+        .dark body {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        
+        .page { display: none; }
+        .page.active { display: block; }
+        .main-view { display: none; }
+        .main-view.active { display: block; }
+
+        .btn-primary {
+            @apply bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:from-blue-600 hover:to-purple-700 transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed;
+        }
+        
+        .btn-secondary {
+            @apply bg-white dark:bg-slate-700 dark:text-white text-gray-800 font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-slate-600 transition-all duration-300 ease-in-out;
+        }
+        
+        .btn-google {
+            @apply bg-white dark:bg-slate-700 dark:text-gray-700 dark:text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-slate-600 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2;
+        }
+
+        .chat-messages::-webkit-scrollbar { width: 8px; }
+        .chat-messages::-webkit-scrollbar-track { background: var(--bg-light); border-radius: 10px; }
+        .dark .chat-messages::-webkit-scrollbar-track { background: var(--bg-dark); }
+        .chat-messages::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        .dark .chat-messages::-webkit-scrollbar-thumb { background: #4b5563; }
+
+        .vibe-tag {
+            @apply inline-block bg-purple-100 text-purple-700 text-xs font-medium px-3 py-1 rounded-full;
+        }
+        
+        #global-loader {
+            display: none;
+            @apply fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50;
+        }
+        #global-loader.active { display: flex; }
+        .spinner {
+            @apply w-12 h-12 border-4 border-white border-t-purple-500 rounded-full animate-spin;
+        }
+
+        /* Verification Badge */
+        .human-verified-badge {
+            @apply flex items-center gap-1.5 bg-blue-500 text-white text-xs font-medium px-2.5 py-1 rounded-full;
+        }
+        .discover-card-trust {
+            @apply absolute top-4 right-4 flex items-center gap-1.5 bg-black/30 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full;
+        }
+    </style>
+    <script>
+        // Set theme on load
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 transition-colors duration-300">
+
+    <!-- Global Container -->
+    <div class="min-h-screen">
+
+        <!-- ============================================= -->
+        <!-- =====   Portion 1: Login/Landing Page   ===== -->
+        <!-- ============================================= -->
+        <div id="page-login" class="page">
+            <div class="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-gradient-to-br from-blue-700 to-purple-600">
+                <div class="absolute inset-0 z-0">
+                    <div class="absolute top-0 left-0 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+                    <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse animation-delay-3000"></div>
+                </div>
+
+                <div class="text-center text-white mb-12 z-10">
+                    <h1 class="text-6xl font-bold mb-4 drop-shadow-lg">You and I <span class="font-light">not</span> Ai</h1>
+                    <!-- THEME UPDATE -->
+                    <p class="text-2xl font-light drop-shadow-md">Anti-Bot Dating. Only Human Connections.</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-lg p-10 md:p-12 rounded-2xl shadow-2xl w-full max-w-md z-10 border border-white/20">
+                    <h2 class="text-3xl font-bold text-white text-center mb-8">Join the Community</h2>
+                    <div class="space-y-4">
+                        <!-- THEME UPDATE: Changed "Sign Up" text -->
+                        <button data-action="auth:signup" class="w-full btn-primary">Start Human Verification</button>
+                        <button data-action="auth:login" class="w-full btn-secondary">Log In</button>
+                        
+                        <div class="relative flex py-3 items-center">
+                            <div class="flex-grow border-t border-white/30"></div>
+                            <span class="flex-shrink mx-4 text-white/80 text-sm">OR</span>
+                            <div class="flex-grow border-t border-white/30"></div>
+                        </div>
+                        <button data-action="auth:google-login" class="w-full btn-google">
+                            <svg class="w-5 h-5" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
+                            <span>Sign in with Google</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================== -->
+        <!-- =====   Portion 2: Sign Up / Face Verify     ===== -->
+        <!-- ================================================== -->
+        <div id="page-signup" class="page">
+             <div class="min-h-screen flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-900 p-6">
+                <div class="bg-white dark:bg-slate-800 p-10 md:p-12 rounded-2xl shadow-xl w-full max-w-md text-center">
+                    <i data-lucide="shield-check" class="h-16 w-16 text-blue-600 mx-auto"></i>
+                    <!-- THEME UPDATE: Wording changed -->
+                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-6">Become Human Verified</h3>
+                    <p class="text-slate-600 dark:text-slate-300 mt-4 mb-8">We guarantee a bot-free community. This one-time verification ensures every profile is 100% human.</p>
+                    <div class="w-full h-48 bg-slate-200 dark:bg-slate-700 rounded-lg flex items-center justify-center text-slate-500 dark:text-slate-400 mb-8 overflow-hidden">
+                        <i data-lucide="video" class="w-16 h-16 text-slate-400 dark:text-slate-500"></i>
+                    </div>
+                    <button data-action="auth:verify-face" class="w-full btn-primary">
+                        Start Verification
+                    </button>
+                     <button data-action="nav:page" data-page-id="page-login" class="w-full mt-4 text-sm text-slate-600 dark:text-slate-400 hover:underline">
+                        Back to Login
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- =====   Portion 3: Main Application     ===== -->
+        <!-- ============================================= -->
+        <div id="page-main" class="page">
+            <div class="min-h-screen flex flex-col md:flex-row">
+                
+                <!-- Mobile Bottom Nav -->
+                <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 shadow-lg z-50 border-t border-slate-200 dark:border-slate-700">
+                    <div class="flex justify-around">
+                        <button class="main-nav-link flex-1 py-3 text-center text-slate-600 dark:text-slate-400" data-action="nav:view" data-view-id="view-discover">
+                            <i data-lucide="layout-grid" class="mx-auto h-6 w-6"></i><span class="text-xs">Discover</span>
+                        </button>
+                        <button class="main-nav-link flex-1 py-3 text-center text-purple-600 font-bold" data-action="nav:view" data-view-id="view-messages">
+                            <i data-lucide="message-square" class="mx-auto h-6 w-6"></i><span class="text-xs">Messages</span>
+                        </button>
+                        <!-- THEME UPDATE: Removed AI Concierge -->
+                        <button class="main-nav-link flex-1 py-3 text-center text-slate-600 dark:text-slate-400" data-action="nav:view" data-view-id="view-profile">
+                            <i data-lucide="user" class="mx-auto h-6 w-6"></i><span class="text-xs">Profile</span>
+                        </button>
+                    </div>
+                </nav>
+
+                <!-- Desktop Sidebar Nav -->
+                <nav class="hidden md:flex flex-col w-64 bg-white dark:bg-slate-800 shadow-xl border-r border-slate-200 dark:border-slate-700">
+                    <div class="p-6 border-b border-slate-200 dark:border-slate-700"><h1 class="text-3xl font-bold text-blue-600">You and I <span class="font-light text-purple-500">not</span> Ai</h1></div>
+                    <div class="flex-grow p-4 space-y-2">
+                        <button class="main-nav-link flex items-center space-x-3 w-full text-left py-3 px-4 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-purple-600" data-action="nav:view" data-view-id="view-discover">
+                            <i data-lucide="layout-grid" class="h-5 w-5"></i><span class="font-medium">Discover</span>
+                        </button>
+                        <button class="main-nav-link flex items-center space-x-3 w-full text-left py-3 px-4 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 font-bold" data-action="nav:view" data-view-id="view-messages">
+                            <i data-lucide="message-square" class="h-5 w-5"></i><span class="font-medium">Messages</span>
+                        </button>
+                        <!-- THEME UPDATE: Removed AI Concierge -->
+                        <button class="main-nav-link flex items-center space-x-3 w-full text-left py-3 px-4 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-purple-600" data-action="nav:view" data-view-id="view-profile">
+                            <i data-lucide="user" class="h-5 w-5"></i><span class="font-medium">Profile</span>
+                        </button>
+                        <button class="flex items-center space-x-3 w-full text-left py-3 px-4 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-purple-600" data-action="auth:logout">
+                            <i data-lucide="log-out" class="h-5 w-5"></i><span class="font-medium">Log Out</span>
+                        </button>
+                    </div>
+                </nav>
+                
+                <!-- Main Content Area -->
+                <main class="flex-1 bg-slate-100 dark:bg-slate-950 pb-20 md:pb-0">
+                    
+                    <div id="view-discover" class="main-view p-4 md:p-8">
+                        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Discover Humans</h2>
+                        <div id="discover-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Cards dynamically injected -->
+                        </div>
+                    </div>
+
+                    <div id="view-messages" class="main-view h-full flex flex-col">
+                        <h2 class="text-3xl font-bold text-slate-900 dark:text-white p-4 md:p-8 pb-0">Messages</h2>
+                        <div class="flex-1 flex flex-col md:flex-row p-4 md:p-8 md:pt-4 gap-6 h-[calc(100vh-160px)] md:h-[calc(100vh-120px)]">
+                            <div class="w-full md:w-1/3 bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden border border-slate-200 dark:border-slate-700">
+                                <div class="p-4 border-b border-slate-200 dark:border-slate-700"><input type="text" placeholder="Search matches" class="w-full p-2 border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"></div>
+                                <ul id="conversation-list" class="divide-y divide-slate-200 dark:divide-slate-700 overflow-y-auto h-40 md:h-full"></ul>
+                            </div>
+                            <div class="flex-1 flex flex-col bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden border border-slate-200 dark:border-slate-700">
+                                <div id="chat-header" class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center space-x-4 min-h-[88px]"></div>
+                                <div id="chat-messages" class="chat-messages flex-1 p-6 space-y-4 overflow-y-auto bg-slate-50 dark:bg-slate-800"></div>
+                                <!-- THEME UPDATE: Removed AI Coach -->
+                                <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                                    <div class="flex items-center space-x-3">
+                                        <input id="chat-input" type="text" placeholder="Type your message..." class="flex-1 p-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" disabled>
+                                        <button id="btn-send-message" data-action="chat:send" class="p-3 rounded-lg btn-primary" disabled>
+                                            <i data-lucide="send" class="h-6 w-6"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- THEME UPDATE: This view is now inaccessible via nav -->
+                    <div id="view-concierge" class="main-view h-full flex flex-col"></div>
+
+                    <div id="view-profile" class="main-view p-4 md:p-8 overflow-y-auto">
+                        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Profile</h2>
+                        <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-md mb-8 border border-slate-200 dark:border-slate-700">
+                            <div class="flex flex-col sm:flex-row items-center sm:space-x-6">
+                                <div class="relative">
+                                    <img src="https://placehold.co/100x100/A020F0/FFFFFF?text=User" alt="Your Profile" class="w-24 h-24 rounded-full border-4 border-purple-500">
+                                    <!-- THEME UPDATE: Added Verified Badge to profile pic -->
+                                    <div class="absolute -bottom-2 -right-2 human-verified-badge">
+                                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                                        <span>Human</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 sm:mt-0 text-center sm:text-left">
+                                    <h3 id="profile-name" class="text-2xl font-bold"></h3>
+                                    <p id="profile-email" class="text-slate-600 dark:text-slate-400"></p>
+                                    <button data-action="auth:logout" class="md:hidden mt-2 text-sm text-red-500 hover:underline">Log Out</button>
+                                </div>
+                                <div class="flex-grow flex justify-center sm:justify-end space-x-6 mt-4 sm:mt-0">
+                                    <div class="text-center">
+                                        <!-- THEME UPDATE: Renamed "Trust Score" -->
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Humanity Score</p>
+                                        <p id="profile-trust-score" class="text-3xl font-bold text-green-500"></p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Gems</p>
+                                        <p id="profile-gems" class="text-3xl font-bold text-yellow-500 flex items-center">
+                                            <i data-lucide="gem" class="h-6 w-6 mr-1"></i> <span id="profile-gems-amount"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                                <span class="text-slate-700 dark:text-slate-300 font-medium">Dark Mode</span>
+                                <button data-action="ui:toggle-dark-mode" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-slate-200 dark:bg-purple-600">
+                                    <span class="inline-block w-4 h-4 transform bg-white dark:translate-x-6 rounded-full transition-transform" id="dark-mode-toggle"></span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="sm:hidden">
+                                <select id="profile-tabs-select" data-action="nav:tab-select" class="block w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:border-purple-500 focus:ring-purple-500">
+                                    <option value="tab-subscription">Subscription</option>
+                                    <option value="tab-quests">Quests</option>
+                                </select>
+                            </div>
+                            <div class="hidden sm:block">
+                                <nav class="flex space-x-4 border-b border-slate-200 dark:border-slate-700">
+                                    <button class="profile-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-purple-500 text-purple-600" data-action="nav:tab" data-tab-id="tab-subscription">Subscription</button>
+                                    <button class="profile-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600" data-action="nav:tab" data-tab-id="tab-quests">Quests</button>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div id="tab-subscription" class="profile-tab-content active">
+                            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+                                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Subscription Status</h3>
+                                <div id="subscription-status" class="p-6 bg-slate-100 dark:bg-slate-700 rounded-lg"></div>
+                                <button id="btn-go-to-payment" data-action="nav:page" data-page-id="page-payment" class="w-full md:w-auto mt-6 btn-primary"></button>
+                            </div>
+                        </div>
+                        <div id="tab-quests" class="profile-tab-content" style="display: none;">
+                            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+                                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Available Quests</h3>
+                                <div id="quest-list" class="space-y-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        
+        <!-- ============================================= -->
+        <!-- ===== Portion 4: Payment/Subscription   ===== -->
+        <!-- ============================================= -->
+        <div id="page-payment" class="page">
+            <div class="min-h-screen bg-slate-100 dark:bg-slate-950 py-12 px-4">
+                <div class="max-w-5xl mx-auto">
+                    <button data-action="nav:page" data-page-id="page-main" class="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white mb-4 flex items-center">
+                        <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i> Back to Profile
+                    </button>
+                    <h1 class="text-4xl font-bold text-slate-900 dark:text-white text-center mb-10">Our Plans</h1>
+                    
+                    <!-- THEME UPDATE: Added Guarantee Box -->
+                    <div class="mb-10 bg-blue-50 dark:bg-blue-900/50 border border-blue-200 dark:border-blue-700 p-6 rounded-lg text-center">
+                        <i data-lucide="shield-check" class="w-12 h-12 text-blue-600 mx-auto"></i>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-4">The Human-Only Guarantee</h3>
+                        <p class="text-slate-600 dark:text-slate-300 mt-2 max-w-2xl mx-auto">
+                            We are so confident in our Anti-Bot Shield that we offer a money-back guarantee. If you have a confirmed interaction with a bot, we'll refund your month's subscription.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 border border-slate-200 dark:border-slate-700">
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Basic</h3>
+                            <p class="text-4xl font-bold text-slate-900 dark:text-white">$9.99<span class="text-lg font-normal text-slate-600 dark:text-slate-400">/mo</span></p>
+                            <ul class="space-y-3 mt-6 text-slate-600 dark:text-slate-300">
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Human Verification</li>
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Standard Matching</li>
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Anti-Bot Shield</li>
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Human-Only Guarantee</li>
+                            </ul>
+                            <button data-action="payment:select" data-plan="basic" class="w-full mt-8 btn-secondary">Select Basic</button>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border-2 border-purple-500 relative">
+                            <span class="absolute top-0 -translate-y-1/2 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">POPULAR</span>
+                            <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">Premium</h3>
+                            <p class="text-4xl font-bold text-slate-900 dark:text-white">$19.99<span class="text-lg font-normal text-slate-600 dark:text-slate-400">/mo</span></p>
+                            <ul class="space-y-3 mt-6 text-slate-600 dark:text-slate-300">
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> All Basic Features</li>
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Advanced Matching</li>
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Read Receipts</li>
+                            </ul>
+                            <button data-action="payment:select" data-plan="premium" class="w-full mt-8 btn-primary">Select Premium</button>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 border border-slate-200 dark:border-slate-700">
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Elite</h3>
+                            <p class="text-4xl font-bold text-slate-900 dark:text-white">$29.99<span class="text-lg font-normal text-slate-600 dark:text-slate-400">/mo</span></p>
+                            <ul class="space-y-3 mt-6 text-slate-600 dark:text-slate-300">
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> All Premium Features</li>
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Profile Boost monthly</li>
+                                <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-2"></i> Couple's Quests</li>
+                            </ul>
+                            <button data-action="payment:select" data-plan="elite" class="w-full mt-8 btn-secondary">Select Elite</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- ===== Portion 5: Global Modals          ===== -->
+    <!-- ============================================= -->
+
+    <!-- THEME UPDATE: Renamed to "Anti-Bot Shield" -->
+    <div id="ai-safety-modal" class="page fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-2xl max-w-md w-full">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 bg-yellow-100 p-3 rounded-full"><i data-lucide="shield-alert" class="h-8 w-8 text-yellow-500"></i></div>
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Anti-Bot Shield</h3>
+                    <p id="ai-modal-message" class="text-slate-600 dark:text-slate-300 mt-2">Our shield detected a suspicious link or bot-like activity.</p>
+                </div>
+            </div>
+            <button data-action="modal:close-ai" class="w-full mt-6 bg-yellow-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-yellow-600 transition-all duration-300">
+                I Understand
+            </button>
+        </div>
+    </div>
+    
+    <div id="global-loader" class="page">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- ===== Portion 6: JavaScript Logic       ===== -->
+    <!-- ============================================= -->
+    <script type="text/javascript">
+        
+        const appState = {
+            currentUser: null,
+            currentChatId: null,
+            currentPage: 'page-login',
+            currentView: null,
+            previousPage: null,
+            allData: {
+                profiles: [
+                    { id: 1, name: "Alex", age: 28, bio: "Software developer by day, aspiring chef by night.", img: "https://placehold.co/400x500/F472B6/FFFFFF?text=Alex", humanityScore: 88, vibes: ["Foodie", "Tech", "Creative"] },
+                    { id: 2, name: "Jessica", age: 26, bio: "Graphic designer who loves hiking and my golden retriever, Max.", img: "https://placehold.co/400x500/EC4899/FFFFFF?text=Jessica", humanityScore: 95, vibes: ["Outdoors", "Animal Lover", "Artsy"] },
+                    { id: 3, name: "Mike", age: 31, bio: "Live music, good coffee, and spontaneous road trips.", img: "https://placehold.co/400x500/D946EF/FFFFFF?text=Mike", humanityScore: 79, vibes: ["Music", "Adventurous", "Night Owl"] }
+                ],
+                conversations: [
+                    {
+                        id: 101, profileId: 2, name: "Jessica", img: "https://placehold.co/100x100/EC4899/FFFFFF?text=J", lastMessage: "Sounds great! How about this weekend?", unread: true,
+                        messages: [
+                            { sender: "other", text: "Hey! I saw you like hiking. Me too!" },
+                            { sender: "me", text: "Awesome! We should totally go sometime." },
+                            { sender: "other", text: "Sounds great! How about this weekend?" }
+                        ]
+                    }
+                ],
+                quests: [
+                    { id: 1, title: "First Date", description: "Plan your first date with a match.", gems: 100 },
+                    { id: 2, title: "Icebreaker", description: "Send 5 opening messages.", gems: 50 },
+                    { id: 3, title: "Photo Op", description: "Add 3 new photos to your profile.", gems: 75 }
+                ],
+                defaultUser: {
+                    name: "Josh Coleman",
+                    email: "josh@youandinotai.com",
+                    subscription: "basic",
+                    humanityScore: 92, // THEME UPDATE: Renamed
+                    gems: 1250
+                }
+            }
+        };
+
+        function showLoader(show) {
+            document.getElementById('global-loader').classList.toggle('active', show);
+        }
+        
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        function navigateTo(pageId, viewId = null) {
+            appState.previousPage = appState.currentPage;
+            appState.currentPage = pageId;
+            
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId === 'page-main' && viewId) {
+                appState.currentView = viewId;
+                document.querySelectorAll('.main-view').forEach(view => view.classList.remove('active'));
+                document.getElementById(viewId).classList.add('active');
+                
+                document.querySelectorAll('.main-nav-link').forEach(link => {
+                    const linkView = link.dataset.viewId || link.dataset.view;
+                    const isActive = linkView === viewId;
+                    link.classList.toggle('bg-purple-100', isActive);
+                    link.classList.toggle('dark:bg-purple-900/50', isActive);
+                    link.classList.toggle('text-purple-700', isActive);
+                    link.classList.toggle('dark:text-purple-300', isActive);
+                    link.classList.toggle('font-bold', isActive);
+                    link.classList.toggle('text-slate-700', !isActive);
+                    link.classList.toggle('dark:text-slate-300', !isActive);
+                    link.classList.toggle('text-slate-600', !isActive);
+                    link.classList.toggle('dark:text-slate-400', !isActive);
+                });
+            }
+            window.scrollTo(0, 0);
+        }
+        
+        function refreshIcons() {
+            lucide.createIcons();
+        }
+
+        function renderDiscoverFeed() {
+            const feed = document.getElementById('discover-feed');
+            feed.innerHTML = appState.allData.profiles.map(profile => `
+                <div class="discover-card">
+                    <img src="${profile.img}" alt="${profile.name}" class="discover-card-img">
+                    <div class="discover-card-overlay"></div>
+                    <!-- THEME UPDATE: Added Verified Badge -->
+                    <div class="absolute top-4 left-4 human-verified-badge">
+                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                        <span>Human Verified</span>
+                    </div>
+                    <div class="discover-card-trust">
+                        <i data-lucide="bar-chart-2" class="w-3 h-3"></i>
+                        <span>${profile.humanityScore} Score</span>
+                    </div>
+                    <div class="discover-card-info">
+                        <h3 class="text-2xl font-bold">${profile.name}, ${profile.age}</h3>
+                        <p class="text-sm text-white/90 truncate">${profile.bio}</p>
+                        <div class="mt-2">
+                            ${profile.vibes.map(vibe => `<span class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-2 py-0.5 rounded-full">${vibe}</span>`).join(' ')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            refreshIcons();
+        }
+
+        function renderConversationList() {
+            const list = document.getElementById('conversation-list');
+            list.innerHTML = appState.allData.conversations.map(convo => `
+                <li class="p-4 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer" data-action="chat:load" data-id="${convo.id}">
+                    <div class="flex items-center space-x-4">
+                        <img src="${convo.img}" alt="${convo.name}" class="w-12 h-12 rounded-full">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-slate-900 dark:text-white">${convo.name}</h4>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 truncate">${convo.lastMessage}</p>
+                        </div>
+                        ${convo.unread ? '<div class="w-3 h-3 bg-purple-500 rounded-full"></div>' : ''}
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function renderChatWindow(conversationId) {
+            const convo = appState.allData.conversations.find(c => c.id === conversationId);
+            if (!convo) {
+                document.getElementById('chat-header').innerHTML = '';
+                document.getElementById('chat-messages').innerHTML = '<p class="text-center text-slate-500 p-8">Select a conversation to start chatting.</p>';
+                document.getElementById('chat-input').disabled = true;
+                document.getElementById('btn-send-message').disabled = true;
+                return;
+            }
+            
+            appState.currentChatId = conversationId;
+            convo.unread = false;
+            renderConversationList();
+
+            document.getElementById('chat-header').innerHTML = `
+                <img src="${convo.img}" alt="${convo.name}" class="w-12 h-12 rounded-full">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">${convo.name}</h3>
+                    <!-- THEME UPDATE: Added Verified Badge -->
+                    <div class="human-verified-badge w-fit">
+                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                        <span>Human Verified</span>
+                    </div>
+                </div>
+            `;
+            
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.innerHTML = convo.messages.map(msg => `
+                <div class="flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}">
+                    <div class="max-w-xs md:max-w-md p-4 rounded-lg ${msg.sender === 'me' ? 'bg-purple-500 text-white' : 'bg-slate-200 text-slate-800 dark:bg-slate-700 dark:text-white'}">
+                        ${msg.text}
+                    </div>
+                </div>
+            `).join('');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            document.getElementById('chat-input').disabled = false;
+            document.getElementById('btn-send-message').disabled = false;
+            refreshIcons();
+        }
+
+        function renderProfile() {
+            const user = appState.currentUser;
+            document.getElementById('profile-name').textContent = user.name;
+            document.getElementById('profile-email').textContent = user.email;
+            document.getElementById('profile-trust-score').textContent = user.humanityScore; // THEME UPDATE
+            document.getElementById('profile-gems-amount').textContent = user.gems.toLocaleString();
+            
+            const subStatus = document.getElementById('subscription-status');
+            const subButton = document.getElementById('btn-go-to-payment');
+            
+            if (user.subscription === 'basic') {
+                subStatus.innerHTML = `<p class="text-lg">You are on the <span class="font-bold text-slate-700 dark:text-slate-300">Basic Tier</span>.</p>`;
+                subButton.textContent = "Upgrade Plan";
+                subButton.disabled = false;
+            } else if (user.subscription === 'premium') {
+                subStatus.innerHTML = `<p class="text-lg">You are on the <span class="font-bold text-purple-600 dark:text-purple-400">Premium Tier</span>.</p>`;
+                subButton.textContent = "Upgrade to Elite";
+                subButton.disabled = false;
+            } else {
+                subStatus.innerHTML = `<p class="text-lg">You are on the <span class="font-bold text-yellow-500">Elite Tier</span>!</p>`;
+                subButton.textContent = "Manage Subscription";
+                subButton.disabled = false;
+            }
+        }
+        
+        function renderQuests() {
+            const questContainer = document.getElementById('quest-list');
+            questContainer.innerHTML = appState.allData.quests.map(quest => `
+                <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-lg flex justify-between items-center">
+                    <div>
+                        <h4 class="font-semibold text-slate-900 dark:text-white">${quest.title}</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">${quest.description}</p>
+                    </div>
+                    <span class="flex items-center font-bold text-yellow-500">
+                        <i data-lucide="gem" class="h-4 w-4 mr-1"></i> +${quest.gems}
+                    </span>
+                </div>
+            `).join('');
+            refreshIcons();
+        }
+        
+        function showAiModal(message) {
+            document.getElementById('ai-modal-message').textContent = message;
+            navigateTo('ai-safety-modal');
+        }
+
+        async function handleSendMessage(button) {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text || !appState.currentChatId) return;
+            
+            // THEME UPDATE: Re-worded for "Anti-Bot Shield"
+            if (/http:|https:|www\.|.com/.test(text)) {
+                showAiModal("Our Anti-Bot Shield detected a suspicious link. For your safety, this message was not sent.");
+                input.value = '';
+                return;
+            }
+
+            input.disabled = true;
+            button.disabled = true;
+
+            const convo = appState.allData.conversations.find(c => c.id === appState.currentChatId);
+            convo.messages.push({ sender: 'me', text: text });
+            convo.lastMessage = text;
+            
+            renderChatWindow(appState.currentChatId);
+            input.value = '';
+            
+            await sleep(500); 
+            
+            input.disabled = false;
+            button.disabled = false;
+            input.focus();
+        }
+        
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        }
+
+        function initApp() {
+            document.body.addEventListener('click', async (e) => {
+                const actionTarget = e.target.closest('[data-action]');
+                if (!actionTarget) return;
+
+                const { action, pageId, viewId, tabId, id, plan } = actionTarget.dataset;
+                
+                if (action.startsWith('auth:') || action.startsWith('payment:')) {
+                    showLoader(true);
+                    await sleep(1000);
+                }
+
+                switch (action) {
+                    // Navigation
+                    case 'nav:page': navigateTo(pageId); break;
+                    case 'nav:view': navigateTo('page-main', viewId); break;
+                    case 'nav:tab': 
+                        document.querySelectorAll('.profile-tab-content').forEach(tab => tab.style.display = 'none');
+                        document.getElementById(tabId).style.display = 'block';
+                        document.querySelectorAll('.profile-tab-btn').forEach(btn => {
+                            const isActive = btn.dataset.tabId === tabId;
+                            btn.classList.toggle('border-purple-500', isActive);
+                            btn.classList.toggle('text-purple-600', isActive);
+                            btn.classList.toggle('border-transparent', !isActive);
+                            btn.classList.toggle('text-slate-500', !isActive);
+                            btn.classList.toggle('dark:text-slate-400', !isActive);
+                        });
+                        break;
+                    
+                    // Auth
+                    case 'auth:login':
+                    case 'auth:verify-face': 
+                        appState.currentUser = { ...appState.allData.defaultUser };
+                        renderProfile();
+                        renderQuests();
+                        renderDiscoverFeed();
+                        renderConversationList();
+                        renderChatWindow(null);
+                        navigateTo('page-main', 'view-discover');
+                        break;
+                    case 'auth:signup':
+                    case 'auth:google-login':
+                        navigateTo('page-signup');
+                        break;
+                    case 'auth:logout':
+                        appState.currentUser = null;
+                        appState.currentChatId = null;
+                        navigateTo('page-login');
+                        break;
+                        
+                    // Chat
+                    case 'chat:load': renderChatWindow(parseInt(id)); break;
+                    case 'chat:send': handleSendMessage(actionTarget); break;
+                    
+                    // Payment
+                    case 'payment:select':
+                        appState.currentUser.subscription = plan;
+                        renderProfile();
+                        navigateTo('page-main', 'view-profile');
+                        break;
+                        
+                    // UI
+                    case 'ui:toggle-dark-mode': toggleDarkMode(); break;
+                        
+                    // Modals
+                    case 'modal:close-ai': navigateTo(appState.previousPage || 'page-main'); break;
+                }
+                
+                // Handle tab-select change separately
+                if (action === 'nav:tab-select') {
+                    const selectedTabId = e.target.value;
+                    document.querySelectorAll('.profile-tab-content').forEach(tab => tab.style.display = 'none');
+                    document.getElementById(selectedTabId).style.display = 'block';
+                }
+                
+                showLoader(false);
+            });
+            
+            document.getElementById('profile-tabs-select').addEventListener('change', (e) => {
+                 const selectedTabId = e.target.value;
+                 document.querySelectorAll('.profile-tab-content').forEach(tab => tab.style.display = 'none');
+                 document.getElementById(selectedTabId).style.display = 'block';
+            });
+
+            navigateTo('page-login');
+            refreshIcons();
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
+
