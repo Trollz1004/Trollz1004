@@ -15,9 +15,10 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-PROJECT_ID="${GCP_PROJECT_ID:-spring-asset-476800-u6}"
-REGION="${GCP_REGION:-us-central1}"
+PROJECT_ID="${GCP_PROJECT_ID:-pelagic-bison-476817-k7}"
+REGION="${GCP_REGION:-us-east1}"
 SERVICE_NAME="youandinotai-app"
+SERVICE_ACCOUNT_NAME="youandinotai-sa"
 DB_INSTANCE_NAME="youandinotai-db"
 REDIS_INSTANCE_NAME="youandinotai-redis"
 VPC_CONNECTOR_NAME="youandinotai-connector"
@@ -263,21 +264,20 @@ if ! gcloud secrets describe jwt-refresh-secret --project="$PROJECT_ID" &> /dev/
     create_or_update_secret "jwt-refresh-secret" "$JWT_REFRESH_SECRET"
 fi
 
-# Create placeholder secrets for user to update
-log_warning "============================================================================"
-log_warning "IMPORTANT: Update these secrets with your actual production values:"
-log_warning "============================================================================"
+# Create production-ready secrets from environment variables
+log_info "============================================================================"
+log_info "PRODUCTION SECRETS CONFIGURATION"
+log_info "============================================================================"
 
-PLACEHOLDER_SECRETS=(
-    "square-access-token:YOUR_SQUARE_ACCESS_TOKEN_HERE"
-    "square-location-id:YOUR_SQUARE_LOCATION_ID_HERE"
-    "square-app-id:YOUR_SQUARE_APP_ID_HERE"
-    "gemini-api-key:YOUR_GEMINI_API_KEY_HERE"
-    "azure-face-key:YOUR_AZURE_FACE_KEY_HERE"
-    "azure-face-endpoint:YOUR_AZURE_ENDPOINT_HERE"
-    "gmail-user:YOUR_GMAIL_ADDRESS_HERE"
-    "gmail-password:YOUR_GMAIL_APP_PASSWORD_HERE"
-    "cloudflare-api-token:YOUR_CLOUDFLARE_TOKEN_HERE"
+PRODUCTION_SECRETS=(
+    "square-access-token"
+    "square-location-id"
+    "square-app-id"
+    "gemini-api-key"
+    "azure-face-key"
+    "azure-face-endpoint"
+    "gmail-user"
+    "gmail-password"
 )
 
 for secret_pair in "${PLACEHOLDER_SECRETS[@]}"; do
@@ -287,6 +287,22 @@ for secret_pair in "${PLACEHOLDER_SECRETS[@]}"; do
         create_or_update_secret "$secret_name" "$placeholder_value"
         log_warning "Created placeholder for: $secret_name"
         log_warning "Update with: echo -n 'YOUR_ACTUAL_VALUE' | gcloud secrets versions add \"$secret_name\" --data-file=- --project=\"$PROJECT_ID\""
+for secret_name in "${PRODUCTION_SECRETS[@]}"; do
+    # Convert secret name to environment variable format (e.g., square-access-token -> SQUARE_ACCESS_TOKEN)
+    env_var=$(echo "$secret_name" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
+    env_value="${!env_var}"
+    
+    if [ -n "$env_value" ]; then
+        create_or_update_secret "$secret_name" "$env_value"
+        log_success "Configured: $secret_name from environment"
+    else
+        # Check if secret already exists
+        if gcloud secrets describe $secret_name --project=$PROJECT_ID &> /dev/null; then
+            log_info "Secret already exists: $secret_name"
+        else
+            log_warning "Missing environment variable: $env_var"
+            log_warning "Create secret manually: echo -n 'YOUR_VALUE' | gcloud secrets versions add $secret_name --data-file=- --project=$PROJECT_ID"
+        fi
     fi
 done
 

@@ -56,12 +56,19 @@ youandinotai/
 └── .env.example        # Environment variables template
 ```
 
-## 🚀 Quick Deploy to GCP
+## 🚀 Quick Deploy to GCP (Production)
 
 ### Prerequisites
 - Google Cloud Platform account with billing enabled
 - gcloud CLI installed and authenticated
 - Docker installed
+- Production credentials for Square, Gemini AI, and Azure
+
+### Important: Production Mode Only
+This application is configured for **PRODUCTION ONLY**. There is no sandbox or test mode.
+- Square payments use live production tokens
+- All transactions are real
+- Ensure you have proper production credentials before deploying
 
 ### Deployment Steps
 
@@ -71,24 +78,39 @@ youandinotai/
    cd Trollz1004
    ```
 
-2. **Run deployment script**:
+2. **Set up environment variables with production credentials**:
+   ```bash
+   export SQUARE_ACCESS_TOKEN="your_production_square_token"
+   export SQUARE_LOCATION_ID="your_square_location_id"
+   export SQUARE_APP_ID="your_square_app_id"
+   export GEMINI_API_KEY="your_gemini_api_key"
+   export AZURE_FACE_KEY="your_azure_face_key"
+   export AZURE_FACE_ENDPOINT="your_azure_endpoint"
+   export GMAIL_USER="your_gmail@gmail.com"
+   export GMAIL_PASSWORD="your_app_specific_password"
+   ```
+
+3. **Run deployment script**:
    ```bash
    chmod +x scripts/deploy-gcp.sh
    ./scripts/deploy-gcp.sh
    ```
 
-3. **Update secrets with production values**:
+4. **Verify production deployment**:
    ```bash
-   echo -n 'YOUR_SQUARE_TOKEN' | gcloud secrets versions add square-access-token --data-file=-
-   echo -n 'YOUR_GEMINI_KEY' | gcloud secrets versions add gemini-api-key --data-file=-
-   echo -n 'YOUR_AZURE_KEY' | gcloud secrets versions add azure-face-key --data-file=-
+   chmod +x scripts/verify-production.sh
+   ./scripts/verify-production.sh
    ```
 
-4. **Run database migrations**:
+5. **Run database migrations**:
    ```bash
-   gcloud sql connect youandinotai-db --user=youandinotai_user
+   gcloud sql connect youandinotai-db --user=youandinotai_user --database=youandinotai
    \i database/schema.sql
    ```
+
+6. **Configure Square webhooks** (see PRODUCTION_DEPLOYMENT.md for details)
+
+For detailed production deployment instructions, see [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md).
 
 ## 🔐 Security
 
@@ -132,7 +154,7 @@ Required environment variables (stored in Secret Manager):
 
 ```bash
 # View logs
-gcloud run logs read youandinotai-app --region=us-central1
+gcloud run logs read youandinotai-app --region=us-east1
 
 # Health check
 curl https://your-app-url.run.app/health
@@ -157,3 +179,4 @@ Copyright © 2024 YouAndINotAI. All rights reserved.
 ---
 
 **Built with ❤️ and cutting-edge AI technology**
+
