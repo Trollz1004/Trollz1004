@@ -131,7 +131,7 @@ router.post('/login', async (req, res) => {
 
         // Get user
         const result = await req.app.locals.pool.query(
-            'SELECT id, email, password_hash, account_status FROM users WHERE email = $1',
+            'SELECT id, email, password_hash, verified FROM users WHERE email = $1',
             [email.toLowerCase()]
         );
 
@@ -140,11 +140,6 @@ router.post('/login', async (req, res) => {
         }
 
         const user = result.rows[0];
-
-        // Check account status
-        if (user.account_status !== 'active') {
-            return res.status(403).json({ error: 'Account is not active' });
-        }
 
         // Verify password
         const validPassword = await bcrypt.compare(password, user.password_hash);
@@ -155,7 +150,7 @@ router.post('/login', async (req, res) => {
 
         // Update last login
         await req.app.locals.pool.query(
-            'UPDATE users SET last_login_at = NOW() WHERE id = $1',
+            'UPDATE users SET last_login = NOW() WHERE id = $1',
             [user.id]
         );
 
