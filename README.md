@@ -48,6 +48,12 @@ youandinotai/
 ├── frontend/
 │   ├── index.html      # Landing page
 │   └── js/             # Frontend JavaScript
+├── dashboard/          # Admin dashboard
+│   └── index.html      # Admin interface
+├── kickstarter-dashboard/  # 🆕 Production-Ready React Dashboard
+│   ├── src/            # React components and logic
+│   ├── package.json    # Dashboard dependencies
+│   └── README.md       # Dashboard documentation
 ├── database/
 │   └── schema.sql      # Complete database schema
 ├── scripts/
@@ -55,6 +61,30 @@ youandinotai/
 ├── Dockerfile          # Production Docker image
 └── .env.example        # Environment variables template
 ```
+
+## 🎯 New: Kickstarter Dashboard
+
+A **production-ready, multi-platform dashboard** demonstrating advanced filtering and data visualization:
+
+- **React 19 + TypeScript 5** - Modern, type-safe development
+- **Advanced Filtering** - Filter by name, goal amount with real-time updates
+- **Interactive Charts** - Beautiful visualizations with custom tooltips
+- **Responsive Design** - Works seamlessly on all devices
+- **Production Ready** - Built, tested, and ready to deploy
+
+📖 **[View Complete Dashboard Documentation →](./KICKSTARTER-DASHBOARD.md)**
+
+### Quick Start
+```bash
+cd kickstarter-dashboard
+npm install
+npm run dev
+```
+
+### Screenshots
+- [Full Dashboard View](https://github.com/user-attachments/assets/357e539a-9c5f-4606-aeee-2f963a3f5373)
+- [Filtered by Name](https://github.com/user-attachments/assets/ad384734-ec1b-4930-a274-2548b082905e)
+- [Filtered by Goal Amount](https://github.com/user-attachments/assets/4a0a3d3b-3123-44d3-b2b5-1b9a9447c470)
 
 ## 🚀 Quick Deploy to GCP
 
