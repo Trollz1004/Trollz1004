@@ -1,0 +1,87 @@
+﻿version: '3.8'
+
+services:
+  # PostgreSQL Database
+  youandinotai-db:
+    image: postgres:16-alpine
+    container_name: youandinotai-db
+    networks:
+      - youandinotai-net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: YouAndINotAI_Secure_2025_38938
+      POSTGRES_DB: youandinotai_prod
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./config/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis Cache
+  youandinotai-redis:
+    image: redis:7-alpine
+    container_name: youandinotai-redis
+    networks:
+      - youandinotai-net
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Express API
+  youandinotai-api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: youandinotai-api
+    networks:
+      - youandinotai-net
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://postgres:YouAndINotAI_Secure_2025_38938@youandinotai-db:5432/youandinotai_prod
+      REDIS_URL: redis://youandinotai-redis:6379
+    depends_on:
+      youandinotai-db:
+        condition: service_healthy
+      youandinotai-redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Nginx Reverse Proxy
+  youandinotai-nginx:
+    image: nginx:alpine
+    container_name: youandinotai-nginx
+    networks:
+      - youandinotai-net
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - youandinotai-api
+    restart: unless-stopped
+
+networks:
+  youandinotai-net:
+    driver: bridge
