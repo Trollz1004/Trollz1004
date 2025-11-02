@@ -1,3 +1,47 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env*
+cloud_env.bat
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+desktop.ini
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS & System files
+Thumbs.db
+.DS_Store
+*.bak
+
 # Exclude Google Cloud SDK
 google-cloud-sdk/
 
@@ -5,13 +49,20 @@ google-cloud-sdk/
 *.tar.gz
 *.zip
 
-# Exclude environment files with secrets
-.env*
-cloud_env.bat
-
-# Exclude desktop metadata
-desktop.ini
+# Exclude deployment artifacts
+youandinotai-deploy/
+.codacy/
 
 # Exclude deployment notes
 DEPLOYMENT_COMPLETE.txt
 PUSH-TO-GITHUB.txt
+
+# Exclude temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Docker volumes & data
+data/postgres/
+data/redis/
