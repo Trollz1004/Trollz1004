@@ -13,7 +13,7 @@ export const initSocket = (server: http.Server) => {
     },
   });
 
-  io.use(async (socket: Socket, next) => {
+  io.use(async (socket: Socket, next: (err?: Error) => void) => {
     const token = socket.handshake.auth.token;
     if (!token) {
       return next(new Error('Authentication error'));
@@ -34,7 +34,7 @@ export const initSocket = (server: http.Server) => {
     const { uid } = (socket as any).user;
     socket.join(uid);
 
-    socket.on('chat_message', (data) => {
+    socket.on('chat_message', (data: { message: string; userId: string; username: string }) => {
       io.emit('chat_message', data);
     });
 

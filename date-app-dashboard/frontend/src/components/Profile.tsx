@@ -26,7 +26,7 @@ export default function Profile() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setUser({ ...user, avatar: data.avatarUrl });
+      setUser({ ...user!, avatar: data.avatarUrl });
     } catch (error) {
       console.error('Error uploading avatar:', error);
     }

@@ -1,5 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Button,
+  Snackbar,
+  Alert,
+} from '@mui/material';
+import { useAuthStore } from './store/authStore';
+import { socket } from './socket';
+import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
+import Profile from './components/Profile';
+import Chat from './components/Chat';
+import CreateFundraiser from './components/CreateFundraiser';
 
 const darkTheme = createTheme({
   palette: {
