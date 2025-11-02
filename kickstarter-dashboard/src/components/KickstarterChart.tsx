@@ -22,13 +22,25 @@ interface ChartDataPoint {
   backers: number;
 }
 
+interface TooltipPayloadEntry {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: TooltipPayloadEntry[];
+  label?: string;
+}
+
 // Custom Tooltip Component
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
         <p className="font-bold text-gray-800 mb-2">{label}</p>
-        {payload.map((entry: any, index: number) => (
+        {payload.map((entry, index) => (
           <p key={index} className="text-sm" style={{ color: entry.color }}>
             <span className="font-semibold">{entry.name}:</span>{' '}
             {entry.name === 'Backers' 
