@@ -1,0 +1,35 @@
+﻿{
+  "name": "youandinotai-api-v8",
+  "version": "8.0.0",
+  "description": "AI-First Dating Platform Backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "migrate": "node scripts/migrate.js"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.5",
+    "@types/pg": "^8.10.9",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/cors": "^2.8.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "redis": "^4.6.12",
+    "socket.io": "^4.7.2",
+    "jsonwebtoken": "^9.1.2",
+    "argon2": "^0.31.2",
+    "square": "^36.0.0",
+    "@google/generative-ai": "^0.3.0",
+    "axios": "^1.6.2",
+    "winston": "^3.11.0"
+  }
+}
