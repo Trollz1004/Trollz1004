@@ -10,14 +10,20 @@ import {
   Button,
   Snackbar,
   Alert,
+  IconButton,
 } from '@mui/material';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useAuthStore } from './store/authStore';
+import { useThemeStore } from './store/themeStore';
 import { socket } from './socket';
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
 import Profile from './components/Profile';
 import Chat from './components/Chat';
 import CreateFundraiser from './components/CreateFundraiser';
+import Search from './components/Search';
+import Analytics from './components/Analytics';
+import ActivityFeed from './components/ActivityFeed';
 
 const darkTheme = createTheme({
   palette: {
@@ -25,9 +31,18 @@ const darkTheme = createTheme({
   },
 });
 
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
+
 function App() {
   const { user } = useAuthStore();
+  const { mode, toggleTheme } = useThemeStore();
   const [notification, setNotification] = useState<{ title: string; message: string } | null>(null);
+
+  const theme = mode === 'dark' ? darkTheme : lightTheme;
 
   useEffect(() => {
     if (user) {
@@ -49,7 +64,7 @@ function App() {
 
   return (
     <Router>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppBar position="static">
           <Toolbar>
@@ -58,13 +73,27 @@ function App() {
                 Date App DAO
               </Link>
             </Typography>
+            <IconButton onClick={toggleTheme} color="inherit" sx={{ mr: 2 }}>
+              {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+            </IconButton>
             {user && (
               <>
                 {user.role === 'admin' && (
-                  <Button color="inherit" component={Link} to="/admin">
-                    Admin
-                  </Button>
+                  <>
+                    <Button color="inherit" component={Link} to="/admin">
+                      Admin
+                    </Button>
+                    <Button color="inherit" component={Link} to="/analytics">
+                      Analytics
+                    </Button>
+                  </>
                 )}
+                <Button color="inherit" component={Link} to="/search">
+                  Search
+                </Button>
+                <Button color="inherit" component={Link} to="/activity">
+                  Activity
+                </Button>
                 <Button color="inherit" component={Link} to="/create-fundraiser">
                   Create Fundraiser
                 </Button>
@@ -83,8 +112,11 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/activity" element={<ActivityFeed />} />
             <Route path="/create-fundraiser" element={<CreateFundraiser />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/analytics" element={<Analytics />} />
           </Routes>
         </Container>
         <Snackbar open={!!notification} autoHideDuration={6000} onClose={handleCloseNotification}>

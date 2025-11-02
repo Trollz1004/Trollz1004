@@ -23,7 +23,9 @@
     "socket.io": "^4.8.1",
     "square": "^25.0.0",
     "uuid": "^9.0.0",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "speakeasy": "^2.0.0",
+    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -36,6 +38,8 @@
     "@types/node": "^20.4.2",
     "@types/nodemailer": "^6.4.9",
     "@types/uuid": "^9.0.0",
+    "@types/speakeasy": "^2.0.7",
+    "@types/qrcode": "^1.5.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }

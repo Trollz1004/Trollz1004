@@ -12,6 +12,10 @@ import { fundraiserRouter } from './routes/fundraiser';
 import { marketingRouter } from './routes/marketing';
 import { profileRouter } from './routes/profile';
 import { adminRouter } from './routes/admin';
+import { searchRouter } from './routes/search';
+import { analyticsRouter } from './routes/analytics';
+import { activityRouter } from './routes/activity';
+import { twoFactorRouter } from './routes/twoFactor';
 import logger from './logger';
 
 // Initialize Firebase Admin SDK
@@ -58,6 +62,10 @@ app.use('/api/fundraiser', fundraiserRouter);
 app.use('/api/marketing', marketingRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/search', searchRouter);
+app.use('/api/analytics', analyticsRouter);
+app.use('/api/activity', activityRouter);
+app.use('/api/2fa', twoFactorRouter);
 
 // Global error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
