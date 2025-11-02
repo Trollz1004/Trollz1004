@@ -13,7 +13,7 @@ DB_INSTANCE="youandinotai-db-v8"
 REDIS_INSTANCE="youandinotai-redis-v8"
 SA_NAME="youandinotai-sa-v8"
 REGISTRY="youandinotai-repo-v8"
-GCLOUD="gcloud --account=admin@youandinotai.com"
+GCLOUD="gcloud"
 
 # ===== STEP 1: Set Project =====
 echo "📍 Setting GCP Project..."
