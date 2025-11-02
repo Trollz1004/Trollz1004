@@ -1,11 +1,5 @@
-import React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Dashboard from './components/Dashboard';
+import React, { useEffect, useState } from 'react';
+import AdminDashboard from './components/AdminDashboard';
 
 const darkTheme = createTheme({
   palette: {
@@ -14,20 +8,74 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  const { user } = useAuthStore();
+  const [notification, setNotification] = useState<{ title: string; message: string } | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      socket.connect();
+
+      socket.on('notification', (data) => {
+        setNotification(data);
+      });
+    }
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [user]);
+
+  const handleCloseNotification = () => {
+    setNotification(null);
+  };
+
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Date App DAO
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Dashboard />
-      </Container>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                Date App DAO
+              </Link>
+            </Typography>
+            {user && (
+              <>
+                {user.role === 'admin' && (
+                  <Button color="inherit" component={Link} to="/admin">
+                    Admin
+                  </Button>
+                )}
+                <Button color="inherit" component={Link} to="/create-fundraiser">
+                  Create Fundraiser
+                </Button>
+                <Button color="inherit" component={Link} to="/chat">
+                  Chat
+                </Button>
+                <Button color="inherit" component={Link} to="/profile">
+                  Profile
+                </Button>
+              </>
+            )}
+          </Toolbar>
+        </AppBar>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/create-fundraiser" element={<CreateFundraiser />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </Container>
+        <Snackbar open={!!notification} autoHideDuration={6000} onClose={handleCloseNotification}>
+          <Alert onClose={handleCloseNotification} severity="info" sx={{ width: '100%' }}>
+            {notification?.title}: {notification?.message}
+          </Alert>
+        </Snackbar>
+      </ThemeProvider>
+    </Router>
   );
 }
 

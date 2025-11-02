@@ -11,12 +11,20 @@ interface CartItem extends Product {
   quantity: number;
 }
 
+interface User {
+  uid: string;
+  displayName: string;
+  email: string;
+  avatar?: string;
+  role?: 'admin' | 'user';
+}
+
 interface AuthState {
   token: string | null;
-  user: any | null; // You should define a proper user type
+  user: User | null;
   cart: CartItem[];
   setToken: (token: string) => void;
-  setUser: (user: any) => void;
+  setUser: (user: User) => void;
   logout: () => void;
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
