@@ -1,17 +1,4 @@
-# Exclude Google Cloud SDK
-google-cloud-sdk/
 
-# Exclude large binary files
-*.tar.gz
-*.zip
 
-# Exclude environment files with secrets
-.env*
-cloud_env.bat
-
-# Exclude desktop metadata
-desktop.ini
-
-# Exclude deployment notes
-DEPLOYMENT_COMPLETE.txt
-PUSH-TO-GITHUB.txt
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md
