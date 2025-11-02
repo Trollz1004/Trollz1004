@@ -8,27 +8,38 @@
     "seed": "ts-node src/scripts/seed.ts"
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.12.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-rate-limit": "^6.9.0",
     "firebase-admin": "^11.11.1",
-    "jsonwebtoken": "^9.0.2",
     "helmet": "^7.0.0",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.4",
+    "socket.io": "^4.8.1",
     "square": "^25.0.0",
     "uuid": "^9.0.0",
-    "joi": "^17.9.2",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "speakeasy": "^2.0.0",
+    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
-    "@types/jsonwebtoken": "^9.0.2",
     "@types/helmet": "^4.0.0",
-    "@types/uuid": "^9.0.0",
-    "@types/joi": "^17.2.3"
+    "@types/joi": "^17.2.3",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/multer": "^1.4.7",
     "@types/node": "^20.4.2",
+    "@types/nodemailer": "^6.4.9",
+    "@types/uuid": "^9.0.0",
+    "@types/speakeasy": "^2.0.7",
+    "@types/qrcode": "^1.5.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }

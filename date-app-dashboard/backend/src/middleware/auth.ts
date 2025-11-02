@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as admin from 'firebase-admin';
 
-deexport interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   user?: admin.auth.DecodedIdToken;
 }
 
@@ -9,12 +9,12 @@ export const isAuthenticated = async (req: AuthenticatedRequest, res: Response, 
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return res.status(401).send({ message: 'Unauthorized' });
+    return res.status(401).json({ message: 'Unauthorized: Missing or invalid authorization header' });
   }
 
   const split = authorization.split('Bearer ');
   if (split.length !== 2) {
-    return res.status(401).send({ message: 'Unauthorized' });
+    return res.status(401).json({ message: 'Unauthorized: Invalid token format' });
   }
 
   const token = split[1];
@@ -25,6 +25,6 @@ export const isAuthenticated = async (req: AuthenticatedRequest, res: Response, 
     next();
   } catch (error) {
     console.error('Error verifying auth token', error);
-    return res.status(401).send({ message: 'Unauthorized' });
+    return res.status(401).json({ message: 'Unauthorized: Invalid or expired token' });
   }
 };
