@@ -20,6 +20,7 @@ import badgeRouter from './routes/badges';
 import smsRouter from './routes/sms';
 import experimentsRouter from './routes/experiments';
 import contestsRouter from './routes/contests';
+import dashboardRouter from './routes/dashboard';
 import { initializeDatabase } from './database';
 import logger from './logger';
 import config from './config';
@@ -82,6 +83,7 @@ app.use('/api/badges', badgeRouter);
 app.use('/api/sms', smsRouter);
 app.use('/api/experiments', experimentsRouter);
 app.use('/api/contests', contestsRouter);
+app.use('/api/dashboard', dashboardRouter);
 
 // Global error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

@@ -1,0 +1,22 @@
+{
+  "name": "youandinotai-automation",
+  "version": "1.0.0",
+  "description": "100% Automated AI agents for YouAndINotAI platform",
+  "main": "dist/orchestrator.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/orchestrator.js",
+    "dev": "ts-node orchestrator.ts"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "pg": "^8.11.3",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/pg": "^8.10.9",
+    "typescript": "^5.3.2",
+    "ts-node": "^10.9.1"
+  }
+}
