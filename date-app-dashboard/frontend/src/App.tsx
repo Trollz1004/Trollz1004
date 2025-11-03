@@ -1,52 +1,124 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import {
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  Button,
-  Snackbar,
-  Alert,
-  IconButton,
-} from '@mui/material';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
-import { useAuthStore } from './store/authStore';
-import { useThemeStore } from './store/themeStore';
-import { socket } from './socket';
-import Dashboard from './components/Dashboard';
-import AdminDashboard from './components/AdminDashboard';
-import Profile from './components/Profile';
-import Chat from './components/Chat';
-import CreateFundraiser from './components/CreateFundraiser';
-import Search from './components/Search';
-import Analytics from './components/Analytics';
-import ActivityFeed from './components/ActivityFeed';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { Signup } from './pages/Signup';
+import { Login } from './pages/Login';
+import { VerifyEmail } from './pages/VerifyEmail';
+import { VerifyAge } from './pages/VerifyAge';
+import { AcceptTOS } from './pages/AcceptTOS';
+import { CreateProfile } from './pages/CreateProfile';
+import { Dashboard } from './pages/Dashboard';
+import './App.css';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, loading } = useAuth();
 
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
+  if (loading) {
+    return <div className="loading-page">Loading...</div>;
+  }
 
-function App() {
-  const { user } = useAuthStore();
-  const { mode, toggleTheme } = useThemeStore();
-  const [notification, setNotification] = useState<{ title: string; message: string } | null>(null);
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-  const theme = mode === 'dark' ? darkTheme : lightTheme;
+  return <>{children}</>;
+};
 
-  useEffect(() => {
-    if (user) {
-      socket.connect();
+const AuthRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="loading-page">Loading...</div>;
+  }
+
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <>{children}</>;
+};
+
+const AppRoutes: React.FC = () => {
+  return (
+    <Routes>
+      {/* Auth Routes */}
+      <Route
+        path="/signup"
+        element={
+          <AuthRoute>
+            <Signup />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <AuthRoute>
+            <Login />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/verify-email"
+        element={
+          <AuthRoute>
+            <VerifyEmail />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/verify-age"
+        element={
+          <AuthRoute>
+            <VerifyAge />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/accept-tos"
+        element={
+          <AuthRoute>
+            <AcceptTOS />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/complete-profile"
+        element={
+          <AuthRoute>
+            <CreateProfile />
+          </AuthRoute>
+        }
+      />
+
+      {/* Protected Routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Redirects */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <Router>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </Router>
+  );
+};
+
+export default App;
 
       socket.on('notification', (data) => {
         setNotification(data);

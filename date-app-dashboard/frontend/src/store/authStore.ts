@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface Product {
@@ -12,9 +12,19 @@ interface CartItem extends Product {
 }
 
 interface User {
-  uid: string;
-  displayName: string;
+  id: string;
   email: string;
+  emailVerified: boolean;
+  phoneVerified: boolean;
+  ageVerified: boolean;
+  tosAcceptedAt: string | null;
+  subscriptionTier: string | null;
+  failedLoginAttempts: number;
+  lockedUntil: string | null;
+  lastLoginAt: string | null;
+  lastLoginIp: string | null;
+  lastLoginUserAgent: string | null;
+  displayName?: string;
   avatar?: string;
   role?: 'admin' | 'user';
 }
@@ -31,33 +41,40 @@ interface AuthState {
   clearCart: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      token: null,
-      user: null,
-      cart: [],
-      setToken: (token) => set({ token }),
-      setUser: (user) => set({ user }),
-      logout: () => set({ token: null, user: null, cart: [] }),
-      addToCart: (product) =>
-        set((state) => {
-          const existingProduct = state.cart.find((item) => item.id === product.id);
-          if (existingProduct) {
-            return {
-              cart: state.cart.map((item) =>
-                item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-              ),
-            };
-          }
-          return { cart: [...state.cart, { ...product, quantity: 1 }] };
-        }),
-      removeFromCart: (productId) =>
-        set((state) => ({
-          cart: state.cart.filter((item) => item.id !== productId),
-        })),
-      clearCart: () => set({ cart: [] }),
+const authStoreCreator: StateCreator<AuthState, [], []> = (
+  set: (
+    partial:
+      | AuthState
+      | Partial<AuthState>
+      | ((state: AuthState) => AuthState | Partial<AuthState>),
+    replace?: boolean
+  ) => void
+) => ({
+  token: null,
+  user: null,
+  cart: [],
+  setToken: (token: string) => set({ token }),
+  setUser: (user: User) => set({ user }),
+  logout: () => set({ token: null, user: null, cart: [] }),
+  addToCart: (product: Product) =>
+    set((state: AuthState) => {
+      const existingProduct = state.cart.find((item: CartItem) => item.id === product.id);
+      if (existingProduct) {
+        return {
+          cart: state.cart.map((item: CartItem) =>
+            item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          ),
+        };
+      }
+      return { cart: [...state.cart, { ...product, quantity: 1 }] };
     }),
-    { name: 'auth-storage' } // Local storage key
-  )
+  removeFromCart: (productId: string) =>
+    set((state: AuthState) => ({
+      cart: state.cart.filter((item: CartItem) => item.id !== productId),
+    })),
+  clearCart: () => set({ cart: [] }),
+});
+
+export const useAuthStore = create<AuthState>()(
+  persist<AuthState>(authStoreCreator, { name: 'auth-storage' })
 );

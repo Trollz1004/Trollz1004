@@ -66,3 +66,48 @@ PUSH-TO-GITHUB.txt
 # Docker volumes & data
 data/postgres/
 data/redis/
+
+# ============================================================================
+# ADMIN DASHBOARD SPECIFIC
+# ============================================================================
+admin-dashboard/.env
+admin-dashboard/backend/.env
+admin-dashboard/frontend/.env
+admin-dashboard/backend/dist/
+admin-dashboard/frontend/dist/
+admin-dashboard/media/
+admin-dashboard/uploads/
+admin-dashboard/logs/
+admin-dashboard/backups/
+
+# AI Models & Cache
+admin-dashboard/.ollama/
+admin-dashboard/models/
+admin-dashboard/.transformers_cache/
+
+# Video Processing Temp
+admin-dashboard/ffmpeg_temp/
+admin-dashboard/video_processing/
+admin-dashboard/render_queue/
+
+# Blockchain Private Keys
+admin-dashboard/wallet_backup.json
+admin-dashboard/.secret
+admin-dashboard/mnemonic.txt
+
+# Service Account Keys
+admin-dashboard/**/service-account*.json
+admin-dashboard/**/*-key.json
+admin-dashboard/**/*.pem
+admin-dashboard/**/*.p12
+
+# Claude Config Manager Extension - Security Rules
+# Prevents accidental commit of private conversation data
+.claude/.chats/
+.claude/.chats/**
+.claude/settings.local.json
+
+# Team-sharable Claude Code files (tracked by git):
+# .claude/settings.json     # Team settings (official Claude Code)
+# .claude/commands/         # Team slash commands (official Claude Code)
+# .claude/.plans/           # Project documentation (extension-specific)
