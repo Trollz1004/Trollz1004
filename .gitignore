@@ -10,6 +10,7 @@ pnpm-lock.yaml
 .env.*.local
 .env*
 !.env.production.example
+!.env.example
 cloud_env.bat
 
 # Build outputs
