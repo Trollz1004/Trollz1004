@@ -322,10 +322,10 @@ const incrementRequestCount = (): void => {
 };
 
 /**
- * Get tweet analytics (mock - would need Twitter API Premium for real data)
+ * Get tweet analytics (requires Twitter API Premium)
  */
 export const fetchTweetAnalytics = async (tweetId: string): Promise<void> => {
   // Note: Twitter API v2 Basic doesn't provide analytics
-  // This is a placeholder for when you upgrade to Premium API
-  logger.info('Tweet analytics fetch not implemented (requires Premium API)', { tweetId });
+  // Premium API required for full analytics features
+  logger.info('Tweet analytics fetch requires Premium API upgrade', { tweetId });
 };

@@ -611,7 +611,7 @@ export const initializeDatabase = async () => {
         event_type VARCHAR(50), -- 'subscription_start', 'subscription_renewal', 'refund'
         amount DECIMAL(10, 2),
         subscription_tier VARCHAR(50),
-        payment_method VARCHAR(50), -- 'square', 'stripe'
+        payment_method VARCHAR(50) DEFAULT 'square', -- Payment processor (Square only)
         transaction_id VARCHAR(255),
         revenue_date TIMESTAMP DEFAULT NOW(),
         created_at TIMESTAMP DEFAULT NOW()

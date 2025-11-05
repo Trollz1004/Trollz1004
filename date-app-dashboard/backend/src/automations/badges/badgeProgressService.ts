@@ -328,8 +328,7 @@ export const trackStreakProgress = async (userId: string): Promise<void> => {
  */
 export const trackEngagementProgress = async (userId: string): Promise<void> => {
   try {
-    // Get total likes sent (you'll need a likes table or similar)
-    // For now, using a placeholder query
+    // Get total likes sent from user_interactions table
     const likesQuery = `
       SELECT COUNT(*) as count FROM user_interactions
       WHERE user_id = $1 AND interaction_type = 'like'

@@ -51,7 +51,7 @@ const envSchema = Joi.object({
   REDIS_URL: Joi.string().uri().allow('').optional(),
 
   SQUARE_ACCESS_TOKEN: Joi.string().min(20).required(),
-  SQUARE_ENVIRONMENT: Joi.string().valid('sandbox', 'production').default('sandbox'),
+  SQUARE_ENVIRONMENT: Joi.string().valid('sandbox', 'production').default('production'),
 
   EMAIL_SMTP_HOST: Joi.string().allow('').optional(),
   EMAIL_SMTP_PORT: Joi.number().integer().min(1).max(65535).allow(null, '').optional(),

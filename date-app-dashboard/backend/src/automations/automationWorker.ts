@@ -77,14 +77,17 @@ const weeklyBadgeAwards = async (): Promise<void> => {
   try {
     logger.info('Running weekly badge awards check');
 
-    // This is a placeholder - in production, you'd fetch all users with referrals
-    // and check badges for each. For now, this serves as the structure.
+    // Check and award badges for all eligible users
+    const users = await getUsersCloseToEarning();
+    for (const user of users) {
+      await checkAndAwardBadges(user.id);
+    }
 
     await logAutomation({
       service: 'automation_worker',
       action: 'weekly_badge_awards',
       status: 'success',
-      details: { message: 'Badge awards check completed' },
+      details: { message: 'Badge awards check completed', usersChecked: users.length },
     });
 
     logger.info('Weekly badge awards check completed');
