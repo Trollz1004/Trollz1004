@@ -1,0 +1,252 @@
+# Default values for multi-platform deployment
+# This is a YAML-formatted file.
+
+global:
+  namespace: ai-solutions
+  registry: docker.io/aisolutions
+  pullPolicy: IfNotPresent
+  imagePullSecrets: []
+
+  # Domain configuration
+  domains:
+    dao: aidoesitall.org
+    ai: claudedroid.ai
+    marketplace: ai-solutions.store
+    dashboard: dashboard.ai-solutions.store
+
+  # Resource defaults
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# DAO Platform (aidoesitall.org)
+daoPlat form:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: dao-platform
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 3000
+  env:
+    NODE_ENV: "production"
+    NEXT_PUBLIC_CHAIN_ID: "137"  # Polygon mainnet
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    tls:
+      enabled: true
+      secretName: dao-platform-tls
+
+# ClaudeDroid AI Platform
+claudedroidAI:
+  enabled: true
+  replicaCount: 3
+  image:
+    repository: claudedroid-ai
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 8080
+  env:
+    LOG_LEVEL: "info"
+    LOCALAI_URL: "http://localai-service:8080"
+    OLLAMA_URL: "http://ollama-service:11434"
+  secrets:
+    ANTHROPIC_API_KEY: ""
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 20
+    targetCPUUtilizationPercentage: 70
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/rate-limit: "1000"
+    tls:
+      enabled: true
+      secretName: claudedroid-ai-tls
+
+# Marketplace (AI-Solutions.Store)
+marketplace:
+  enabled: true
+  replicaCount: 3
+  image:
+    repository: marketplace
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 3001
+  env:
+    NODE_ENV: "production"
+    NEXT_PUBLIC_API_URL: "https://api.ai-solutions.store"
+  secrets:
+    STRIPE_SECRET_KEY: ""
+    DATABASE_URL: ""
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    tls:
+      enabled: true
+      secretName: marketplace-tls
+
+# Unified Dashboard
+dashboard:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: dashboard
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 3000
+    websocketPort: 4001
+  env:
+    NODE_ENV: "production"
+    GRAPHQL_ENDPOINT: "http://dashboard-graphql:4000"
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/websocket-services: "dashboard"
+    tls:
+      enabled: true
+      secretName: dashboard-tls
+
+# AI Models (LocalAI & Ollama)
+aiModels:
+  localai:
+    enabled: true
+    replicaCount: 2
+    image:
+      repository: localai/localai
+      tag: "v2.9.0"
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 8Gi
+        nvidia.com/gpu: 1
+      requests:
+        cpu: 2000m
+        memory: 4Gi
+    persistence:
+      enabled: true
+      size: 50Gi
+      storageClass: "fast-ssd"
+
+  ollama:
+    enabled: true
+    replicaCount: 1
+    image:
+      repository: ollama/ollama
+      tag: "latest"
+    service:
+      type: ClusterIP
+      port: 11434
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 8Gi
+        nvidia.com/gpu: 1
+      requests:
+        cpu: 2000m
+        memory: 4Gi
+    persistence:
+      enabled: true
+      size: 30Gi
+      storageClass: "fast-ssd"
+
+# PostgreSQL Database
+postgresql:
+  enabled: true
+  auth:
+    username: aisolutions
+    password: "" # Set via secrets
+    database: multi_platform
+  primary:
+    persistence:
+      enabled: true
+      size: 20Gi
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 2Gi
+
+# Redis Cache
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: true
+    password: "" # Set via secrets
+  master:
+    persistence:
+      enabled: true
+      size: 5Gi
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+
+# Ingress Controller Configuration
+ingressController:
+  enabled: true
+  className: nginx
+  replicas: 2
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# Monitoring Stack
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    retention: 15d
+    storageSize: 50Gi
+  grafana:
+    enabled: true
+    adminPassword: "" # Set via secrets
+  loki:
+    enabled: true
+    storageSize: 30Gi
+
+# Backup Configuration
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention: 30  # days
+  storageClass: "standard"
+  storageSize: 100Gi

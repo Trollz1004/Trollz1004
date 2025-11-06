@@ -1,0 +1,174 @@
+version: '3.9'
+
+services:
+  # DAO Platform
+  dao-platform:
+    build:
+      context: ../../platforms/dao-platform/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_CHAIN_ID=31337
+      - NEXT_PUBLIC_RPC_URL=http://localhost:8545
+    volumes:
+      - ../../platforms/dao-platform/frontend:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - ai-solutions-network
+
+  # ClaudeDroid AI Platform
+  claudedroid-ai:
+    build:
+      context: ../../platforms/claudedroid-ai
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - LOCALAI_URL=http://localai:8080
+      - OLLAMA_URL=http://ollama:11434
+      - LOG_LEVEL=info
+    volumes:
+      - ../../platforms/claudedroid-ai/src:/app/src
+    depends_on:
+      - localai
+      - ollama
+      - redis
+    networks:
+      - ai-solutions-network
+
+  # Marketplace
+  marketplace:
+    build:
+      context: ../../platforms/marketplace
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://aisolutions:password@postgres:5432/marketplace
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    volumes:
+      - ../../platforms/marketplace:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - ai-solutions-network
+
+  # Unified Dashboard
+  dashboard:
+    build:
+      context: ../../platforms/dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+      - "4001:4001"  # WebSocket
+    environment:
+      - NODE_ENV=development
+      - GRAPHQL_ENDPOINT=http://dashboard-graphql:4000
+    volumes:
+      - ../../platforms/dashboard:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - ai-solutions-network
+
+  # LocalAI (Self-hosted models)
+  localai:
+    image: localai/localai:v2.9.0-ffmpeg-core
+    ports:
+      - "8081:8080"
+    environment:
+      - THREADS=4
+      - CONTEXT_SIZE=4096
+    volumes:
+      - localai-models:/models
+      - localai-config:/config
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - ai-solutions-network
+
+  # Ollama
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - ai-solutions-network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=aisolutions
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=multi_platform
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../../scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ai-solutions-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - ai-solutions-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - dao-platform
+      - claudedroid-ai
+      - marketplace
+      - dashboard
+    networks:
+      - ai-solutions-network
+
+volumes:
+  postgres-data:
+  redis-data:
+  localai-models:
+  localai-config:
+  ollama-data:
+
+networks:
+  ai-solutions-network:
+    driver: bridge

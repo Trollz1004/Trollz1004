@@ -1,0 +1,125 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: multi-platform-ingress
+  namespace: ai-solutions
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "1000"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - aidoesitall.org
+        - www.aidoesitall.org
+      secretName: dao-platform-tls
+    - hosts:
+        - claudedroid.ai
+        - www.claudedroid.ai
+        - api.claudedroid.ai
+      secretName: claudedroid-ai-tls
+    - hosts:
+        - ai-solutions.store
+        - www.ai-solutions.store
+        - api.ai-solutions.store
+      secretName: marketplace-tls
+    - hosts:
+        - dashboard.ai-solutions.store
+      secretName: dashboard-tls
+  rules:
+    # DAO Platform - aidoesitall.org
+    - host: aidoesitall.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dao-platform
+                port:
+                  number: 3000
+    - host: www.aidoesitall.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dao-platform
+                port:
+                  number: 3000
+
+    # ClaudeDroid AI Platform
+    - host: claudedroid.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: claudedroid-ai-frontend
+                port:
+                  number: 3000
+    - host: api.claudedroid.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: claudedroid-ai
+                port:
+                  number: 8080
+
+    # Marketplace
+    - host: ai-solutions.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: marketplace
+                port:
+                  number: 3001
+    - host: www.ai-solutions.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: marketplace
+                port:
+                  number: 3001
+    - host: api.ai-solutions.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: marketplace-api
+                port:
+                  number: 4000
+
+    # Unified Dashboard
+    - host: dashboard.ai-solutions.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard
+                port:
+                  number: 3000
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard
+                port:
+                  number: 4001

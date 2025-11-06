@@ -1,0 +1,22 @@
+apiVersion: v2
+name: multi-platform
+description: Complete multi-platform bundle for aidoesitall.org, ClaudeDroid AI, and AI-Solutions.Store
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+keywords:
+  - dao
+  - ai-platform
+  - marketplace
+  - multi-platform
+  - governance
+
+maintainers:
+  - name: AI For You LLC
+    email: contact@aidoesitall.org
+
+sources:
+  - https://github.com/ai-solutions-store/multi-platform-transfer
+
+dependencies: []
