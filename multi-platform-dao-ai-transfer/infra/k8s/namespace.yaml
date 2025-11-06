@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-solutions
+  labels:
+    name: ai-solutions
+    environment: production
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dao-platform
+  labels:
+    name: dao-platform
+    parent: ai-solutions
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: claudedroid-ai
+  labels:
+    name: claudedroid-ai
+    parent: ai-solutions
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: marketplace
+  labels:
+    name: marketplace
+    parent: ai-solutions
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: unified-dashboard
+  labels:
+    name: unified-dashboard
+    parent: ai-solutions
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-models
+  labels:
+    name: ai-models
+    parent: ai-solutions
+    gpu-enabled: "true"

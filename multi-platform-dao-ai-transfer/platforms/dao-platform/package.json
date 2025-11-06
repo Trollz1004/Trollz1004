@@ -1,0 +1,33 @@
+{
+  "name": "aidoesitall-dao",
+  "version": "1.0.0",
+  "description": "DAO governance platform for aidoesitall.org",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:sepolia": "hardhat run scripts/deploy-dao.ts --network sepolia",
+    "deploy:mumbai": "hardhat run scripts/deploy-dao.ts --network mumbai",
+    "deploy:polygon": "hardhat run scripts/deploy-dao.ts --network polygon",
+    "deploy:mainnet": "hardhat run scripts/deploy-dao.ts --network mainnet",
+    "verify": "hardhat verify",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/node": "^20.10.0",
+    "hardhat": "^2.19.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.3.2",
+    "typescript": "^5.3.0"
+  }
+}

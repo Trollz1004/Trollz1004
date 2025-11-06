@@ -1,0 +1,96 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development
+.env.staging
+.env.production
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+.pytest_cache/
+.coverage
+
+# Blockchain
+cache/
+artifacts/
+typechain/
+typechain-types/
+
+# AI Models
+*.gguf
+*.safetensors
+*.bin
+models/mistral*
+models/llama*
+models/stable-diffusion*
+
+# Secrets
+*.key
+*.pem
+*.p12
+secrets.yaml
+*-secrets.yaml
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+postgres-data/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Docker
+.dockerignore
+
+# Kubernetes
+kubeconfig
+
+# Helm
+charts/*.tgz
+
+# Backup files
+*.backup
+*.bak
+backups/
+
+# OS
+Thumbs.db
+.Spotlight-V100
+.Trashes
