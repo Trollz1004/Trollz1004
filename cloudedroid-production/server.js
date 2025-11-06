@@ -26,8 +26,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
 
-// Perplexity API configuration
+// AI Configuration
+const OLLAMA_HOST = process.env.OLLAMA_HOST || 'http://localhost:11434';
 const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY || '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';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const USE_SELF_HOSTED_FIRST = process.env.USE_SELF_HOSTED_FIRST !== 'false'; // Default: true
 
 // API Routes
 app.get('/health', (req, res) => {
@@ -41,7 +44,83 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Perplexity AI endpoint
+// AI Chat endpoint - Self-Hosted FIRST, Cloud as fallback
+app.post('/api/ai/chat', async (req, res) => {
+  const { messages, useWeb = false } = req.body;
+
+  try {
+    // Try Ollama first (FREE, self-hosted)
+    if (USE_SELF_HOSTED_FIRST && !useWeb) {
+      try {
+        const prompt = messages.map(m => `${m.role}: ${m.content}`).join('\n');
+        const response = await axios.post(`${OLLAMA_HOST}/api/generate`, {
+          model: 'llama3.1:8b',
+          prompt,
+          stream: false
+        }, { timeout: 10000 });
+
+        console.log('✅ Using Ollama (self-hosted, FREE)');
+        return res.json({
+          provider: 'ollama',
+          model: 'llama3.1:8b',
+          cost: 0,
+          response: response.data.response
+        });
+      } catch (ollamaError) {
+        console.warn('⚠️ Ollama unavailable, trying cloud fallback:', ollamaError.message);
+      }
+    }
+
+    // Fallback to Perplexity (PAID) - for web search or when Ollama fails
+    if (useWeb || !USE_SELF_HOSTED_FIRST) {
+      const response = await axios.post('https://api.perplexity.ai/chat/completions', {
+        model: 'llama-3.1-sonar-small-128k-online',
+        messages,
+        temperature: 0.7,
+        max_tokens: 500
+      }, {
+        headers: {
+          'Authorization': `Bearer ${PERPLEXITY_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      console.log('💰 Using Perplexity (cloud, PAID)');
+      return res.json({
+        provider: 'perplexity',
+        model: 'llama-3.1-sonar-small-128k-online',
+        cost: 0.001, // Approximate cost per request
+        response: response.data.choices[0].message.content
+      });
+    }
+
+    // Last fallback: Gemini
+    if (GEMINI_API_KEY) {
+      const response = await axios.post(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          contents: messages.map(m => ({ parts: [{ text: m.content }] }))
+        }
+      );
+
+      console.log('💰 Using Gemini (cloud, PAID)');
+      return res.json({
+        provider: 'gemini',
+        model: 'gemini-pro',
+        cost: 0.0005,
+        response: response.data.candidates[0].content.parts[0].text
+      });
+    }
+
+    throw new Error('No AI providers available');
+
+  } catch (error) {
+    console.error('AI Error:', error.message);
+    res.status(500).json({ error: 'All AI services temporarily unavailable' });
+  }
+});
+
+// Legacy Perplexity endpoint (for backwards compatibility)
 app.post('/api/perplexity', async (req, res) => {
   try {
     const response = await axios.post('https://api.perplexity.ai/chat/completions', {
@@ -62,16 +141,29 @@ app.post('/api/perplexity', async (req, res) => {
   }
 });
 
-// Agent status endpoint
-app.get('/api/agents/status', (req, res) => {
+// Agent status endpoint - With real health checks
+app.get('/api/agents/status', async (req, res) => {
+  const checkOllama = async () => {
+    try {
+      await axios.get(`${OLLAMA_HOST}/api/tags`, { timeout: 2000 });
+      return { id: 'ollama', name: 'Ollama (Self-Hosted)', status: 'online', latency: 50, cost: 0, priority: 1 };
+    } catch {
+      return { id: 'ollama', name: 'Ollama (Self-Hosted)', status: 'offline', latency: -1, cost: 0, priority: 1 };
+    }
+  };
+
+  const ollama = await checkOllama();
+
   res.json({
     agents: [
-      { id: 'perplexity', name: 'Perplexity AI', status: 'online', latency: 120 },
-      { id: 'claude', name: 'Claude Sonnet', status: 'online', latency: 150 },
-      { id: 'gpt4', name: 'GPT-4', status: 'online', latency: 180 },
-      { id: 'gemini', name: 'Gemini Pro', status: 'online', latency: 140 },
-      { id: 'ollama', name: 'Ollama Local', status: 'online', latency: 50 }
-    ]
+      ollama,
+      { id: 'perplexity', name: 'Perplexity AI (Cloud)', status: PERPLEXITY_API_KEY ? 'online' : 'offline', latency: 120, cost: 0.001, priority: 2 },
+      { id: 'gemini', name: 'Gemini Pro (Cloud)', status: GEMINI_API_KEY ? 'online' : 'offline', latency: 140, cost: 0.0005, priority: 3 },
+      { id: 'claude', name: 'Claude Sonnet (Planned)', status: 'planned', latency: 150, cost: 0.003, priority: 4 },
+      { id: 'gpt4', name: 'GPT-4 (Planned)', status: 'planned', latency: 180, cost: 0.03, priority: 5 }
+    ],
+    strategy: USE_SELF_HOSTED_FIRST ? 'self-hosted-first' : 'cloud-first',
+    estimated_monthly_cost: ollama.status === 'online' ? '$5' : '$65'
   });
 });
 
