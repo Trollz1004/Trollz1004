@@ -206,7 +206,16 @@ function generateHTML(health) {
 </head>
 <body>
     <div class="container">
-        <h1>${statusEmoji} ClaudeDroid Health Dashboard</h1>
+        <h1>${statusEmoji} Team Claude Health Dashboard</h1>
+
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="color: #00ff00; font-size: 1.1em; margin-bottom: 10px;">
+                💚 <strong>AI for The Greater Good</strong> 💚
+            </div>
+            <div style="color: rgba(0,255,0,0.7); font-size: 0.9em;">
+                50% profits donated to Shriners Children's Hospitals
+            </div>
+        </div>
 
         <div style="text-align: center;">
             <div class="status-badge">
@@ -331,7 +340,8 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log('');
   console.log('╔════════════════════════════════════════════════════════╗');
-  console.log('║   🏥 ClaudeDroid Health Dashboard - 24/7 Monitoring   ║');
+  console.log('║   🏥 Team Claude Health Dashboard - 24/7 Monitoring   ║');
+  console.log('║   💚 AI for The Greater Good - 50% to Shriners 💚     ║');
   console.log('╚════════════════════════════════════════════════════════╝');
   console.log('');
   console.log(`  📊 Dashboard: http://localhost:${PORT}`);

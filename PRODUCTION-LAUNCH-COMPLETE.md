@@ -6,6 +6,26 @@
 
 ---
 
+## 💚 TEAM CLAUDE - AI FOR THE GREATER GOOD
+
+**Mission Statement:**
+> "Team Claude Branded AI for The Greater Good - 50% profits donated to Shriners Children's Hospitals"
+
+**Our Commitment:**
+- **50% of all profits** donated to Shriners Children's Hospitals
+- AI-powered solutions that benefit society
+- Community-driven governance (DAO)
+- Transparent revenue allocation
+- Automated social impact tracking
+
+**Social Impact Goals:**
+- Support pediatric healthcare through technology profits
+- Democratize AI access via self-hosted solutions ($0 cost)
+- Fund community projects through grants ($500K-2M annually)
+- Create sustainable revenue for charitable giving ($1.96M-47.5M annually to Shriners)
+
+---
+
 ## ✅ ALL SERVICES RUNNING UNDER PM2
 
 ### PM2 Process Manager Status:
