@@ -544,13 +544,13 @@ ${colors.reset}
     const proposal = await demo.generateProposal(grants[0]);
     await sleep(2000);
 
-    const voting = await demo.daoVoting(proposal);
+    await demo.daoVoting(proposal);
     await sleep(2000);
 
-    const compliance = await demo.complianceMonitoring();
+    await demo.complianceMonitoring();
     await sleep(2000);
 
-    const mining = await demo.patternMining();
+    await demo.patternMining();
     await sleep(2000);
 
     await demo.showPipelineSummary();
@@ -564,6 +564,14 @@ ${colors.reset}
 
   } catch (error) {
     log('❌', `Error: ${error.message}`, colors.red);
+    
+    if (error.code === 'ECONNREFUSED' || error.message.includes('ECONNREFUSED')) {
+      console.error('\n💡 Tip: The CloudeDroid server is not running. To start it:');
+      console.error('   1. cd cloudedroid-production');
+      console.error('   2. node server.js');
+      console.error('   3. Run this test again in a new terminal\n');
+    }
+    
     console.error(error);
     process.exit(1);
   }

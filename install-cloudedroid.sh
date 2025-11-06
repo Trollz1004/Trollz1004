@@ -91,7 +91,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
 
 // Perplexity API configuration
-const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY || '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';
+const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
 
 // API Routes
 app.get('/health', (req, res) => {

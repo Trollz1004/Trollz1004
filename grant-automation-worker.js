@@ -57,14 +57,6 @@ async function checkDeadlines() {
   });
 }
 
-async function generateProposals() {
-  console.log('📝 [' + new Date().toISOString() + '] Generating proposals for high-match grants...');
-
-  // This would be triggered by high-match discoveries
-  console.log('  Using Ollama (self-hosted AI) - Cost: $0');
-  console.log('  ✅ Proposal generation ready on-demand');
-}
-
 // Schedule grant discovery every 6 hours
 schedule.scheduleJob('0 */6 * * *', async () => {
   console.log('\n🔄 Scheduled grant discovery triggered');
@@ -94,7 +86,10 @@ schedule.scheduleJob('0 9 * * *', async () => {
     await checkDeadlines();
     console.log('');
     console.log('✅ Grant automation worker initialized successfully');
-    console.log('⏰ Next discovery: ' + schedule.scheduleJob('0 */6 * * *').nextInvocation());
+    const nextRun = schedule.scheduledJobs['0 */6 * * *'];
+    if (nextRun) {
+      console.log('⏰ Next discovery: ' + nextRun.nextInvocation());
+    }
   } catch (error) {
     console.error('❌ Initialization error:', error);
   }

@@ -19,7 +19,6 @@
 import { Pool } from 'pg';
 import logger from '../logger';
 import aiService from './aiService';
-import axios from 'axios';
 
 interface GrantCluster {
   id: string;
@@ -183,7 +182,6 @@ export class GrantMiningComplianceService {
     if (vectors.length === 0) return [];
 
     const n = vectors.length;
-    const dim = vectors[0].length;
 
     // Initialize centroids randomly
     let centroids: number[][] = [];
@@ -401,8 +399,11 @@ Return as JSON array of patterns:
   private async checkComplianceSource(source: any): Promise<ComplianceAlert[]> {
     const alerts: ComplianceAlert[] = [];
 
-    // Mock implementation (in production, actually fetch and parse sources)
-    // For demo, create sample alert
+    // ========================================
+    // MOCK/DEMO LOGIC BELOW:
+    // The following is placeholder logic for demonstration purposes only.
+    // DO NOT USE IN PRODUCTION. Replace with actual API integration or real compliance source parsing.
+    // ========================================
 
     if (Math.random() > 0.7) { // 30% chance of alert
       const alert: ComplianceAlert = {

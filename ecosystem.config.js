@@ -54,7 +54,7 @@ module.exports = {
         PORT: 3000,
         DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/dating_platform',
         SQUARE_ENVIRONMENT: 'production',
-        SQUARE_ACCESS_TOKEN: 'EAAAlzPv9mOdHtwWwGJsCHXaG_5Ektf_rIvg4H6tiKRzTQSW9UHiVHUBDuHTOQYc'
+        SQUARE_ACCESS_TOKEN: process.env.SQUARE_ACCESS_TOKEN
       },
       error_file: './logs/dating-backend-error.log',
       out_file: './logs/dating-backend-out.log',
