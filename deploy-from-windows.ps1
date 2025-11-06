@@ -83,7 +83,7 @@ Write-Host ""
 
 $StartTime = Get-Date
 
-ssh $SERVER "bash -s" < $TempScript | ForEach-Object {
+Get-Content $TempScript | ssh $SERVER "bash -s" | ForEach-Object {
     if ($_ -match "PROGRESS:(\d+):(.+)") {
         $Step = [int]$Matches[1]
         $Message = $Matches[2]
@@ -118,7 +118,7 @@ Write-Host "   • http://youandinotai.com" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "📊 Next steps:" -ForegroundColor Yellow
 Write-Host "   1. Configure DNS for youandinotai.com → 71.52.23.215" -ForegroundColor White
-Write-Host "   2. Setup SSL: ssh root@71.52.23.215 'certbot --nginx -d youandinotai.com'" -ForegroundColor White
+Write-Host "   2. Setup SSL: ssh root@71.52.23.215 ""certbot --nginx -d youandinotai.com""" -ForegroundColor White
 Write-Host "   3. Test API: curl http://71.52.23.215:3000/health" -ForegroundColor White
 Write-Host ""
 Write-Host "Press any key to exit..."
