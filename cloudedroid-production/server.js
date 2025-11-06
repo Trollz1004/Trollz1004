@@ -28,7 +28,7 @@ app.use(morgan('combined'));
 
 // AI Configuration
 const OLLAMA_HOST = process.env.OLLAMA_HOST || 'http://localhost:11434';
-const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY || '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';
+const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const USE_SELF_HOSTED_FIRST = process.env.USE_SELF_HOSTED_FIRST !== 'false'; // Default: true
 

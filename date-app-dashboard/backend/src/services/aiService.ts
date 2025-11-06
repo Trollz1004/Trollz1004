@@ -12,7 +12,7 @@
 import axios from 'axios';
 
 // Configuration
-const OLLAMA_HOST = process.env.OLLAMA_HOST || 'http://192.168.1.100:11434';
+const OLLAMA_HOST = process.env.OLLAMA_HOST || 'http://localhost:11434';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
 const USE_SELF_HOSTED_FIRST = process.env.USE_SELF_HOSTED_FIRST !== 'false';

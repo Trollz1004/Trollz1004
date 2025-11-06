@@ -20,7 +20,6 @@
 import { Pool } from 'pg';
 import aiService from './aiService';
 import logger from '../logger';
-import axios from 'axios';
 
 interface GrantOpportunity {
   id?: string;

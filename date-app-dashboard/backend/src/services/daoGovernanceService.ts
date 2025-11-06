@@ -190,9 +190,9 @@ export class DAOGovernanceService {
         }
       }
 
-      // Generate blockchain proposal ID
+      // Generate blockchain proposal ID with random component to prevent collisions
       const proposalId = crypto.createHash('sha256')
-        .update(`${proposal.proposer}-${proposal.title}-${Date.now()}`)
+        .update(`${proposal.proposer}-${proposal.title}-${Date.now()}-${crypto.randomUUID()}`)
         .digest('hex');
 
       // Set voting period

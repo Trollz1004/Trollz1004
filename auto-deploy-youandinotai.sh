@@ -477,22 +477,22 @@ JWT_REFRESH_SECRET=$(openssl rand -base64 64)
 # ============================================
 # 9. CREATE .ENV FILE WITH REAL CREDENTIALS
 # ============================================
-echo "📝 Creating .env.production with real credentials..."
+echo "📝 Creating .env.production with auto-generated secrets..."
 cat > .env.production <<EOF
 # Auto-generated secrets
 DB_PASSWORD=${DB_PASSWORD}
 JWT_SECRET=${JWT_SECRET}
 JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
 
-# Real production credentials
-SQUARE_ACCESS_TOKEN=EAAAlzPv9mOdHtwWwGJsCHXaG_5Ektf_rIvg4H6tiKRzTQSW9UHiVHUBDuHTOQYc
-SQUARE_APPLICATION_ID=sq0idp-Carv59GQKuQHoIydJ1Wanw
-SQUARE_LOCATION_ID=LHPBX0P3TBTEC
-GEMINI_API_KEY=AIzaSyBuaA6sdJ2kvIeXiL1jY4Qm7StXAUwFWG4
-AZURE_COGNITIVE_KEY=CScbecGnFd4YLCWpvmdAZ5yxkV6U2O5L02xPcp6f2bEYIMiJesdtJQQJ99BHACYeBjFXJ3w3AAABACOGHJUX
+# Production credentials (set these environment variables before running this script)
+SQUARE_ACCESS_TOKEN=\${SQUARE_ACCESS_TOKEN}
+SQUARE_APPLICATION_ID=\${SQUARE_APPLICATION_ID}
+SQUARE_LOCATION_ID=\${SQUARE_LOCATION_ID}
+GEMINI_API_KEY=\${GEMINI_API_KEY}
+AZURE_COGNITIVE_KEY=\${AZURE_COGNITIVE_KEY}
 EOF
 
-echo "✅ Real credentials added automatically!"
+echo "✅ Environment file created! Make sure to set the required environment variables before running."
 
 # Load environment variables
 export $(cat .env.production | xargs)
