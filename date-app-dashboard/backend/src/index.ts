@@ -21,6 +21,7 @@ import smsRouter from './routes/sms';
 import experimentsRouter from './routes/experiments';
 import contestsRouter from './routes/contests';
 import dashboardRouter from './routes/dashboard';
+import { anthropicOAuthRouter } from './routes/anthropicOAuth';
 import { initializeDatabase } from './database';
 import logger from './logger';
 import config from './config';
@@ -84,6 +85,7 @@ app.use('/api/sms', smsRouter);
 app.use('/api/experiments', experimentsRouter);
 app.use('/api/contests', contestsRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/oauth/anthropic', anthropicOAuthRouter);
 
 // Global error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

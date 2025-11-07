@@ -59,6 +59,13 @@ const envSchema = Joi.object({
   EMAIL_SMTP_PASSWORD: Joi.string().allow('').optional(),
   EMAIL_FROM_ADDRESS: Joi.string().email().allow('').optional(),
 
+  ANTHROPIC_CLIENT_ID: Joi.string().allow('').optional(),
+  ANTHROPIC_CLIENT_SECRET: Joi.string().allow('').optional(),
+  ANTHROPIC_REDIRECT_URI: Joi.string().uri().allow('').optional(),
+  ANTHROPIC_AUTH_URL: Joi.string().uri().default('https://console.anthropic.com/oauth/authorize'),
+  ANTHROPIC_TOKEN_URL: Joi.string().uri().default('https://console.anthropic.com/oauth/token'),
+  ANTHROPIC_API_URL: Joi.string().uri().default('https://api.anthropic.com'),
+
   LOG_LEVEL: Joi.string()
     .valid('error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly')
     .default('info'),
@@ -126,6 +133,14 @@ const config = {
     user: envVars.EMAIL_SMTP_USER as string | undefined,
     password: envVars.EMAIL_SMTP_PASSWORD as string | undefined,
     from: envVars.EMAIL_FROM_ADDRESS as string | undefined,
+  },
+  anthropic: {
+    clientId: envVars.ANTHROPIC_CLIENT_ID as string | undefined,
+    clientSecret: envVars.ANTHROPIC_CLIENT_SECRET as string | undefined,
+    redirectUri: envVars.ANTHROPIC_REDIRECT_URI as string | undefined,
+    authUrl: envVars.ANTHROPIC_AUTH_URL as string,
+    tokenUrl: envVars.ANTHROPIC_TOKEN_URL as string,
+    apiUrl: envVars.ANTHROPIC_API_URL as string,
   },
   logLevel: envVars.LOG_LEVEL as string,
 };
