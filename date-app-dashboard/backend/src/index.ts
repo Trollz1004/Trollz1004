@@ -22,6 +22,7 @@ import experimentsRouter from './routes/experiments';
 import contestsRouter from './routes/contests';
 import dashboardRouter from './routes/dashboard';
 import { anthropicOAuthRouter } from './routes/anthropicOAuth';
+import aiRouter from './routes/ai';
 import { initializeDatabase } from './database';
 import logger from './logger';
 import config from './config';
@@ -86,6 +87,7 @@ app.use('/api/experiments', experimentsRouter);
 app.use('/api/contests', contestsRouter);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/oauth/anthropic', anthropicOAuthRouter);
+app.use('/api/ai', aiRouter);
 
 // Global error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
