@@ -14,21 +14,16 @@ kubectl get svc -n ingress-nginx ingress-nginx-controller
 **Replace `YOUR_K8S_IP` with your actual Load Balancer IP**
 
 ```
-Domain: aidoesitall.org
+Domain: aidoesitall.org (DAO Platform)
 ------------------------
 Type: A    Host: @           Value: YOUR_K8S_IP    TTL: 3600
 Type: A    Host: www         Value: YOUR_K8S_IP    TTL: 3600
 
-Domain: claudedroid.ai
+Domain: ai-solutions.store (Marketplace + AI Platform)
 ------------------------
 Type: A    Host: @           Value: YOUR_K8S_IP    TTL: 3600
 Type: A    Host: www         Value: YOUR_K8S_IP    TTL: 3600
-Type: A    Host: api         Value: YOUR_K8S_IP    TTL: 3600
-
-Domain: ai-solutions.store
-------------------------
-Type: A    Host: @           Value: YOUR_K8S_IP    TTL: 3600
-Type: A    Host: www         Value: YOUR_K8S_IP    TTL: 3600
+Type: A    Host: ai          Value: YOUR_K8S_IP    TTL: 3600
 Type: A    Host: api         Value: YOUR_K8S_IP    TTL: 3600
 Type: A    Host: dashboard   Value: YOUR_K8S_IP    TTL: 3600
 ```
@@ -71,9 +66,9 @@ Type: A    Host: dashboard   Value: YOUR_K8S_IP    TTL: 3600
 # Wait 5-10 minutes, then test:
 dig aidoesitall.org +short
 dig www.aidoesitall.org +short
-dig claudedroid.ai +short
-dig api.claudedroid.ai +short
 dig ai-solutions.store +short
+dig ai.ai-solutions.store +short
+dig api.ai-solutions.store +short
 dig dashboard.ai-solutions.store +short
 
 # All should return YOUR_K8S_IP
@@ -136,12 +131,12 @@ kubectl get certificates -n ai-solutions
 After DNS + SSL is ready (15-30 min total), test these URLs:
 
 ```
-✅ https://aidoesitall.org
+✅ https://aidoesitall.org (DAO Platform)
 ✅ https://www.aidoesitall.org
-✅ https://claudedroid.ai
-✅ https://api.claudedroid.ai/health
-✅ https://ai-solutions.store
-✅ https://dashboard.ai-solutions.store
+✅ https://ai-solutions.store (Marketplace)
+✅ https://ai.ai-solutions.store (ClaudeDroid AI - Kindroid clone)
+✅ https://api.ai-solutions.store/health (AI API)
+✅ https://dashboard.ai-solutions.store (Control Hub - FOR THE KIDS! 💙)
 ```
 
 All should have **green padlock 🔒** in browser.
