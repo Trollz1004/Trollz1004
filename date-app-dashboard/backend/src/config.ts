@@ -66,6 +66,10 @@ const envSchema = Joi.object({
   ANTHROPIC_TOKEN_URL: Joi.string().uri().default('https://console.anthropic.com/oauth/token'),
   ANTHROPIC_API_URL: Joi.string().uri().default('https://api.anthropic.com'),
 
+  OLLAMA_ENABLED: Joi.boolean().default(true),
+  OLLAMA_BASE_URL: Joi.string().uri().default('http://localhost:11434'),
+  OLLAMA_DEFAULT_MODEL: Joi.string().default('llama3.2'),
+
   LOG_LEVEL: Joi.string()
     .valid('error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly')
     .default('info'),
@@ -141,6 +145,11 @@ const config = {
     authUrl: envVars.ANTHROPIC_AUTH_URL as string,
     tokenUrl: envVars.ANTHROPIC_TOKEN_URL as string,
     apiUrl: envVars.ANTHROPIC_API_URL as string,
+  },
+  ollama: {
+    enabled: envVars.OLLAMA_ENABLED === 'true' || envVars.OLLAMA_ENABLED === true,
+    baseUrl: envVars.OLLAMA_BASE_URL as string,
+    defaultModel: envVars.OLLAMA_DEFAULT_MODEL as string,
   },
   logLevel: envVars.LOG_LEVEL as string,
 };
