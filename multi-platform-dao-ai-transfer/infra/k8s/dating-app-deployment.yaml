@@ -1,0 +1,370 @@
+# You and I Not AI - Kubernetes Deployment
+# Powered by Claude Code 💙
+# FOR THE KIDS!
+#
+# Zero tolerance for bots. 1M users in Year 1 goal.
+# $24M/year potential = $16.8M FOR THE KIDS!
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dating-app
+
+---
+# PostgreSQL Database
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: dating-app
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/database: "true"  # Deploy on X79 Sabertooth (64GB)
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "dating_app"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: dating-app-secrets
+              key: DB_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dating-app-secrets
+              key: DB_PASSWORD
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "8Gi"
+            cpu: "4"
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 100Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: dating-app
+spec:
+  selector:
+    app: postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+  clusterIP: None  # Headless service
+
+---
+# Redis (Real-time messaging)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: dating-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: dating-app
+spec:
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+    targetPort: 6379
+
+---
+# Dating App Backend API
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dating-app-backend
+  namespace: dating-app
+  labels:
+    app: dating-app-backend
+    powered-by: claude-code
+    mission: for-the-kids
+spec:
+  replicas: 10  # Scale to handle 1M users
+  selector:
+    matchLabels:
+      app: dating-app-backend
+  template:
+    metadata:
+      labels:
+        app: dating-app-backend
+    spec:
+      affinity:
+        # Spread across worker nodes for high availability
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - dating-app-backend
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: backend
+        image: dating-app-backend:latest  # Build and push to registry
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: dating-app-secrets
+              key: DATABASE_URL
+        - name: REDIS_URL
+          value: "redis://redis:6379"
+        - name: ANTHROPIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dating-app-secrets
+              key: ANTHROPIC_API_KEY
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: dating-app-secrets
+              key: JWT_SECRET
+        - name: STRIPE_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dating-app-secrets
+              key: STRIPE_SECRET_KEY
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dating-app-backend
+  namespace: dating-app
+spec:
+  selector:
+    app: dating-app-backend
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: ClusterIP
+
+---
+# Horizontal Pod Autoscaler
+# Scales from 10 to 100 pods based on CPU/memory
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: dating-app-backend-hpa
+  namespace: dating-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dating-app-backend
+  minReplicas: 10
+  maxReplicas: 100  # Can scale to 100 pods on your 30+ OptiPlex workers
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# Ingress - HTTPS access
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dating-app-ingress
+  namespace: dating-app
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"  # Allow photo uploads
+    nginx.ingress.kubernetes.io/websocket-services: "dating-app-backend"  # WebSocket support
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - youandinotai.com
+    - www.youandinotai.com
+    - api.youandinotai.com
+    secretName: youandinotai-tls
+  - hosts:
+    - u-and-not-ai.online
+    - www.u-and-not-ai.online
+    - api.u-and-not-ai.online
+    secretName: u-and-not-ai-tls
+  rules:
+  - host: youandinotai.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dating-app-frontend
+            port:
+              number: 80
+  - host: www.youandinotai.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dating-app-frontend
+            port:
+              number: 80
+  - host: api.youandinotai.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dating-app-backend
+            port:
+              number: 8000
+  - host: u-and-not-ai.online
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dating-app-frontend
+            port:
+              number: 80
+  - host: www.u-and-not-ai.online
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dating-app-frontend
+            port:
+              number: 80
+  - host: api.u-and-not-ai.online
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dating-app-backend
+            port:
+              number: 8000
+
+---
+# Secrets (create with actual values before deploying)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dating-app-secrets
+  namespace: dating-app
+type: Opaque
+stringData:
+  DB_USER: "datingapp"
+  DB_PASSWORD: "CHANGE_ME_STRONG_PASSWORD"
+  DATABASE_URL: "postgresql://datingapp:CHANGE_ME_STRONG_PASSWORD@postgres:5432/dating_app"
+  JWT_SECRET: "CHANGE_ME_RANDOM_64_CHAR_STRING"
+  ANTHROPIC_API_KEY: "sk-ant-YOUR-KEY-HERE"
+  STRIPE_SECRET_KEY: "sk_live_YOUR-KEY-HERE"
+
+---
+# ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dating-app-config
+  namespace: dating-app
+data:
+  APP_NAME: "You and I Not AI"
+  APP_TAGLINE: "Real People. Real Conversations. Real Love."
+  POWERED_BY: "Claude Code 💙"
+  MISSION: "FOR THE KIDS!"
+  ZERO_TOLERANCE_BOTS: "true"
+  TARGET_USERS_YEAR_1: "1000000"
+  REVENUE_TO_CHARITY_PERCENT: "70"
