@@ -19,6 +19,12 @@ build/
 .next/
 out/
 
+# TypeScript compiled outputs (automation directory)
+automation/*.js
+automation/*.d.ts
+automation/*.js.map
+automation/*.d.ts.map
+
 # IDE & Editor files
 .vscode/
 .idea/
