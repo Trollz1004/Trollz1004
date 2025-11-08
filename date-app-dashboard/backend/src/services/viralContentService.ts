@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
-import { Anthropic } from '@anthropic-ai/sdk';
 import axios from 'axios';
 import logger from '../logger';
+import aiService from './aiService';
 
 interface ViralCampaign {
   campaignName: string;
@@ -22,16 +22,15 @@ interface GeneratedContent {
  * AI generates + posts viral content 24/7
  * Expected: 500K-2M monthly impressions = $10K-30K/month
  * Psychology: Humans scroll, AI never sleeps 🤖
+ *
+ * 💰 COST OPTIMIZATION: Now using Ollama (self-hosted, FREE) instead of Claude API
+ * Savings: ~$500/month on content generation alone
  */
 export class ViralContentService {
   private pool: Pool;
-  private anthropic: Anthropic;
 
   constructor(pool: Pool) {
     this.pool = pool;
-    this.anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY || ''
-    });
   }
 
   /**
@@ -64,8 +63,10 @@ export class ViralContentService {
   }
 
   /**
-   * Generate viral content using Claude AI
+   * Generate viral content using self-hosted AI (Ollama first, cloud fallback)
    * Prompt engineering for maximum engagement
+   *
+   * 💰 Cost: $0 when Ollama is available, ~$0.0005 when using Gemini fallback
    */
   async generateViralContent(campaignId: string): Promise<GeneratedContent> {
     const client = await this.pool.connect();
@@ -94,22 +95,26 @@ export class ViralContentService {
       // Build AI prompt with success patterns
       const prompt = this.buildViralPrompt(campaign, topPerformers.rows);
 
-      // Generate content with Claude
-      const message = await this.anthropic.messages.create({
-        model: 'claude-3-5-sonnet-20241022',
-        max_tokens: 1024,
-        messages: [{
+      // Generate content with self-hosted AI (Ollama → Gemini → Perplexity)
+      const aiResponse = await aiService.chat([
+        {
+          role: 'system',
+          content: 'You are a viral content mastermind. Always return valid JSON.'
+        },
+        {
           role: 'user',
           content: prompt
-        }]
+        }
+      ], {
+        temperature: 0.8,
+        maxTokens: 1024,
+        modelType: 'text'
       });
 
-      const contentText = message.content[0].type === 'text' ? message.content[0].text : '';
-
       // Parse AI response (expects JSON)
-      const generated = JSON.parse(contentText);
+      const generated = JSON.parse(aiResponse.response);
 
-      logger.info(`🤖 Viral content generated for campaign ${campaignId}`);
+      logger.info(`🤖 Viral content generated for campaign ${campaignId} using ${aiResponse.provider} ($${aiResponse.cost})`);
 
       return {
         text: generated.text,
