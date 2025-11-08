@@ -16,7 +16,8 @@ Write-Host "Claude Represents Perfection"
 Write-Host ""
 
 # Configuration
-$ServerIP = "192.168.0.101"  # Change this to your server IP
+# Leave blank to auto-deploy locally and get public IP automatically
+$ServerIP = ""  # Leave empty for local deployment, or enter your remote server IP
 $ServerUser = "josh"
 $RepoURL = "https://github.com/Trollz1004/Trollz1004.git"
 $Branch = "claude/cleanup-credentials-documentation-011CUuSdSLpRW4mNx7e9pRsV"
@@ -27,16 +28,6 @@ $ProjectPath = "Trollz1004/Trollz1004/Trollz1004"
 # ============================================================================
 Write-Host "📋 STEP 1: Checking Environment" -ForegroundColor Yellow
 Write-Host "─────────────────────────────────────────────────────────────────────"
-
-# Check if SSH is available
-$sshAvailable = Get-Command ssh -ErrorAction SilentlyContinue
-if ($sshAvailable) {
-    Write-Host "✅ SSH available" -ForegroundColor Green
-} else {
-    Write-Host "❌ SSH not available - installing OpenSSH..." -ForegroundColor Red
-    Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
-    Write-Host "✅ OpenSSH installed" -ForegroundColor Green
-}
 
 # Check if Git is available
 $gitAvailable = Get-Command git -ErrorAction SilentlyContinue
@@ -52,19 +43,24 @@ if ($gitAvailable) {
 Write-Host ""
 
 # ============================================================================
-# STEP 2: Server Connection Test
+# STEP 2: Determine Deployment Mode
 # ============================================================================
-Write-Host "📋 STEP 2: Testing Server Connection" -ForegroundColor Yellow
+Write-Host "📋 STEP 2: Determining Deployment Mode" -ForegroundColor Yellow
 Write-Host "─────────────────────────────────────────────────────────────────────"
 
-$serverReachable = Test-Connection -ComputerName $ServerIP -Count 1 -Quiet
-if ($serverReachable) {
-    Write-Host "✅ Server $ServerIP is reachable" -ForegroundColor Green
-    $deployMode = "remote"
-} else {
-    Write-Host "⚠️  Server $ServerIP not reachable" -ForegroundColor Yellow
-    Write-Host "Will deploy locally using WSL" -ForegroundColor Yellow
+if ([string]::IsNullOrWhiteSpace($ServerIP)) {
+    Write-Host "No remote server specified - deploying locally" -ForegroundColor Cyan
     $deployMode = "local"
+} else {
+    $serverReachable = Test-Connection -ComputerName $ServerIP -Count 1 -Quiet
+    if ($serverReachable) {
+        Write-Host "✅ Server $ServerIP is reachable" -ForegroundColor Green
+        $deployMode = "remote"
+    } else {
+        Write-Host "⚠️  Server $ServerIP not reachable" -ForegroundColor Yellow
+        Write-Host "Will deploy locally instead" -ForegroundColor Yellow
+        $deployMode = "local"
+    }
 }
 
 Write-Host ""
