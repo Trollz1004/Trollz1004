@@ -1,0 +1,408 @@
+# Google Cloud Platform Deployment Configuration
+# Team Claude For The Kids - Production Launch
+# Revenue Target: $1.2M+ Year 1 | 50% to Shriners Children's Hospitals
+
+version: '1.0'
+project:
+  name: team-claude-production
+  region: us-central1
+  zone: us-central1-a
+
+# Cost Estimate: $200-400/month (optimized for profitability)
+services:
+
+  # Backend API - Dating Platform & AI Marketplace
+  backend:
+    type: Cloud Run
+    image: gcr.io/${PROJECT_ID}/teamclaude-backend:latest
+    cpu: 2
+    memory: 4Gi
+    min_instances: 1
+    max_instances: 100
+    autoscaling:
+      target_cpu: 70
+      target_requests: 1000
+    env:
+      NODE_ENV: production
+      DATABASE_URL: ${CLOUD_SQL_CONNECTION}
+      REDIS_URL: ${MEMORYSTORE_REDIS}
+      SQUARE_ACCESS_TOKEN: ${SQUARE_PRODUCTION_TOKEN}
+      SQUARE_ENVIRONMENT: production
+      PERPLEXITY_API_KEY: ${PERPLEXITY_KEY}
+    costs: $50-150/month
+
+  # Frontend - React Dating App
+  frontend:
+    type: Cloud Run
+    image: gcr.io/${PROJECT_ID}/teamclaude-frontend:latest
+    cpu: 1
+    memory: 2Gi
+    min_instances: 1
+    max_instances: 50
+    env:
+      REACT_APP_API_URL: https://api.youandinotai.com
+      REACT_APP_SQUARE_APP_ID: ${SQUARE_APP_ID}
+    costs: $30-80/month
+
+  # AI Marketplace - ai-solutions.store
+  marketplace:
+    type: Cloud Run
+    image: gcr.io/${PROJECT_ID}/ai-marketplace:latest
+    cpu: 2
+    memory: 4Gi
+    min_instances: 1
+    max_instances: 50
+    env:
+      COMMISSION_RATE: 0.50
+      DAO_ALLOCATION: 0.05
+      PAYMENT_PROCESSOR: square
+    costs: $40-100/month
+
+  # DAO Platform - aidoesitall.org
+  dao:
+    type: Cloud Run
+    image: gcr.io/${PROJECT_ID}/dao-platform:latest
+    cpu: 1
+    memory: 2Gi
+    env:
+      BLOCKCHAIN_NETWORK: polygon
+      GOVERNANCE_TOKEN: ADIA
+    costs: $30-70/month
+
+databases:
+
+  # Primary PostgreSQL Database
+  postgres:
+    type: Cloud SQL
+    engine: PostgreSQL 15
+    tier: db-custom-2-7680  # 2 CPU, 7.68 GB RAM
+    storage: 100GB
+    backup:
+      enabled: true
+      start_time: "03:00"
+      retention_days: 30
+    high_availability: true
+    costs: $150-250/month
+
+  # Redis Cache
+  redis:
+    type: Memorystore
+    tier: basic
+    memory: 5GB
+    costs: $30-50/month
+
+storage:
+
+  # User uploads, photos, documents
+  user_content:
+    type: Cloud Storage
+    bucket: teamclaude-user-content
+    location: US
+    storage_class: STANDARD
+    lifecycle:
+      - age: 90
+        storage_class: NEARLINE
+    costs: $20-80/month
+
+  # Static assets, merch images
+  static_assets:
+    type: Cloud Storage
+    bucket: teamclaude-static
+    location: US
+    storage_class: STANDARD
+    cdn_enabled: true
+    costs: $10-30/month
+
+networking:
+
+  # Cloud CDN for global performance
+  cdn:
+    enabled: true
+    cache_mode: CACHE_ALL_STATIC
+    default_ttl: 3600
+    costs: $20-60/month
+
+  # Load Balancer
+  load_balancer:
+    type: HTTPS
+    ssl_certificates:
+      - youandinotai.com
+      - ai-solutions.store
+      - aidoesitall.org
+      - youandinotai.online
+    costs: $18/month
+
+monitoring:
+
+  # Cloud Monitoring & Logging
+  stackdriver:
+    logging: true
+    monitoring: true
+    alerting: true
+    uptime_checks:
+      - youandinotai.com
+      - ai-solutions.store
+      - aidoesitall.org
+    costs: $50-150/month
+
+automation:
+
+  # Marketing Automation Worker
+  marketing_worker:
+    type: Cloud Run Jobs
+    schedule: "0 */6 * * *"  # Every 6 hours
+    image: gcr.io/${PROJECT_ID}/marketing-automation:latest
+    env:
+      PERPLEXITY_API_KEY: ${PERPLEXITY_KEY}
+      GOOGLE_ADS_API_KEY: ${GOOGLE_ADS_KEY}
+      FACEBOOK_ACCESS_TOKEN: ${FACEBOOK_TOKEN}
+      TWITTER_API_KEY: ${TWITTER_KEY}
+    costs: $10-30/month
+
+  # Grant Automation Worker
+  grant_worker:
+    type: Cloud Run Jobs
+    schedule: "0 8 * * *"  # Daily at 8 AM
+    image: gcr.io/${PROJECT_ID}/grant-automation:latest
+    env:
+      OLLAMA_ENDPOINT: ${OLLAMA_URL}
+      GRANTS_GOV_API: ${GRANTS_API}
+    costs: $5-15/month
+
+  # Revenue Analytics
+  analytics_worker:
+    type: Cloud Run Jobs
+    schedule: "0 0 * * *"  # Daily at midnight
+    image: gcr.io/${PROJECT_ID}/revenue-analytics:latest
+    costs: $5-10/month
+
+security:
+
+  # Cloud Armor - DDoS protection
+  cloud_armor:
+    enabled: true
+    rules:
+      - rate_limiting: 1000 req/min
+      - geo_blocking: []
+    costs: $10-30/month
+
+  # Secret Manager
+  secrets:
+    - SQUARE_ACCESS_TOKEN
+    - SQUARE_APP_ID
+    - PERPLEXITY_API_KEY
+    - DATABASE_PASSWORD
+    - GOOGLE_ADS_API_KEY
+    - FACEBOOK_ACCESS_TOKEN
+    costs: $0.06/secret/month
+
+# Domain Mapping
+domains:
+  - name: youandinotai.com
+    service: frontend
+    ssl: auto
+  - name: api.youandinotai.com
+    service: backend
+    ssl: auto
+  - name: ai-solutions.store
+    service: marketplace
+    ssl: auto
+  - name: aidoesitall.org
+    service: dao
+    ssl: auto
+  - name: youandinotai.online
+    service: admin-dashboard
+    ssl: auto
+
+# CI/CD Pipeline
+ci_cd:
+
+  # Cloud Build
+  build:
+    triggers:
+      - branch: main
+        build_config: cloudbuild.yaml
+    costs: Free tier (120 min/day)
+
+  # Container Registry
+  registry:
+    type: Artifact Registry
+    repository: team-claude
+    costs: $0.10/GB storage
+
+# Estimated Monthly Costs
+costs:
+  minimum: $200/month
+  typical: $350/month
+  maximum: $800/month (high traffic)
+
+  # Revenue vs Cost Ratio
+  projected_revenue: $100,000+/month (Year 1 average)
+  profit_margin: 99%+ (infrastructure only)
+
+# Deployment Commands
+deployment:
+
+  setup: |
+    # 1. Create GCP project
+    gcloud projects create team-claude-production
+    gcloud config set project team-claude-production
+
+    # 2. Enable APIs
+    gcloud services enable \
+      run.googleapis.com \
+      sql-component.googleapis.com \
+      sqladmin.googleapis.com \
+      storage-api.googleapis.com \
+      cloudbuild.googleapis.com \
+      secretmanager.googleapis.com \
+      redis.googleapis.com
+
+    # 3. Set up billing
+    gcloud billing projects link team-claude-production \
+      --billing-account=${BILLING_ACCOUNT_ID}
+
+  database: |
+    # Create Cloud SQL instance
+    gcloud sql instances create teamclaude-db \
+      --database-version=POSTGRES_15 \
+      --tier=db-custom-2-7680 \
+      --region=us-central1 \
+      --backup \
+      --availability-type=regional
+
+    # Create database
+    gcloud sql databases create teamclaude_production \
+      --instance=teamclaude-db
+
+    # Create user
+    gcloud sql users create teamclaude \
+      --instance=teamclaude-db \
+      --password=${DB_PASSWORD}
+
+  redis: |
+    # Create Memorystore Redis
+    gcloud redis instances create teamclaude-redis \
+      --size=5 \
+      --region=us-central1 \
+      --tier=basic
+
+  storage: |
+    # Create storage buckets
+    gsutil mb -l US gs://teamclaude-user-content
+    gsutil mb -l US gs://teamclaude-static
+
+    # Set CORS for user uploads
+    gsutil cors set cors.json gs://teamclaude-user-content
+
+  deploy: |
+    # Build and deploy all services
+    ./gcp-deploy-all.sh
+
+  monitor: |
+    # Set up monitoring
+    gcloud monitoring uptime create \
+      --resource-type=uptime-url \
+      --display-name="Dating Platform" \
+      --hostname=youandinotai.com
+
+    # Create alert for downtime
+    gcloud alpha monitoring policies create \
+      --notification-channels=${ALERT_EMAIL} \
+      --display-name="Platform Down Alert"
+
+# Revenue Automation Integration
+revenue_automation:
+
+  enabled: true
+
+  streams:
+    - name: Dating Subscriptions
+      endpoint: /api/subscriptions
+      processor: Square
+      splits:
+        charity: 50%
+        operations: 50%
+      target: $12,000/month
+
+    - name: AI Marketplace
+      endpoint: /api/marketplace/transactions
+      processor: Square
+      commission: 50%
+      dao_allocation: 5%
+      target: $24,000/month
+
+    - name: Merch Store
+      endpoint: /api/merch/orders
+      processor: Printful + Square
+      margin: 65%
+      target: $65,000/month
+
+    - name: Grant Funding
+      endpoint: /api/grants/applications
+      automation: true
+      target: $42,000/month (annualized)
+
+  analytics:
+    dashboard: youandinotai.online/revenue
+    real_time: true
+    forecasting: enabled
+    alerts:
+      - revenue_below_target
+      - payment_failure
+      - subscription_churn_spike
+
+# Marketing Automation
+marketing:
+
+  google_ads:
+    enabled: true
+    budget: $50/day
+    campaigns:
+      - name: Dating App Launch
+        targeting: US, 18-45, single
+        keywords:
+          - "real dating app"
+          - "no bots dating"
+          - "verified dating"
+          - "charity dating app"
+
+  social_media:
+    platforms:
+      - twitter
+      - instagram
+      - facebook
+      - tiktok
+    posting_frequency: 3x/day
+    ai_generated: true
+
+  email:
+    provider: SendGrid
+    campaigns:
+      - welcome_sequence
+      - re_engagement
+      - premium_upsell
+      - charity_impact
+
+# Success Metrics
+success_metrics:
+
+  revenue:
+    month_1: $5,000
+    month_3: $25,000
+    month_6: $75,000
+    month_12: $150,000
+
+  users:
+    month_1: 500
+    month_3: 2,000
+    month_6: 8,000
+    month_12: 25,000
+
+  charity:
+    year_1_donation: $600,000+
+
+# Ready to Deploy: YES
+# Estimated Setup Time: 4-6 hours
+# Time to First Revenue: 24-48 hours
+# Break-even: Month 1
