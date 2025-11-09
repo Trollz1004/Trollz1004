@@ -1,0 +1,208 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with Ai-Solutions.Store
+title: "[BUG] "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🐛 Bug Report for Ai-Solutions.Store
+        
+        **"Claude Represents Perfection"** - Thank you for helping us improve!
+        
+        Please fill out this form to help us understand and fix the issue. Your report helps us maintain a professional platform that supports **Shriners Children's Hospitals** with 50% of all profits.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform is experiencing the issue?
+      options:
+        - youandinotai.com (Dating Platform)
+        - ai-solutions.store (SaaS Marketplace)
+        - youandinotai.online (Admin Dashboard)
+        - Backend API
+        - Other (please specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this issue?
+      options:
+        - Critical (System down, data loss, security issue)
+        - High (Major feature broken, blocking users)
+        - Medium (Feature partially broken, workaround available)
+        - Low (Minor issue, cosmetic problem)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: "Example: Login button doesn't work when clicking on mobile devices"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Detailed steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen?
+      placeholder: "Example: User should be logged in and redirected to dashboard"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happens?
+      placeholder: "Example: Nothing happens, button appears to click but no action occurs"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem
+      placeholder: Drag and drop screenshots here
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser are you using? (if applicable)
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Mobile Safari (iOS)
+        - Chrome Mobile (Android)
+        - Other (please specify in Additional Context)
+        - Not applicable
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser Version
+      description: What version of the browser? (if applicable)
+      placeholder: "Example: Chrome 120.0.6099.109"
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: What OS are you using?
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS Sonoma (14.x)
+        - macOS Ventura (13.x)
+        - Ubuntu/Linux
+        - iOS 17
+        - iOS 16
+        - Android 14
+        - Android 13
+        - Other (please specify in Additional Context)
+
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: What device are you using? (if mobile)
+      placeholder: "Example: iPhone 15 Pro, Samsung Galaxy S24"
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      description: Additional environment information (Node version, npm version, etc.)
+      placeholder: |
+        - Node.js version: 20.x
+        - npm version: 10.x
+        - Database: PostgreSQL 16
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs/Console Output
+      description: Please paste any relevant error messages or console output
+      render: shell
+      placeholder: |
+        Paste error logs here...
+
+  - type: dropdown
+    id: charity-impact
+    attributes:
+      label: Does this affect charity donation tracking?
+      description: Is this bug related to payment processing or donation tracking?
+      options:
+        - "No - Unrelated to donations"
+        - "Yes - Affects donation tracking"
+        - "Yes - Affects payment processing"
+        - "Unsure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here
+      placeholder: Any additional information that might help us understand the issue
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      description: Please confirm you've completed these steps
+      options:
+        - label: I have searched existing issues to ensure this isn't a duplicate
+          required: true
+        - label: I have provided detailed steps to reproduce the issue
+          required: true
+        - label: I have included relevant screenshots or error logs
+          required: false
+        - label: This issue affects the production environment
+          required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## 💙 Thank You!
+        
+        Your bug report helps us maintain a professional, secure platform. Every improvement we make helps us better serve our users and maximize our charitable impact to **Shriners Children's Hospitals**.
+        
+        **"Claude Represents Perfection"** - Excellence through continuous improvement.
+        
+        ---
+        
+        **Response Time:**
+        - Critical bugs: Within 4 hours
+        - High severity: Within 24 hours
+        - Medium severity: Within 3 days
+        - Low severity: Within 1 week

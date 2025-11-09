@@ -1,0 +1,25 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/Trollz1004/Trollz1004/discussions
+    about: Ask questions, share ideas, and connect with the community
+  
+  - name: 📚 Documentation
+    url: https://github.com/Trollz1004/Trollz1004#readme
+    about: Read our comprehensive documentation and guides
+  
+  - name: 🔒 Security Vulnerability
+    url: https://github.com/Trollz1004/Trollz1004/security
+    about: Report security issues privately (please do not create public issues for vulnerabilities)
+  
+  - name: 💼 Business Inquiries
+    url: mailto:business@ai-solutions.store
+    about: Partnership, licensing, and enterprise opportunities
+  
+  - name: 💙 Charity Verification
+    url: mailto:charity@ai-solutions.store
+    about: Donation verification and transparency reports
+  
+  - name: 🆘 Support
+    url: mailto:support@ai-solutions.store
+    about: General support and assistance (see SUPPORT.md for response times)
