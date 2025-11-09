@@ -3,6 +3,8 @@
 **Deployed:** November 9, 2025 @ 1:15 AM
 **Status:** ✅ 100% OPERATIONAL
 
+> **⚠️ Configuration Note:** The URLs in this document (incomparable-gecko-b51107.netlify.app, postgres-production-475c.up.railway.app) are hardcoded. If these services change, update the URLs throughout this file and related documentation files.
+
 ---
 
 ## 🌐 YOUR LIVE URLS:

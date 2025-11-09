@@ -4,6 +4,8 @@
 **Repository:** https://github.com/Trollz1004/Trollz1004
 **Branch:** claude/deploy-frontend-netlify-011CUwLP7JFbY3yW1sFctkTS
 
+> **⚠️ Configuration Note:** The URLs in this document (aquamarine-tiramisu-f079ff.netlify.app, youandinotai.netlify.app, postgres-production-475c.up.railway.app) are hardcoded throughout multiple documentation files. If these URLs change, they will need to be updated in: YOUR-WORKING-DOMAINS.md, SUCCESS-YOU-ARE-LIVE.md, DEPLOY-INSTRUCTIONS.md, LIVE-NOW.md, CLOUDFLARE-DNS-SETUP.md, and the setup scripts (setup-cloudflare-dns.sh, setup-cloudflare-dns.ps1). Consider using environment variables or a centralized configuration file for production deployments.
+
 ---
 
 ## ✅ WORKING LINKS (CLICK THESE NOW!):

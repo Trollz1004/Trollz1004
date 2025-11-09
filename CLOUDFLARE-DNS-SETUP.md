@@ -51,6 +51,7 @@ Automatically configures Cloudflare DNS for:
 
 **On Windows (PowerShell):**
 ```powershell
+cd C:\path\to\Trollz1004
 cd C:\Users\T5500PRECISION\projects\Trollz1004\projects\Trollz1004
 
 .\setup-cloudflare-dns.ps1

@@ -19,6 +19,14 @@ echo -e "${BLUE}║       CLOUDFLARE DNS AUTOMATION - TEAM CLAUDE               
 echo -e "${BLUE}╚══════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
+# Required information (can be overridden by environment variables)
+NETLIFY_URL="${NETLIFY_URL:-incomparable-gecko-b51107.netlify.app}"
+RAILWAY_URL="${RAILWAY_URL:-postgres-production-475c.up.railway.app}"
+
+echo -e "${YELLOW}📋 This script will configure DNS for:${NC}"
+echo "   - youandinotai.com → Netlify frontend (${NETLIFY_URL})"
+echo "   - youandinotai.online → Netlify frontend (${NETLIFY_URL})"
+echo "   - api.youandinotai.com → Railway backend (${RAILWAY_URL})"
 # Required information
 NETLIFY_URL="incomparable-gecko-b51107.netlify.app"
 RAILWAY_URL="postgres-production-475c.up.railway.app"
@@ -40,6 +48,8 @@ if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
     echo "4. Select your zones (youandinotai.com, youandinotai.online)"
     echo "5. Create token and copy it"
     echo ""
+    read -sp "Enter your Cloudflare API Token: " CLOUDFLARE_API_TOKEN
+    echo
     read -p "Enter your Cloudflare API Token: " CLOUDFLARE_API_TOKEN
     export CLOUDFLARE_API_TOKEN
 fi
@@ -79,6 +89,7 @@ create_dns_record() {
         -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
         -H "Content-Type: application/json")
 
+    record_id=$(echo "$existing_record" | grep -o '"id":"[^"]*' | head -1 | cut -d'"' -f4)
     record_id=$(echo $existing_record | grep -o '"id":"[^"]*' | head -1 | cut -d'"' -f4)
 
     if [ -n "$record_id" ]; then
@@ -98,6 +109,7 @@ create_dns_record() {
     fi
 
     # Check if successful
+    success=$(echo "$response" | grep -o '"success":[^,]*' | cut -d':' -f2)
     success=$(echo $response | grep -o '"success":[^,]*' | cut -d':' -f2)
     if [ "$success" = "true" ]; then
         echo -e "   ${GREEN}✅ Success!${NC}"
@@ -118,6 +130,7 @@ configure_ssl() {
     curl -s -X PATCH "https://api.cloudflare.com/client/v4/zones/${zone_id}/settings/ssl" \
         -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
         -H "Content-Type: application/json" \
+        --data '{"value":"strict"}' > /dev/null
         --data '{"value":"full"}' > /dev/null
 
     # Enable Always Use HTTPS

@@ -44,6 +44,9 @@ You should see these files:
    "Need to update your site? Drag and drop your site output folder here"
    ```
 
+3. **Drag the entire `dist` folder:**
+   - Locate the `dist` folder in your file explorer
+   - Drag the entire `dist` folder
 3. **Select ALL files inside dist folder:**
    - Open the `dist` folder
    - Press `Ctrl + A` (select all)
@@ -61,6 +64,8 @@ You should see these files:
 3. Drop it
 
 4. Get instant URL! ✅
+
+**Note:** Netlify handles the folder correctly when you drag the entire `dist` folder. You don't need to select individual files.
 
 ---
 

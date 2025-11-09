@@ -7,6 +7,24 @@ Write-Host "╚═════════════════════�
 Write-Host ""
 
 # Configuration
+if ($env:NETLIFY_URL) {
+    $NETLIFY_URL = $env:NETLIFY_URL
+} else {
+    $NETLIFY_URL = "incomparable-gecko-b51107.netlify.app"
+    Write-Host "ℹ️  Using default Netlify URL: $NETLIFY_URL" -ForegroundColor Yellow
+}
+
+if ($env:RAILWAY_URL) {
+    $RAILWAY_URL = $env:RAILWAY_URL
+} else {
+    $RAILWAY_URL = "postgres-production-475c.up.railway.app"
+    Write-Host "ℹ️  Using default Railway URL: $RAILWAY_URL" -ForegroundColor Yellow
+}
+
+Write-Host "📋 This script will configure DNS for:" -ForegroundColor Yellow
+Write-Host "   - youandinotai.com → Netlify frontend ($NETLIFY_URL)"
+Write-Host "   - youandinotai.online → Netlify frontend ($NETLIFY_URL)"
+Write-Host "   - api.youandinotai.com → Railway backend ($RAILWAY_URL)"
 $NETLIFY_URL = "incomparable-gecko-b51107.netlify.app"
 $RAILWAY_URL = "postgres-production-475c.up.railway.app"
 
@@ -27,6 +45,8 @@ if (-not $env:CLOUDFLARE_API_TOKEN) {
     Write-Host "4. Select your zones (youandinotai.com, youandinotai.online)"
     Write-Host "5. Create token and copy it"
     Write-Host ""
+    $secureToken = Read-Host "Enter your Cloudflare API Token" -AsSecureString
+    $CLOUDFLARE_API_TOKEN = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureToken))
     $CLOUDFLARE_API_TOKEN = Read-Host "Enter your Cloudflare API Token"
     $env:CLOUDFLARE_API_TOKEN = $CLOUDFLARE_API_TOKEN
 } else {
@@ -116,6 +136,9 @@ function Set-CloudflareSSL {
         "Content-Type" = "application/json"
     }
 
+    # Set SSL to Full (strict)
+    $sslUrl = "https://api.cloudflare.com/client/v4/zones/$ZoneId/settings/ssl"
+    Invoke-RestMethod -Uri $sslUrl -Headers $headers -Method Patch -Body '{"value":"strict"}' | Out-Null
     # Set SSL to Full
     $sslUrl = "https://api.cloudflare.com/client/v4/zones/$ZoneId/settings/ssl"
     Invoke-RestMethod -Uri $sslUrl -Headers $headers -Method Patch -Body '{"value":"full"}' | Out-Null

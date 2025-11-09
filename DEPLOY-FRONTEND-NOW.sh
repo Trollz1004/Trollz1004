@@ -21,6 +21,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Navigate to frontend
+cd date-app-dashboard/frontend || { echo -e "${YELLOW}❌ Error: Cannot find frontend directory. Exiting.${NC}"; exit 1; }
 cd date-app-dashboard/frontend
 
 echo -e "${BLUE}📍 Current directory: $(pwd)${NC}"
