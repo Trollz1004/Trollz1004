@@ -40,7 +40,8 @@ if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
     echo "4. Select your zones (youandinotai.com, youandinotai.online)"
     echo "5. Create token and copy it"
     echo ""
-    read -p "Enter your Cloudflare API Token: " CLOUDFLARE_API_TOKEN
+    read -s -p "Enter your Cloudflare API Token: " CLOUDFLARE_API_TOKEN
+    echo
     export CLOUDFLARE_API_TOKEN
 fi
 
@@ -79,7 +80,7 @@ create_dns_record() {
         -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
         -H "Content-Type: application/json")
 
-    record_id=$(echo $existing_record | grep -o '"id":"[^"]*' | head -1 | cut -d'"' -f4)
+    record_id=$(echo "$existing_record" | grep -o '"id":"[^"]*' | head -1 | cut -d'"' -f4)
 
     if [ -n "$record_id" ]; then
         # Update existing record
@@ -98,7 +99,7 @@ create_dns_record() {
     fi
 
     # Check if successful
-    success=$(echo $response | grep -o '"success":[^,]*' | cut -d':' -f2)
+    success=$(echo "$response" | grep -o '"success":[^,]*' | cut -d':' -f2)
     if [ "$success" = "true" ]; then
         echo -e "   ${GREEN}✅ Success!${NC}"
     else
