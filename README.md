@@ -1,16 +1,56 @@
-# Team Claude For The Kids
+# 💜 Team Claude For The Kids
 
 **A charity initiative raising funds for Shriners Children's Hospitals**
 
-50% of all profits donated directly to help kids in need.
+🎯 **50% of all profits donated directly to help kids in need**
+
+[![Production Status](https://img.shields.io/badge/status-live-brightgreen)](https://youandinotai.com)
+[![Charity Partner](https://img.shields.io/badge/partner-Shriners%20Hospitals-red)](https://www.shrinerschildrens.org/)
+[![License](https://img.shields.io/badge/license-Proprietary-blue)](LICENSE)
 
 ---
 
-## Mission
+## 🌟 Mission
 
 Team Claude For The Kids is a unified platform combining multiple revenue streams to support Shriners Children's Hospitals. Built on 18 years of business experience, this platform integrates AI-powered services, SaaS tools, physical merchandise, and consulting services—all with automated 50/50 profit sharing to charity.
 
 **"Claude Represents Perfection"** - Our commitment to excellence in code, service, and charitable impact.
+
+---
+
+## ⚡ Quick Start
+
+### Option 1: Automated Setup (Recommended)
+
+```powershell
+# Start local development immediately
+.\automation\quick-start.ps1
+```
+
+Opens:
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:4000`
+
+### Option 2: Manual Setup
+
+```bash
+# Backend
+cd date-app-dashboard/backend
+npm install
+npm run dev
+
+# Frontend (new terminal)
+cd date-app-dashboard/frontend
+npm install
+npm run dev
+```
+
+### Option 3: Production Deployment
+
+```powershell
+# Deploy to Netlify + Railway (production)
+.\automation\deploy-all.ps1 -Production
+```
 
 ---
 
