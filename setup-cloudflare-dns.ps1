@@ -27,7 +27,10 @@ if (-not $env:CLOUDFLARE_API_TOKEN) {
     Write-Host "4. Select your zones (youandinotai.com, youandinotai.online)"
     Write-Host "5. Create token and copy it"
     Write-Host ""
-    $CLOUDFLARE_API_TOKEN = Read-Host "Enter your Cloudflare API Token"
+    $secureToken = Read-Host "Enter your Cloudflare API Token" -AsSecureString
+    $CLOUDFLARE_API_TOKEN = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
+        [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureToken)
+    )
     $env:CLOUDFLARE_API_TOKEN = $CLOUDFLARE_API_TOKEN
 } else {
     $CLOUDFLARE_API_TOKEN = $env:CLOUDFLARE_API_TOKEN
