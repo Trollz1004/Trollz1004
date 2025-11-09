@@ -7,13 +7,24 @@ Write-Host "╚═════════════════════�
 Write-Host ""
 
 # Configuration
-$NETLIFY_URL = "incomparable-gecko-b51107.netlify.app"
-$RAILWAY_URL = "postgres-production-475c.up.railway.app"
+if ($env:NETLIFY_URL) {
+    $NETLIFY_URL = $env:NETLIFY_URL
+} else {
+    $NETLIFY_URL = "incomparable-gecko-b51107.netlify.app"
+    Write-Host "ℹ️  Using default Netlify URL: $NETLIFY_URL" -ForegroundColor Yellow
+}
+
+if ($env:RAILWAY_URL) {
+    $RAILWAY_URL = $env:RAILWAY_URL
+} else {
+    $RAILWAY_URL = "postgres-production-475c.up.railway.app"
+    Write-Host "ℹ️  Using default Railway URL: $RAILWAY_URL" -ForegroundColor Yellow
+}
 
 Write-Host "📋 This script will configure DNS for:" -ForegroundColor Yellow
-Write-Host "   - youandinotai.com → Netlify frontend"
-Write-Host "   - youandinotai.online → Netlify frontend"
-Write-Host "   - api.youandinotai.com → Railway backend"
+Write-Host "   - youandinotai.com → Netlify frontend ($NETLIFY_URL)"
+Write-Host "   - youandinotai.online → Netlify frontend ($NETLIFY_URL)"
+Write-Host "   - api.youandinotai.com → Railway backend ($RAILWAY_URL)"
 Write-Host ""
 
 # Get Cloudflare credentials
@@ -27,7 +38,8 @@ if (-not $env:CLOUDFLARE_API_TOKEN) {
     Write-Host "4. Select your zones (youandinotai.com, youandinotai.online)"
     Write-Host "5. Create token and copy it"
     Write-Host ""
-    $CLOUDFLARE_API_TOKEN = Read-Host "Enter your Cloudflare API Token"
+    $secureToken = Read-Host "Enter your Cloudflare API Token" -AsSecureString
+    $CLOUDFLARE_API_TOKEN = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureToken))
     $env:CLOUDFLARE_API_TOKEN = $CLOUDFLARE_API_TOKEN
 } else {
     $CLOUDFLARE_API_TOKEN = $env:CLOUDFLARE_API_TOKEN
@@ -116,9 +128,9 @@ function Set-CloudflareSSL {
         "Content-Type" = "application/json"
     }
 
-    # Set SSL to Full
+    # Set SSL to Full (strict)
     $sslUrl = "https://api.cloudflare.com/client/v4/zones/$ZoneId/settings/ssl"
-    Invoke-RestMethod -Uri $sslUrl -Headers $headers -Method Patch -Body '{"value":"full"}' | Out-Null
+    Invoke-RestMethod -Uri $sslUrl -Headers $headers -Method Patch -Body '{"value":"strict"}' | Out-Null
 
     # Enable Always HTTPS
     $httpsUrl = "https://api.cloudflare.com/client/v4/zones/$ZoneId/settings/always_use_https"
