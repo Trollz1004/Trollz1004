@@ -57,6 +57,9 @@ Your Netlify project exists, but needs the built files uploaded.
    - **Terminal (Mac):** Run `open date-app-dashboard/frontend/dist`
    - **Terminal (Linux):** Run `xdg-open date-app-dashboard/frontend/dist`
    - **Look for the folder with `index.html` and `assets/` inside**
+   - **In VS Code:** Right-click `date-app-dashboard\frontend\dist` → "Reveal in File Explorer"
+   - **Windows:** Navigate to: `Trollz1004\date-app-dashboard\frontend\dist`
+   - **Full path:** Look for the folder with `index.html` and `assets/` inside
 
 5. **Drag the ENTIRE `dist` folder** into the Netlify drop zone
 

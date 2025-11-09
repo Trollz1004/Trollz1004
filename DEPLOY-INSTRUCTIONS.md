@@ -29,6 +29,8 @@ You should see these files:
 - `assets` (folder) ✅
 - `_redirects` ✅
 
+**IMPORTANT:** You need to drag the **CONTENTS** (these files), NOT the dist folder itself!
+
 ---
 
 ### Step 3: Deploy to Netlify
@@ -45,6 +47,10 @@ You should see these files:
 3. **Drag the entire `dist` folder:**
    - Locate the `dist` folder in your file explorer
    - Drag the entire `dist` folder
+3. **Select ALL files inside dist folder:**
+   - Open the `dist` folder
+   - Press `Ctrl + A` (select all)
+   - Drag the selected files
    - Drop into the Netlify box
 
 4. Wait 30 seconds → ✅ LIVE!

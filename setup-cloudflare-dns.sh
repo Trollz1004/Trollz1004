@@ -27,6 +27,14 @@ echo -e "${YELLOW}📋 This script will configure DNS for:${NC}"
 echo "   - youandinotai.com → Netlify frontend (${NETLIFY_URL})"
 echo "   - youandinotai.online → Netlify frontend (${NETLIFY_URL})"
 echo "   - api.youandinotai.com → Railway backend (${RAILWAY_URL})"
+# Required information
+NETLIFY_URL="incomparable-gecko-b51107.netlify.app"
+RAILWAY_URL="postgres-production-475c.up.railway.app"
+
+echo -e "${YELLOW}📋 This script will configure DNS for:${NC}"
+echo "   - youandinotai.com → Netlify frontend"
+echo "   - youandinotai.online → Netlify frontend"
+echo "   - api.youandinotai.com → Railway backend"
 echo ""
 
 # Check if Cloudflare credentials are set
@@ -42,6 +50,7 @@ if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
     echo ""
     read -sp "Enter your Cloudflare API Token: " CLOUDFLARE_API_TOKEN
     echo
+    read -p "Enter your Cloudflare API Token: " CLOUDFLARE_API_TOKEN
     export CLOUDFLARE_API_TOKEN
 fi
 
@@ -81,6 +90,7 @@ create_dns_record() {
         -H "Content-Type: application/json")
 
     record_id=$(echo "$existing_record" | grep -o '"id":"[^"]*' | head -1 | cut -d'"' -f4)
+    record_id=$(echo $existing_record | grep -o '"id":"[^"]*' | head -1 | cut -d'"' -f4)
 
     if [ -n "$record_id" ]; then
         # Update existing record
@@ -100,6 +110,7 @@ create_dns_record() {
 
     # Check if successful
     success=$(echo "$response" | grep -o '"success":[^,]*' | cut -d':' -f2)
+    success=$(echo $response | grep -o '"success":[^,]*' | cut -d':' -f2)
     if [ "$success" = "true" ]; then
         echo -e "   ${GREEN}✅ Success!${NC}"
     else
@@ -120,6 +131,7 @@ configure_ssl() {
         -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
         -H "Content-Type: application/json" \
         --data '{"value":"strict"}' > /dev/null
+        --data '{"value":"full"}' > /dev/null
 
     # Enable Always Use HTTPS
     curl -s -X PATCH "https://api.cloudflare.com/client/v4/zones/${zone_id}/settings/always_use_https" \
