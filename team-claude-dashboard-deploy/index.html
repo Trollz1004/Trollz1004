@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Claude Dashboard - Ai-Solutions.Store</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Charity Badge -->
+    <div class="charity-badge">
+        <i class="fas fa-heart"></i> 50% to Kids
+    </div>
+
+    <div class="dashboard">
+        <header>
+            <h1><span class="live-indicator"></span>Team Claude For The Kids</h1>
+            <p class="subtitle">Dashboard - Ai-Solutions.Store Platform</p>
+            <p class="mission-statement">💙 Supporting Shriners Children's Hospitals - Making AI Work For Charity</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('overview')">
+                <i class="fas fa-chart-line"></i> Overview
+            </button>
+            <button class="tab-button" onclick="switchTab('revenue')">
+                <i class="fas fa-dollar-sign"></i> Revenue
+            </button>
+            <button class="tab-button" onclick="switchTab('users')">
+                <i class="fas fa-users"></i> Users
+            </button>
+            <button class="tab-button" onclick="switchTab('charity')">
+                <i class="fas fa-hand-holding-heart"></i> Charity Impact
+            </button>
+            <button class="tab-button" onclick="switchTab('platform')">
+                <i class="fas fa-cogs"></i> Platform Status
+            </button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Revenue (All Time)</div>
+                    <div class="stat-value" id="totalRevenue">$0</div>
+                    <div class="stat-change positive" id="revenueChange">+0% from last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Subscriptions</div>
+                    <div class="stat-value" id="activeSubscriptions">0</div>
+                    <div class="stat-change positive" id="subscriptionChange">+0 this week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-value" id="totalUsers">0</div>
+                    <div class="stat-change positive" id="userChange">+0 today</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Matches</div>
+                    <div class="stat-value" id="activeMatches">0</div>
+                    <div class="stat-change positive" id="matchChange">+0 this week</div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <div class="chart-card">
+                    <h3 class="chart-title">Revenue Over Time</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">User Growth</h3>
+                    <canvas id="userChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Tab -->
+        <div id="revenue" class="tab-content">
+            <div class="profit-split">
+                <div class="split-card">
+                    <h3>Platform Revenue (50%)</h3>
+                    <div class="split-amount" id="platformShare">$0</div>
+                    <div class="split-details">
+                        <div>Operational Costs & Growth</div>
+                        <div style="margin-top:10px;color:#4CAF50;"><i class="fas fa-check-circle"></i> Reinvestment Ready</div>
+                    </div>
+                </div>
+                <div class="split-card charity-split">
+                    <h3>Shriners Children's Hospitals (50%)</h3>
+                    <div class="split-amount" id="charityShare">$0</div>
+                    <div class="split-details">
+                        <div>Direct Charity Contribution</div>
+                        <div style="margin-top:10px;color:#E91E63;">
+                            <i class="fas fa-heart"></i> Helping Kids Worldwide
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <div class="chart-card">
+                    <h3 class="chart-title">Monthly Recurring Revenue</h3>
+                    <canvas id="mrrChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Revenue by Subscription Tier</h3>
+                    <canvas id="tierChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Registered Users</div>
+                    <div class="stat-value" id="totalUsersDetail">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Users (30 days)</div>
+                    <div class="stat-value" id="activeUsers">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">New Users Today</div>
+                    <div class="stat-value" id="newUsersToday">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Conversion Rate</div>
+                    <div class="stat-value" id="conversionRate">0%</div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3 class="chart-title">User Activity & Engagement</h3>
+                <canvas id="engagementChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Charity Impact Tab -->
+        <div id="charity" class="tab-content">
+            <div class="charity-impact">
+                <div class="impact-header">
+                    <h2>Our Mission: 50% to Shriners Children's Hospitals</h2>
+                    <p>Every dollar earned helps children receive world-class medical care</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card charity-card">
+                        <div class="stat-label">Total Donated</div>
+                        <div class="stat-value charity-value" id="totalDonated">$0</div>
+                        <div class="stat-details">Lifetime Contribution</div>
+                    </div>
+                    <div class="stat-card charity-card">
+                        <div class="stat-label">Estimated Kids Helped</div>
+                        <div class="stat-value charity-value" id="kidsHelped">0</div>
+                        <div class="stat-details">Based on avg. treatment cost</div>
+                    </div>
+                    <div class="stat-card charity-card">
+                        <div class="stat-label">This Month</div>
+                        <div class="stat-value charity-value" id="monthlyDonation">$0</div>
+                        <div class="stat-details">Current month contribution</div>
+                    </div>
+                    <div class="stat-card charity-card">
+                        <div class="stat-label">Next Donation</div>
+                        <div class="stat-value charity-value" id="nextDonation">$0</div>
+                        <div class="stat-details">Pending transfer</div>
+                    </div>
+                </div>
+
+                <div class="impact-story">
+                    <h3><i class="fas fa-heart"></i> Our Impact Story</h3>
+                    <p>Team Claude For The Kids is more than just a business - it's a mission to use AI for good.
+                    Every subscription, every user, every dollar earned goes toward helping children receive
+                    life-changing medical care at Shriners Children's Hospitals.</p>
+                    <p><strong>Together, we're proving that technology and compassion can change the world.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Status Tab -->
+        <div id="platform" class="tab-content">
+            <h2>Platform Health & Status</h2>
+
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-icon status-active">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>youandinotai.com</h3>
+                    <div class="status-text">Online</div>
+                    <div class="status-details">Response Time: <span id="mainSiteResponse">--ms</span></div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon status-active">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Backend API</h3>
+                    <div class="status-text">Operational</div>
+                    <div class="status-details">API Health: <span id="apiHealth">100%</span></div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon status-active">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Database</h3>
+                    <div class="status-text">Connected</div>
+                    <div class="status-details">Latency: <span id="dbLatency">--ms</span></div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon status-active">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>CDN Status</h3>
+                    <div class="status-text">Active</div>
+                    <div class="status-details">Regions: <span id="cdnRegions">--</span></div>
+                </div>
+            </div>
+
+            <div class="activity-log">
+                <h3 class="chart-title">Recent System Activity</h3>
+                <div id="activityLog">
+                    <div class="log-item">
+                        <div>
+                            <strong>System Initialized</strong>
+                            <div style="font-size:0.9em;color:#666;">Dashboard loaded successfully</div>
+                        </div>
+                        <div class="log-time">Just now</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>Quick Actions</h3>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="exportData()">
+                    <i class="fas fa-download"></i> Export Data
+                </button>
+                <button class="action-btn" onclick="generateReport()">
+                    <i class="fas fa-file-pdf"></i> Generate Report
+                </button>
+                <button class="action-btn" onclick="viewAnalytics()">
+                    <i class="fas fa-chart-bar"></i> View Analytics
+                </button>
+                <button class="action-btn" onclick="openSettings()">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+            </div>
+        </div>
+
+        <div class="timestamp">
+            Last updated: <span id="lastUpdated">--</span>
+        </div>
+    </div>
+
+    <footer>
+        <p>💙 50% of profits to Shriners Children's Hospitals</p>
+        <p>Powered by Ai-Solutions.Store | Claude Code For The Kids</p>
+        <p><a href="https://youandinotai.com" target="_blank">youandinotai.com</a> |
+           <a href="https://dashboard.youandinotai.com">Admin Panel</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

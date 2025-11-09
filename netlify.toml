@@ -1,0 +1,75 @@
+# Netlify Configuration for Team Claude For The Kids
+# youandinotai.com + youandinotai.online
+
+# PRIMARY SITE: youandinotai.com (Dating Platform)
+[build]
+  base = "date-app-dashboard/frontend"
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
+
+# Environment variables (set in Netlify UI)
+# VITE_API_URL = "https://api.youandinotai.com"
+# VITE_SQUARE_APP_ID = "your_square_app_id"
+# VITE_SQUARE_LOCATION_ID = "your_square_location_id"
+
+# Redirect rules
+[[redirects]]
+  from = "/api/*"
+  to = "https://api.youandinotai.com/:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+
+[[redirects]]
+  from = "https://youandinotai.online/*"
+  to = "https://youandinotai.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.youandinotai.online/*"
+  to = "https://youandinotai.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Context-specific builds
+[context.production]
+  command = "npm run build"
+  
+[context.production.environment]
+  VITE_ENV = "production"
+
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"
+
+# Functions (if needed later)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
