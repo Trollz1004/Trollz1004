@@ -1,0 +1,284 @@
+# Ai-Solutions.Store Proprietary License
+
+**Copyright © 2024-2025 Ai-Solutions.Store. All Rights Reserved.**
+
+---
+
+## Terms and Conditions
+
+### 1. Definitions
+
+- **"Software"** refers to all source code, documentation, and related materials in this repository.
+- **"Ai-Solutions.Store"** refers to the business entity operating at ai-solutions.store.
+- **"Licensee"** refers to any individual or entity that obtains a copy of this Software.
+- **"Charitable Component"** refers to the automated donation system directing 50% of profits to Shriners Children's Hospitals.
+
+### 2. License Grant
+
+Subject to the terms and conditions of this License, Ai-Solutions.Store grants Licensee a limited, non-exclusive, non-transferable, revocable license to:
+
+#### a) View and Review
+- View the source code for educational purposes
+- Review the architecture and implementation
+- Learn from the code structure and design patterns
+
+#### b) Personal Use
+- Use the Software for personal, non-commercial purposes
+- Deploy locally for development and testing
+- Modify for personal learning
+
+### 3. Restrictions
+
+Licensee shall NOT, without prior written permission:
+
+#### a) Commercial Use
+- Use the Software for commercial purposes
+- Deploy the Software in a production environment for business use
+- Sell, rent, lease, or license the Software to third parties
+- Offer the Software as a service (SaaS)
+
+#### b) Modification and Distribution
+- Distribute modified or unmodified copies of the Software
+- Create derivative works for commercial purposes
+- Publish the Software under a different name
+- Remove or alter copyright notices
+
+#### c) Charitable Component
+- Remove or bypass the 50% charitable donation mechanism
+- Modify the Square payment integration to redirect charity funds
+- Misrepresent the charitable purpose of the Software
+
+### 4. Permitted Uses
+
+The following uses ARE permitted:
+
+#### a) Educational
+- Academic study and research
+- Teaching and training purposes
+- Personal skill development
+
+#### b) Contribution
+- Contributing bug fixes (subject to approval)
+- Contributing features (subject to approval)
+- Reporting security vulnerabilities
+- Improving documentation
+
+#### c) Evaluation
+- Evaluating the Software for potential business partnership
+- Reviewing for potential licensing agreement
+- Assessing technical capabilities
+
+### 5. Charitable Mission Protection
+
+#### a) Donation Integrity
+- The 50% profit split to Shriners Children's Hospitals is a core, immutable feature
+- Any attempt to circumvent, disable, or modify this feature is strictly prohibited
+- Licensee agrees to maintain the integrity of all charitable components
+
+#### b) Transparency
+- All charitable donations are tracked and reportable
+- Licensee may request transparency reports on charitable giving
+- Annual charity reports are publicly available
+
+### 6. Business Licensing
+
+For commercial use, contact: business@ai-solutions.store
+
+#### a) Commercial License Available
+- Full commercial rights
+- White-label deployment options
+- Custom feature development
+- Priority support and SLA
+
+#### b) Partnership Opportunities
+- Reseller agreements
+- Platform integration
+- Custom deployment services
+- Revenue sharing arrangements
+
+### 7. Intellectual Property
+
+#### a) Ownership
+- Ai-Solutions.Store retains all rights, title, and interest in the Software
+- All trademarks, service marks, and trade names are proprietary
+- No ownership rights are transferred through this License
+
+#### b) Branding
+- "Ai-Solutions.Store" and related marks are protected trademarks
+- "Claude Code For The Kids" is a protected initiative name
+- Use of branding requires explicit written permission
+
+### 8. No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+Ai-Solutions.Store makes no guarantees regarding:
+- Software functionality
+- Uptime or availability
+- Data integrity
+- Security vulnerabilities
+- Suitability for any particular purpose
+
+### 9. Limitation of Liability
+
+IN NO EVENT SHALL AI-SOLUTIONS.STORE BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE.
+
+This includes, but is not limited to:
+- Loss of profits
+- Loss of data
+- Business interruption
+- Indirect or consequential damages
+- Third-party claims
+
+### 10. Termination
+
+#### a) Automatic Termination
+This License terminates automatically if Licensee:
+- Violates any term of this License
+- Uses the Software commercially without permission
+- Attempts to circumvent the charitable component
+- Misrepresents the Software or its purpose
+
+#### b) Effect of Termination
+Upon termination, Licensee must:
+- Immediately cease all use of the Software
+- Delete all copies of the Software
+- Destroy all derivative works
+- Certify deletion in writing if requested
+
+### 11. Contributions
+
+#### a) Contributor License
+By contributing to this repository, you agree that:
+- Contributions become property of Ai-Solutions.Store
+- Contributions may be used commercially
+- You retain no rights to contributed code
+- You represent that contributions are original work
+
+#### b) Recognition
+Contributors are recognized in:
+- CONTRIBUTORS.md file
+- Release notes
+- Public acknowledgments
+
+### 12. Third-Party Components
+
+#### a) Open Source Dependencies
+This Software uses third-party open source components:
+- Each component is governed by its own license
+- See package.json for dependency licenses
+- Compliance with those licenses is required
+
+#### b) Square Payment Integration
+- Square API usage subject to Square's terms
+- PCI DSS compliance required
+- Square trademark usage restricted
+
+### 13. Privacy and Data
+
+#### a) User Data
+- Licensee agrees to handle user data responsibly
+- GDPR and CCPA compliance required
+- Privacy policy must be implemented
+- Data breaches must be reported
+
+#### b) Telemetry
+- Software may collect anonymized usage data
+- Data used for improvement and analytics
+- No personally identifiable information collected
+- Opt-out available in settings
+
+### 14. Governing Law
+
+This License shall be governed by and construed in accordance with the laws of the United States, without regard to its conflict of law provisions.
+
+#### a) Jurisdiction
+Any legal action must be brought in:
+- State of Delaware courts
+- Or federal courts located in Delaware
+- Licensee consents to personal jurisdiction
+
+#### b) Dispute Resolution
+Disputes shall be resolved through:
+1. Good faith negotiation
+2. Mediation (if negotiation fails)
+3. Binding arbitration (if mediation fails)
+4. Litigation (last resort)
+
+### 15. Severability
+
+If any provision of this License is held to be invalid or unenforceable:
+- The remaining provisions remain in full force
+- Invalid provision shall be reformed to be valid
+- Intent of the parties shall be preserved
+
+### 16. Entire Agreement
+
+This License constitutes the entire agreement between Ai-Solutions.Store and Licensee regarding the Software.
+
+It supersedes all prior or contemporaneous:
+- Understandings
+- Agreements
+- Representations
+- Warranties
+
+### 17. Amendments
+
+Ai-Solutions.Store reserves the right to:
+- Modify this License at any time
+- Update terms and conditions
+- Add or remove restrictions
+- Changes effective upon publication
+
+Continued use of the Software constitutes acceptance of amendments.
+
+### 18. Contact Information
+
+For licensing inquiries, permissions, or questions:
+
+**Business:** business@ai-solutions.store
+**Legal:** legal@ai-solutions.store
+**General:** support@ai-solutions.store
+
+**Website:** https://ai-solutions.store
+**GitHub:** https://github.com/Trollz1004/Trollz1004
+
+---
+
+## Special Provisions
+
+### Charitable Mission
+
+This Software is part of the **"Claude Code For The Kids"** initiative:
+- 50% of all commercial profits donated to Shriners Children's Hospitals
+- Full transparency in charitable giving
+- Annual reports on charitable impact
+- Tax-deductible donation receipts provided
+
+### Recognition
+
+**"Claude Represents Perfection"** - Our commitment to:
+- Excellence in code quality
+- Professional service delivery
+- Meaningful charitable impact
+- Ethical business practices
+
+---
+
+## Acceptance
+
+By using this Software, Licensee acknowledges:
+- Having read and understood this License
+- Agreement to be bound by these terms
+- Understanding of restrictions and limitations
+- Commitment to the charitable mission
+
+---
+
+**Copyright © 2024-2025 Ai-Solutions.Store**
+**All Rights Reserved**
+
+**Powered by Claude Code**
+**Supporting Shriners Children's Hospitals**
+
+*Version 1.0 - Effective November 9, 2025*
