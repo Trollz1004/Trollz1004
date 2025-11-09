@@ -30,9 +30,44 @@ Write-Host "🚀 Team Claude Dashboard - 1-Click Launcher" -ForegroundColor Cyan
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
 Write-Host ""
 
-# Get script directory
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+# Get script directory - Handle both file execution and pasted code
+if ($PSScriptRoot) {
+    # Running from saved file
+    $ScriptDir = $PSScriptRoot
+} elseif ($MyInvocation.MyCommand.Path) {
+    # Running from file (older PS versions)
+    $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+} else {
+    # Pasted into console - use current directory
+    $ScriptDir = Get-Location
+    Write-Host "⚠️  Script pasted into console. Using current directory: $ScriptDir" -ForegroundColor Yellow
+    Write-Host "For best results, save as TEAM-CLAUDE-LAUNCHER.ps1 and run from file." -ForegroundColor Yellow
+    Write-Host ""
+}
+
 $DashboardDir = Join-Path $ScriptDir "team-claude-dashboard-deploy"
+
+# Verify dashboard directory exists
+if (-not (Test-Path $DashboardDir)) {
+    Write-Host "⚠️  Dashboard directory not found at: $DashboardDir" -ForegroundColor Yellow
+    Write-Host "Looking in common locations..." -ForegroundColor Cyan
+
+    # Try to find it in current user's directories
+    $PossibleLocations = @(
+        "C:\Users\$env:USERNAME\trollz1004\team-claude-dashboard-deploy",
+        "C:\Users\$env:USERNAME\Trollz1004\team-claude-dashboard-deploy",
+        "C:\Users\$env:USERNAME\projects\Trollz1004\team-claude-dashboard-deploy",
+        "C:\Users\$env:USERNAME\Documents\Trollz1004\team-claude-dashboard-deploy"
+    )
+
+    foreach ($loc in $PossibleLocations) {
+        if (Test-Path $loc) {
+            $DashboardDir = $loc
+            Write-Host "✅ Found dashboard at: $DashboardDir" -ForegroundColor Green
+            break
+        }
+    }
+}
 
 # Function to open URL
 function Open-Url {
