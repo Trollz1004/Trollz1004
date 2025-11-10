@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { Signup } from './pages/Signup';
+import { Signup as SignupModern } from './pages/SignupModern';
 import { Login } from './pages/Login';
 import { VerifyEmail } from './pages/VerifyEmail';
 import { VerifyAge } from './pages/VerifyAge';
@@ -9,6 +9,7 @@ import { AcceptTOS } from './pages/AcceptTOS';
 import { CreateProfile } from './pages/CreateProfile';
 import { Dashboard } from './pages/Dashboard';
 import './App.css';
+import './modern-theme.css';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -46,7 +47,7 @@ const AppRoutes: React.FC = () => {
         path="/signup"
         element={
           <AuthRoute>
-            <Signup />
+            <SignupModern />
           </AuthRoute>
         }
       />

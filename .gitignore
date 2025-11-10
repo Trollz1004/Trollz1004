@@ -136,3 +136,6 @@ admin-dashboard/**/*.p12
 # .claude/settings.json     # Team settings (official Claude Code)
 # .claude/commands/         # Team slash commands (official Claude Code)
 # .claude/.plans/           # Project documentation (extension-specific)
+
+# Local Netlify folder
+.netlify

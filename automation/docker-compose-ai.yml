@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  ai-content-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile.ai
+    container_name: team-claude-ai-engine
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - API_URL=https://youandinotai.com
+      - API_TOKEN=${API_TOKEN}
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN}
+      - FACEBOOK_ACCESS_TOKEN=${FACEBOOK_ACCESS_TOKEN}
+      - INSTAGRAM_ACCESS_TOKEN=${INSTAGRAM_ACCESS_TOKEN}
+      - LINKEDIN_ACCESS_TOKEN=${LINKEDIN_ACCESS_TOKEN}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - team-claude-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health')"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: team-claude-redis
+    restart: always
+    volumes:
+      - redis-data:/data
+    networks:
+      - team-claude-network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: team-claude-db
+    restart: always
+    environment:
+      - POSTGRES_DB=teamclaude
+      - POSTGRES_USER=teamclaude
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - team-claude-network
+
+volumes:
+  redis-data:
+  postgres-data:
+
+networks:
+  team-claude-network:
+    driver: bridge

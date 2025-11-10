@@ -1,0 +1,13 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY ai-content-engine.js .
+COPY social-media-api.js .
+
+EXPOSE 3001
+
+CMD ["node", "ai-content-engine.js"]

@@ -1,0 +1,44 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.7.0
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Build and push backend image
+        run: |
+          gcloud auth configure-docker
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/date-app-backend ./backend
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/date-app-backend
+
+      - name: Deploy backend to Cloud Run
+        run: |
+          gcloud run deploy date-app-backend \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/date-app-backend \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
+
+      - name: Build and push frontend image
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/date-app-frontend ./frontend
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/date-app-frontend
+
+      - name: Deploy frontend to Cloud Run
+        run: |
+          gcloud run deploy date-app-frontend \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/date-app-frontend \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated

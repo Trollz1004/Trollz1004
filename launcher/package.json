@@ -1,0 +1,26 @@
+{
+  "name": "team-claude-fund-launcher",
+  "version": "1.0.0",
+  "description": "1-Click Fund Generator for Team Claude For The Kids",
+  "main": "aws-lambda-launcher.js",
+  "scripts": {
+    "deploy": "sam build && sam deploy",
+    "local": "sam local start-api",
+    "test": "sam local invoke LauncherFunction",
+    "icon": "powershell -ExecutionPolicy Bypass -File create-desktop-icon.ps1",
+    "launch": "powershell -ExecutionPolicy Bypass -File one-click-launcher.ps1"
+  },
+  "keywords": [
+    "charity",
+    "automation",
+    "aws",
+    "lambda",
+    "shriners"
+  ],
+  "author": "Team Claude For The Kids",
+  "license": "PROPRIETARY",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Trollz1004/Trollz1004.git"
+  }
+}

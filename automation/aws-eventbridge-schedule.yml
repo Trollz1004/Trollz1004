@@ -1,0 +1,136 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 24/7 AI Content Engine with EventBridge Scheduler
+
+Resources:
+  AIContentEngine:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: TeamClaudeAIEngine
+      Handler: aws-lambda-ai-engine.handler
+      Runtime: nodejs20.x
+      Timeout: 300
+      MemorySize: 512
+      Environment:
+        Variables:
+          API_URL: https://youandinotai.com
+          API_TOKEN: !Ref ApiToken
+      Policies:
+        - AmazonBedrockFullAccess
+      Events:
+        # Twitter - Every 2 hours
+        TwitterSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(2 hours)
+            Input: '{"action":"generate_content","platform":"twitter"}'
+        
+        # Facebook - Every 3 hours
+        FacebookSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(3 hours)
+            Input: '{"action":"generate_content","platform":"facebook"}'
+        
+        # Instagram - Every 4 hours
+        InstagramSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(4 hours)
+            Input: '{"action":"generate_content","platform":"instagram"}'
+        
+        # LinkedIn - Every 6 hours
+        LinkedInSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(6 hours)
+            Input: '{"action":"generate_content","platform":"linkedin"}'
+        
+        # Blog - Daily at 9am
+        BlogSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 9 * * ? *)
+            Input: '{"action":"generate_content","platform":"blog"}'
+        
+        # Monitor comments - Every 15 minutes
+        TwitterComments:
+          Type: Schedule
+          Properties:
+            Schedule: rate(15 minutes)
+            Input: '{"action":"monitor_comments","platform":"twitter"}'
+        
+        FacebookComments:
+          Type: Schedule
+          Properties:
+            Schedule: rate(15 minutes)
+            Input: '{"action":"monitor_comments","platform":"facebook"}'
+        
+        InstagramComments:
+          Type: Schedule
+          Properties:
+            Schedule: rate(15 minutes)
+            Input: '{"action":"monitor_comments","platform":"instagram"}'
+        
+        # Weekly campaign - Mondays 6am
+        WeeklyCampaign:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 6 ? * MON *)
+            Input: '{"action":"generate_campaign"}'
+
+  # DynamoDB for content tracking
+  ContentTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: TeamClaudeContent
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: N
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+
+  # SNS for alerts
+  AlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: TeamClaudeAIAlerts
+      Subscription:
+        - Endpoint: joshlcoleman@gmail.com
+          Protocol: email
+
+  # CloudWatch Alarm
+  ErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: AIEngineErrors
+      MetricName: Errors
+      Namespace: AWS/Lambda
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 3
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions:
+        - !Ref AlertTopic
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref AIContentEngine
+
+Parameters:
+  ApiToken:
+    Type: String
+    NoEcho: true
+    Description: API authentication token
+
+Outputs:
+  FunctionArn:
+    Value: !GetAtt AIContentEngine.Arn
+  TableName:
+    Value: !Ref ContentTable

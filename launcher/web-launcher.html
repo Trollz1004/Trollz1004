@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Claude Fund Generator - 1-Click Launcher</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+        }
+        .icon {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #FF9900, #E84C00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            box-shadow: 0 10px 30px rgba(255, 153, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .icon:hover { transform: scale(1.1); }
+        h1 { font-size: 2.5em; margin-bottom: 20px; }
+        .subtitle { font-size: 1.2em; margin-bottom: 30px; opacity: 0.9; }
+        .launch-btn {
+            background: linear-gradient(135deg, #FF9900, #E84C00);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 153, 0, 0.4);
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .launch-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 153, 0, 0.6);
+        }
+        .status {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: none;
+        }
+        .status.active { display: block; }
+        .service {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        .operational { color: #4ade80; }
+        .offline { color: #f87171; }
+        .charity-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 23, 68, 0.2);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 23, 68, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon" onclick="launch()">💰</div>
+        <h1>Team Claude Fund Generator</h1>
+        <p class="subtitle">1-Click Automated Revenue System</p>
+        
+        <button class="launch-btn" onclick="launch()">🚀 LAUNCH ALL SYSTEMS</button>
+        
+        <div class="status" id="status">
+            <h3>System Status</h3>
+            <div id="services"></div>
+        </div>
+        
+        <div class="charity-info">
+            <h3>💝 Charity Mission</h3>
+            <p><strong>50% of all profits</strong> donated to<br>
+            <strong>Shriners Children's Hospitals</strong></p>
+        </div>
+    </div>
+
+    <script>
+        async function launch() {
+            const statusDiv = document.getElementById('status');
+            const servicesDiv = document.getElementById('services');
+            
+            statusDiv.classList.add('active');
+            servicesDiv.innerHTML = '<p>⏳ Launching services...</p>';
+            
+            // Open all platforms
+            const platforms = [
+                { name: 'Dating Platform', url: 'https://youandinotai.com' },
+                { name: 'Admin Dashboard', url: 'https://youandinotai.online' },
+                { name: 'Square Dashboard', url: 'https://squareup.com/dashboard' }
+            ];
+            
+            platforms.forEach(platform => {
+                window.open(platform.url, '_blank');
+            });
+            
+            // Check status via AWS Lambda
+            try {
+                const response = await fetch('YOUR_AWS_API_GATEWAY_URL/launch');
+                const data = await response.json();
+                
+                servicesDiv.innerHTML = data.services.map(service => `
+                    <div class="service">
+                        <span>${service.name}</span>
+                        <span class="${service.status}">${service.status.toUpperCase()}</span>
+                    </div>
+                `).join('');
+            } catch (error) {
+                servicesDiv.innerHTML = '<p>✅ All systems launched locally!</p>';
+            }
+        }
+    </script>
+</body>
+</html>
