@@ -1,0 +1,211 @@
+{
+  "name": "Team Claude Workspace Configuration",
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-11",
+  "workspaces": [
+    {
+      "id": "dating-platform",
+      "name": "Dating Platform",
+      "status": "live",
+      "url": "https://youandinotai.com",
+      "backendUrl": "https://luminous-courtesy-production-a9ba.up.railway.app",
+      "description": "Ethical relationship building platform with AI-powered matching",
+      "localPath": "./apps/dating-platform/",
+      "features": [
+        "AI-powered matching",
+        "Real-time messaging",
+        "Video chat integration",
+        "99.9% age verification",
+        "Premium subscriptions"
+      ],
+      "revenue": {
+        "model": "Subscriptions",
+        "charityPercentage": 50,
+        "charityRecipient": "Shriners Children's Hospitals"
+      }
+    },
+    {
+      "id": "admin-dashboard",
+      "name": "Admin Dashboard",
+      "status": "development",
+      "url": "https://youandinotai.online",
+      "description": "Complete administrative control center with multi-AI agent management",
+      "localPath": "./admin-dashboard/",
+      "features": [
+        "Multi-AI agent orchestration",
+        "Content creation tools",
+        "API monitoring with auto-resolve",
+        "DAO management",
+        "Treasury management",
+        "Social media automation"
+      ],
+      "techStack": {
+        "backend": ["Node.js", "TypeScript", "Express", "PostgreSQL", "Redis"],
+        "frontend": ["React 18", "TypeScript", "Vite"],
+        "ai": ["Anthropic Claude", "Google Gemini", "Ollama", "OpenAI"]
+      }
+    },
+    {
+      "id": "business-dashboard",
+      "name": "Business Dashboard",
+      "status": "live",
+      "url": "./dashboard-youandinotai-online/index.html",
+      "description": "Real-time platform analytics and revenue tracking",
+      "localPath": "./dashboard-youandinotai-online/",
+      "features": [
+        "Revenue analytics",
+        "User growth tracking",
+        "50/50 profit split monitoring",
+        "Subscription tier breakdown",
+        "Activity logging"
+      ]
+    },
+    {
+      "id": "dao-platform",
+      "name": "DAO Platform",
+      "status": "development",
+      "url": "https://aidoesitall.org",
+      "description": "Grant automation and DAO governance platform",
+      "localPath": "./multi-platform-dao-ai-transfer/",
+      "features": [
+        "Quadratic voting",
+        "Grant automation",
+        "Public blockchain records",
+        "Community oversight",
+        "Federal grant automation"
+      ],
+      "revenue": {
+        "target": "$500K - $3M annually",
+        "charityPercentage": 50,
+        "charityImpact": "$250K - $1.5M to Shriners"
+      }
+    },
+    {
+      "id": "ai-marketplace",
+      "name": "AI Solutions Marketplace",
+      "status": "development",
+      "url": "https://ai-solutions.store",
+      "description": "Commission-based AI services marketplace",
+      "features": [
+        "Self-hosted AI integration",
+        "Enterprise AI solutions",
+        "Custom AI development",
+        "AI consulting services"
+      ],
+      "revenue": {
+        "target": "$1.8M - $40M annually",
+        "charityPercentage": 50,
+        "charityImpact": "$900K - $20M to Shriners"
+      }
+    },
+    {
+      "id": "dev-dashboard",
+      "name": "Date App Development Dashboard",
+      "status": "development",
+      "url": "local",
+      "description": "Full-stack development environment",
+      "localPath": "./date-app-dashboard/",
+      "features": [
+        "React + TypeScript",
+        "Firebase integration",
+        "Payment processing (Square)",
+        "Docker deployment",
+        "2FA authentication"
+      ],
+      "techStack": {
+        "backend": ["Node.js", "Express", "TypeScript", "Firebase Admin"],
+        "frontend": ["React", "TypeScript", "Vite", "Material-UI"],
+        "database": ["Google Cloud Firestore"],
+        "auth": ["Firebase Authentication"]
+      }
+    }
+  ],
+  "quickLinks": [
+    {
+      "name": "Documentation",
+      "url": "./README.md",
+      "icon": "book"
+    },
+    {
+      "name": "GitHub Repository",
+      "url": "https://github.com/Trollz1004/Trollz1004",
+      "icon": "github"
+    },
+    {
+      "name": "Shriners Hospitals",
+      "url": "https://www.shrinerschildrens.org",
+      "icon": "heart"
+    },
+    {
+      "name": "Mission Statement",
+      "url": "./MISSION.md",
+      "icon": "flag"
+    },
+    {
+      "name": "Funding Information",
+      "url": "./FUNDING.md",
+      "icon": "dollar-sign"
+    },
+    {
+      "name": "Contributing Guide",
+      "url": "./CONTRIBUTING.md",
+      "icon": "hands-helping"
+    },
+    {
+      "name": "Workspace Hub",
+      "url": "./workspace-hub.html",
+      "icon": "th-large"
+    },
+    {
+      "name": "Workspace Documentation",
+      "url": "./WORKSPACES.md",
+      "icon": "folder"
+    }
+  ],
+  "business": {
+    "legalName": "Trash or Treasure Online Recycler LLC",
+    "ein": "33-4655313",
+    "owner": "Joshua Coleman",
+    "email": "joshlcoleman@gmail.com",
+    "domain": "https://onlinerecycle.org"
+  },
+  "charity": {
+    "name": "Shriners Children's Hospitals",
+    "website": "https://www.shrinerschildrens.org",
+    "taxId": "36-2193608",
+    "status": "501(c)(3) Nonprofit",
+    "commitment": "50% of all profits forever",
+    "impactFormula": "Every $100 donated = 1 child receives care"
+  },
+  "revenueModel": {
+    "totalTarget": "$3.92M - $95M annually",
+    "charityTarget": "$1.96M - $47.5M annually",
+    "childrenSupported": "19,600 - 475,000 children annually",
+    "sources": [
+      {
+        "platform": "Dating Platform",
+        "revenue": "$1.2M - $50M",
+        "charityAmount": "$600K - $25M",
+        "childrenSupported": "6,000 - 250,000"
+      },
+      {
+        "platform": "AI Marketplace",
+        "revenue": "$1.8M - $40M",
+        "charityAmount": "$900K - $20M",
+        "childrenSupported": "9,000 - 200,000"
+      },
+      {
+        "platform": "Merchandise",
+        "revenue": "$420K - $2M",
+        "charityAmount": "$210K - $1M",
+        "childrenSupported": "2,100 - 10,000"
+      },
+      {
+        "platform": "Grants",
+        "revenue": "$500K - $3M",
+        "charityAmount": "$250K - $1.5M",
+        "childrenSupported": "2,500 - 15,000"
+      }
+    ]
+  }
+}

@@ -9,6 +9,21 @@
 
 ---
 
+## 🚪 Quick Access: Workspace Hub
+
+**[→ Open Workspace Hub](./workspace-hub.html)** - Central hub for accessing all platforms and workspaces
+
+### Available Workspaces:
+- **[Dating Platform](https://youandinotai.com)** 🟢 LIVE - Ethical relationship building
+- **[Admin Dashboard](https://youandinotai.online)** 🔧 Dev - Complete administrative control
+- **[Business Dashboard](./dashboard-youandinotai-online/index.html)** 🟢 LIVE - Real-time analytics
+- **[DAO Platform](https://aidoesitall.org)** 🔧 Dev - Grant automation & governance
+- **[AI Marketplace](https://ai-solutions.store)** 🔧 Dev - AI services marketplace
+
+📖 **[View Full Workspace Documentation](./WORKSPACES.md)**
+
+---
+
 ## 🎯 Our Mission
 
 We believe that **AI should serve humanity's greatest needs**. Team Claude combines cutting-edge artificial intelligence with a commitment to social good, ensuring that every dollar earned contributes to pediatric healthcare and community welfare.
