@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Claude Workspace Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 5px;
+        }
+
+        .mission {
+            font-size: 1em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .workspaces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .workspace-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workspace-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .workspace-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+
+        .workspace-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .workspace-card.live::before {
+            background: linear-gradient(90deg, #10b981, #059669);
+            transform: scaleX(1);
+        }
+
+        .workspace-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .workspace-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .workspace-icon.dating { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .workspace-icon.admin { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .workspace-icon.dao { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .workspace-icon.marketplace { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .workspace-icon.dashboard { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .workspace-icon.grants { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .workspace-icon.backend { background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%); }
+
+        .workspace-info {
+            flex: 1;
+        }
+
+        .workspace-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .workspace-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-live {
+            background: #10b981;
+            color: white;
+        }
+
+        .status-dev {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .status-planned {
+            background: #6b7280;
+            color: white;
+        }
+
+        .workspace-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .workspace-url {
+            color: #667eea;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .workspace-features {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .workspace-features li {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .workspace-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .quick-links {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .quick-links h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .quick-link i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            opacity: 0.9;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💚 Team Claude Workspace Hub</h1>
+            <p class="tagline">AI for The Greater Good</p>
+            <p class="mission">50% Profits to Shriners Children's Hospitals</p>
+        </header>
+
+        <div class="workspaces-grid">
+            <!-- Dating Platform -->
+            <a href="https://youandinotai.com" class="workspace-card live" target="_blank">
+                <div class="workspace-header">
+                    <div class="workspace-icon dating">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="workspace-info">
+                        <h3 class="workspace-title">Dating Platform</h3>
+                        <span class="workspace-status status-live">
+                            <span class="live-indicator"></span>LIVE
+                        </span>
+                    </div>
+                </div>
+                <div class="workspace-url">youandinotai.com</div>
+                <p class="workspace-description">
+                    Ethical relationship building platform with AI-powered matching and 99.9% age verification.
+                </p>
+                <ul class="workspace-features">
+                    <li>Real-time messaging</li>
+                    <li>Video chat integration</li>
+                    <li>Premium subscriptions</li>
+                    <li>Safety & reporting</li>
+                </ul>
+            </a>
+
+            <!-- Backend API -->
+            <a href="https://postgres-production-475c.up.railway.app/health" class="workspace-card" target="_blank">
+                <div class="workspace-header">
+                    <div class="workspace-icon backend">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="workspace-info">
+                        <h3 class="workspace-title">Backend API</h3>
+                        <span class="workspace-status status-dev">Railway</span>
+                    </div>
+                </div>
+                <div class="workspace-url">postgres-production-475c.up.railway.app</div>
+                <p class="workspace-description">
+                    Express.js backend API with PostgreSQL database on Railway. Powers the dating platform.
+                </p>
+                <ul class="workspace-features">
+                    <li>Authentication & JWT</li>
+                    <li>PostgreSQL database</li>
+                    <li>Square payments</li>
+                    <li>Real-time updates</li>
+                </ul>
+            </a>
+
+            <!-- Admin Dashboard -->
+            <a href="https://youandinotai.online" class="workspace-card" target="_blank">
+                <div class="workspace-header">
+                    <div class="workspace-icon admin">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="workspace-info">
+                        <h3 class="workspace-title">Admin Dashboard</h3>
+                        <span class="workspace-status status-dev">Development</span>
+                    </div>
+                </div>
+                <div class="workspace-url">youandinotai.online</div>
+                <p class="workspace-description">
+                    Complete administrative control center with multi-AI agent management and real-time monitoring.
+                </p>
+                <ul class="workspace-features">
+                    <li>AI agent orchestration</li>
+                    <li>Content creation tools</li>
+                    <li>API monitoring</li>
+                    <li>System analytics</li>
+                </ul>
+            </a>
+
+            <!-- Business Dashboard -->
+            <a href="./team-claude-dashboard-deploy/index.html" class="workspace-card live">
+                <div class="workspace-header">
+                    <div class="workspace-icon dashboard">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="workspace-info">
+                        <h3 class="workspace-title">Business Dashboard</h3>
+                        <span class="workspace-status status-live">
+                            <span class="live-indicator"></span>LIVE
+                        </span>
+                    </div>
+                </div>
+                <div class="workspace-url">Local Dashboard</div>
+                <p class="workspace-description">
+                    Real-time platform analytics, revenue tracking, and profit split monitoring.
+                </p>
+                <ul class="workspace-features">
+                    <li>Revenue analytics</li>
+                    <li>User growth tracking</li>
+                    <li>50/50 profit split</li>
+                    <li>Activity monitoring</li>
+                </ul>
+            </a>
+
+            <!-- DAO Platform -->
+            <a href="https://aidoesitall.org" class="workspace-card" target="_blank">
+                <div class="workspace-header">
+                    <div class="workspace-icon dao">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="workspace-info">
+                        <h3 class="workspace-title">DAO Platform</h3>
+                        <span class="workspace-status status-dev">Development</span>
+                    </div>
+                </div>
+                <div class="workspace-url">aidoesitall.org</div>
+                <p class="workspace-description">
+                    Decentralized governance, grant automation, and transparent donation tracking.
+                </p>
+                <ul class="workspace-features">
+                    <li>Quadratic voting</li>
+                    <li>Grant automation</li>
+                    <li>Blockchain records</li>
+                    <li>Community oversight</li>
+                </ul>
+            </a>
+
+            <!-- AI Marketplace -->
+            <a href="https://ai-solutions.store" class="workspace-card" target="_blank">
+                <div class="workspace-header">
+                    <div class="workspace-icon marketplace">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="workspace-info">
+                        <h3 class="workspace-title">AI Marketplace</h3>
+                        <span class="workspace-status status-dev">Development</span>
+                    </div>
+                </div>
+                <div class="workspace-url">ai-solutions.store</div>
+                <p class="workspace-description">
+                    Commission-based AI services marketplace for self-hosted AI integration.
+                </p>
+                <ul class="workspace-features">
+                    <li>AI consulting</li>
+                    <li>Custom development</li>
+                    <li>Enterprise solutions</li>
+                    <li>Integration services</li>
+                </ul>
+            </a>
+        </div>
+
+        <div class="quick-links">
+            <h2>Quick Links</h2>
+            <div class="links-grid">
+                <a href="./README.md" class="quick-link">
+                    <i class="fas fa-book"></i>
+                    <span>Documentation</span>
+                </a>
+                <a href="https://github.com/Trollz1004/Trollz1004" class="quick-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub Repository</span>
+                </a>
+                <a href="https://www.shrinerschildrens.org" class="quick-link" target="_blank">
+                    <i class="fas fa-heart"></i>
+                    <span>Shriners Hospitals</span>
+                </a>
+                <a href="./date-app-dashboard/RAILWAY-DEPLOYMENT.md" class="quick-link">
+                    <i class="fas fa-rocket"></i>
+                    <span>Railway Deployment</span>
+                </a>
+                <a href="./HAIKU-DAO-UPGRADES-COMPLETE.md" class="quick-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>DAO Security</span>
+                </a>
+                <a href="./team-claude-dashboard-deploy/README.md" class="quick-link">
+                    <i class="fas fa-cloud"></i>
+                    <span>Netlify Deploy</span>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>
+                <strong>Team Claude: AI for The Greater Good</strong><br>
+                Mission: Raise $1.96M - $47.5M annually for Shriners Children's Hospitals<br>
+                <a href="https://github.com/Trollz1004/Trollz1004" target="_blank">View on GitHub</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
