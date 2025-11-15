@@ -1,4 +1,4 @@
-# 💚 Team Claude - AI for The Greater Good
+# 💚 Ai-Solutions.Store - AI for The Greater Good
 
 > **"Team Claude Branded AI for The Greater Good - 50% profits donated to Shriners Children's Hospitals"**
 
