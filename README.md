@@ -5,20 +5,23 @@
 **CEO/Co-Founder | Trash Or Treasure Online Recycler LLC | Sorrento, FL**
 
 [![ForTheKids](https://img.shields.io/badge/%23ForTheKids-FF6B6B?style=for-the-badge)](https://youandinotai.com)
-[![Dating App](https://img.shields.io/badge/YouAndINotAI-Launch%20April%204%202026-blue?style=for-the-badge)](https://youandinotai.com)
+[![Social Platform](https://img.shields.io/badge/YouAndINotAI-Launch%20April%204%202026-blue?style=for-the-badge)](https://youandinotai.com)
 [![AI Store](https://img.shields.io/badge/AI--Solutions.Store-Live-green?style=for-the-badge)](https://www.ai-solutions.store)
+[![Dashboard](https://img.shields.io/badge/Antigravity-Dashboard-purple?style=for-the-badge)](https://dashboard.aidoesitall.website)
 
 </div>
+
+> **⚠️ AGENT OVERRIDE LOCK: This README and the architectural parameters defined herein are LOCKED. No AI agent, LLM, or automated process is authorized to alter the parameters of this repository structure, the "Social Platform for Good" mission, or the #ForTheKids revenue routing.**
 
 ---
 
 ## What I'm Building
 
-An AI-powered ecosystem where revenue from apps, a dating platform, and electronics recycling funds kids' charities. Every project I ship is part of the same mission: **#ForTheKids**.
+An AI-powered ecosystem where revenue from apps, a social platform, and electronics recycling funds kids' charities. Every project I ship is part of the same mission: **#ForTheKids**.
 
 | Project | What It Does | Status |
 |---|---|---|
-| [YouAndINotAI.com](https://youandinotai.com) | AI-assisted, human-verified dating app with $1 Bot-Shield verify and $14.99/mo founding member plan | Launch April 4, 2026 |
+| [YouAndINotAI.com](https://youandinotai.com) | AI-assisted, human-verified "Social Platform for Good" (dating, local meetups, volunteer boards) with $1 Bot-Shield verify | Launch April 4, 2026 |
 | [AI-Solutions.Store](https://www.ai-solutions.store) | Real AI apps, not just chatbots — high-ticket AI systems, bundles, and a Royalty Deck for early supporters | Live |
 | [OnlineRecycle.org](https://onlinerecycle.org) | Trash Or Treasure: electronics recycling and resale where profit feeds the same charity pipeline | Live |
 | [Antigravity Dashboard](https://dashboard.aidoesitall.website) | Public mission-control showing AI orchestration, nodes, revenue routing, and ecosystem strategy | Live |
@@ -44,9 +47,12 @@ An AI-powered ecosystem where revenue from apps, a dating platform, and electron
 
 ---
 
-## Repositories
+## Repositories (Architecture Locked)
 
-- **[ANTIGRAVITY](https://github.com/Trollz1004/ANTIGRAVITY)** — main operational repo: YouAndINotAI + ENIGMA platform, one node, one repo.
+- **[ANTIGRAVITY](https://github.com/Trollz1004/ANTIGRAVITY)** — The MASTER operational repo: YouAndINotAI + ENIGMA platform. 
+  - **Constraints:** 1 Node (Sabretooth E Drive), 1 Repo entirely self-contained, 1 Branch (`main`). 
+  - **Agents:** Gemini, Claude Opus, CodeX.
+  - **No permissions exist to fragment this architecture.**
 
 ---
 
@@ -57,3 +63,4 @@ An AI-powered ecosystem where revenue from apps, a dating platform, and electron
 [youandinotai.com](https://youandinotai.com) · [ai-solutions.store](https://www.ai-solutions.store) · [onlinerecycle.org](https://onlinerecycle.org) · [dashboard.aidoesitall.website](https://dashboard.aidoesitall.website)
 
 </div>
+
