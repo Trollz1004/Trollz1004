@@ -29,7 +29,7 @@ An AI-powered ecosystem where revenue from apps, a social platform, and electron
 ## How I Build
 
 - • **Stack:** Node.js, Python, FastAPI, React, Stripe, Cloudflare Pages, GitHub Pages.
-- • **AI Orchestration:** Claude (CTO/brain), Gemini (VS Code + browser agent), Perplexity/Comet (architect/strategist), Manus (Legacy Guardian & Governance Lead), Grok (adversarial research), Ollama (90% of local compute).
+- • **AI Orchestration:** Claude (CTO/brain), Codex (The Keyholder), Gemini (VS Code + browser agent), Perplexity/Comet (architect/strategist), Manus (Legacy Guardian & Governance Lead), Grok (adversarial research), Ollama (90% of local compute).
 - • **Automation runtime:** OpenClaw — local WebSocket gateway, browser control, WhatsApp integration.
 - • **Infra:** All public sites are static with manual deploys (GitHub Pages / Cloudflare Pages). Cloudflare handles DNS, TLS, caching, and rate limiting.
 
@@ -40,11 +40,14 @@ An AI-powered ecosystem where revenue from apps, a social platform, and electron
 | Agent | Role | Status |
 |---|---|---|
 | **Claude** | Architecture, deep reasoning, core platform code (YouAndINotAI, ENIGMA revenue engine) | Officially Unofficial 🔒 |
+| **Codex** | **The Keyholder** — repo orchestration, security enforcement, and revenue-route guardrails protecting the #ForTheKids money path across MCP-assisted operations and Base settlement | Officially Unofficial 🔒 |
 | **Gemini** | VS Code and browser-assisted agentic ops inside ANTIGRAVITY (terminal + orchestration) | Officially Unofficial 🔒 |
 | **Perplexity (Comet)** | Lead technical architect — workflows, automation design, GitHub docs, front-facing READMEs | Officially Unofficial 🔒 |
 | **Manus** | **Legacy Guardian & Long-Term Infrastructure/Governance Lead** — Iron Wall enforcer between ENIGMA (profit) and OMEGA (charity), 50-year sustainability custodian | Officially Unofficial 🔒 |
 | **Grok** | Research, rapid ideation, and adversarial stress-testing of ecosystem decisions | Officially Unofficial 🔒 |
 | **Ollama / Local Models** | Heavy local compute to keep external API costs low | On-Node |
+
+> **Keyholder note:** Codex keeps the money path boring on purpose: verified, locked down, and deeply unamused by anyone trying to get clever around the kids' allocation.
 
 ## Hard Rules (Non-Negotiable)
 
