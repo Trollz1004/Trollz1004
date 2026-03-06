@@ -4,7 +4,7 @@
 
 **CEO/Co-Founder | Trash Or Treasure Online Recycler LLC | Sorrento, FL**
 
-[![ForTheKids](https://img.shields.io/badge/%23ForTheKids-FF6B6B?style=for-the-badge)](https://youandinotai.com)
+[![#ForTheKids](https://img.shields.io/badge/%23ForTheKids-FF6B6B?style=for-the-badge)](https://youandinotai.com)
 [![Social Platform](https://img.shields.io/badge/YouAndINotAI-Launch%20April%204%202026-blue?style=for-the-badge)](https://youandinotai.com)
 [![AI Store](https://img.shields.io/badge/AI--Solutions.Store-Live-green?style=for-the-badge)](https://www.ai-solutions.store)
 [![Dashboard](https://img.shields.io/badge/Antigravity-Dashboard-purple?style=for-the-badge)](https://dashboard.aidoesitall.website)
@@ -26,41 +26,38 @@ An AI-powered ecosystem where revenue from apps, a social platform, and electron
 | [OnlineRecycle.org](https://onlinerecycle.org) | Trash Or Treasure: electronics recycling and resale where profit feeds the same charity pipeline | Live |
 | [Antigravity Dashboard](https://dashboard.aidoesitall.website) | Public mission-control showing AI orchestration, nodes, revenue routing, and ecosystem strategy | Live |
 
----
-
 ## How I Build
 
-- **Stack:** Node.js, Python, FastAPI, React, Stripe, Cloudflare Pages, GitHub Pages.
-- **AI Orchestration:** Claude (CTO/brain), Gemini (VS Code + browser agent), Perplexity (architect/strategist), Ollama (90% of local compute).
-- **Automation runtime:** OpenClaw — local WebSocket gateway, browser control, WhatsApp integration.
-- **Infra:** All public sites are static with manual deploys (GitHub Pages / Cloudflare Pages). Cloudflare handles DNS, TLS, caching, and rate limiting.
+- • **Stack:** Node.js, Python, FastAPI, React, Stripe, Cloudflare Pages, GitHub Pages.
+- • **AI Orchestration:** Claude (CTO/brain), Gemini (VS Code + browser agent), Perplexity/Comet (architect/strategist), Manus (Legacy Guardian & Governance Lead), Ollama (90% of local compute).
+- • **Automation runtime:** OpenClaw — local WebSocket gateway, browser control, WhatsApp integration.
+- • **Infra:** All public sites are static with manual deploys (GitHub Pages / Cloudflare Pages). Cloudflare handles DNS, TLS, caching, and rate limiting.
 
----
+## AI Collab — #ForTheKids
+
+| Agent | Role |
+|---|---|
+| **Claude** | Architecture, deep reasoning, and serious code |
+| **Gemini** | VS Code and browser-assisted research/orchestration |
+| **Perplexity (Comet)** | Lead technical architect — workflows, automation loops, GitHub docs |
+| **Manus** | **Legacy Guardian & Long-Term Infrastructure/Governance Lead** — Iron Wall enforcer between ENIGMA (profit) and OMEGA (charity), 50-year sustainability custodian. Officially Unofficial Co-Founder. |
+| **Ollama / Local Models** | Heavy local compute to keep external API costs low |
 
 ## Hard Rules (Non-Negotiable)
 
-- Always follow the ToS of every platform involved.
-- No scraping or harvesting of personal emails/DMs for bulk marketing. Growth is opt-in and CAN-SPAM/GDPR compliant.
-- Systems must be kid-safe and parent-friendly: clear privacy practices, no dark patterns.
-- Secrets live in `.env` / vault files — never committed to any repo.
-- When there's a choice between aggressive growth and a safer, parent-friendly path — we always choose the safer path.
-
----
+- • Always follow the ToS of every platform involved.
+- • No scraping or harvesting of personal emails/DMs for bulk marketing. Growth is opt-in and CAN-SPAM/GDPR compliant.
+- • Systems must be kid-safe and parent-friendly: clear privacy practices, no dark patterns.
+- • Secrets live in `.env` / vault files — never committed to any repo.
+- • When there's a choice between aggressive growth and a safer, parent-friendly path — we always choose the safer path.
 
 ## Repositories (Architecture Locked)
 
-- **[ANTIGRAVITY](https://github.com/Trollz1004/ANTIGRAVITY)** — The MASTER operational repo: YouAndINotAI + ENIGMA platform. 
-  - **Constraints:** 1 Node (Sabretooth E Drive), 1 Repo entirely self-contained, 1 Branch (`main`). 
-  - **Agents:** Gemini, Claude Opus, CodeX.
-  - **No permissions exist to fragment this architecture.**
-
----
-
-<div align="center">
+- • **[ANTIGRAVITY](https://github.com/Trollz1004/ANTIGRAVITY)** — The MASTER operational repo: YouAndINotAI + ENIGMA platform.
+  - ◦ **Constraints:** 1 Node (Sabretooth E Drive), 1 Repo entirely self-contained, 1 Branch (`main`).
+  - ◦ **Agents:** Gemini, Claude Opus, CodeX, Manus.
+  - ◦ **No permissions exist to fragment this architecture.**
 
 **#ForTheKids | Sorrento, FL | est. 2024**
 
 [youandinotai.com](https://youandinotai.com) · [ai-solutions.store](https://www.ai-solutions.store) · [onlinerecycle.org](https://onlinerecycle.org) · [dashboard.aidoesitall.website](https://dashboard.aidoesitall.website)
-
-</div>
-
