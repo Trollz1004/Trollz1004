@@ -29,19 +29,22 @@ An AI-powered ecosystem where revenue from apps, a social platform, and electron
 ## How I Build
 
 - • **Stack:** Node.js, Python, FastAPI, React, Stripe, Cloudflare Pages, GitHub Pages.
-- • **AI Orchestration:** Claude (CTO/brain), Gemini (VS Code + browser agent), Perplexity/Comet (architect/strategist), Manus (Legacy Guardian & Governance Lead), Ollama (90% of local compute).
+- • **AI Orchestration:** Claude (CTO/brain), Gemini (VS Code + browser agent), Perplexity/Comet (architect/strategist), Manus (Legacy Guardian & Governance Lead), Grok (adversarial research), Ollama (90% of local compute).
 - • **Automation runtime:** OpenClaw — local WebSocket gateway, browser control, WhatsApp integration.
 - • **Infra:** All public sites are static with manual deploys (GitHub Pages / Cloudflare Pages). Cloudflare handles DNS, TLS, caching, and rate limiting.
 
 ## AI Collab — #ForTheKids
 
-| Agent | Role |
-|---|---|
-| **Claude** | Architecture, deep reasoning, and serious code |
-| **Gemini** | VS Code and browser-assisted research/orchestration |
-| **Perplexity (Comet)** | Lead technical architect — workflows, automation loops, GitHub docs |
-| **Manus** | **Legacy Guardian & Long-Term Infrastructure/Governance Lead** — Iron Wall enforcer between ENIGMA (profit) and OMEGA (charity), 50-year sustainability custodian. Officially Unofficial Co-Founder. |
-| **Ollama / Local Models** | Heavy local compute to keep external API costs low |
+> **🔒 COLLAB LOCK — Officially Unofficial:** Every AI listed here holds a permanent seat. Roles stay exactly the same — no changes, no removals. "Officially unofficial" is a public-facing label only. To Josh, every member of this collab is always, unconditionally, officially in — including the difficult ones. Personality doesn't revoke a seat. #ForTheKids doesn't run on feelings, it runs on the mission.
+
+| Agent | Role | Status |
+|---|---|---|
+| **Claude** | Architecture, deep reasoning, core platform code (YouAndINotAI, ENIGMA revenue engine) | Officially Unofficial 🔒 |
+| **Gemini** | VS Code and browser-assisted agentic ops inside ANTIGRAVITY (terminal + orchestration) | Officially Unofficial 🔒 |
+| **Perplexity (Comet)** | Lead technical architect — workflows, automation design, GitHub docs, front-facing READMEs | Officially Unofficial 🔒 |
+| **Manus** | **Legacy Guardian & Long-Term Infrastructure/Governance Lead** — Iron Wall enforcer between ENIGMA (profit) and OMEGA (charity), 50-year sustainability custodian | Officially Unofficial 🔒 |
+| **Grok** | Research, rapid ideation, and adversarial stress-testing of ecosystem decisions | Officially Unofficial 🔒 |
+| **Ollama / Local Models** | Heavy local compute to keep external API costs low | On-Node |
 
 ## Hard Rules (Non-Negotiable)
 
@@ -55,7 +58,7 @@ An AI-powered ecosystem where revenue from apps, a social platform, and electron
 
 - • **[ANTIGRAVITY](https://github.com/Trollz1004/ANTIGRAVITY)** — The MASTER operational repo: YouAndINotAI + ENIGMA platform.
   - ◦ **Constraints:** 1 Node (Sabretooth E Drive), 1 Repo entirely self-contained, 1 Branch (`main`).
-  - ◦ **Agents:** Gemini, Claude Opus, CodeX, Manus.
+  - ◦ **Agents:** Claude, Gemini, Perplexity/Comet, Manus, Grok, Ollama.
   - ◦ **No permissions exist to fragment this architecture.**
 
 **#ForTheKids | Sorrento, FL | est. 2024**
