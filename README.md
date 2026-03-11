@@ -15,7 +15,9 @@
 
 ---
 
-## What I'm Building and Logic behind it - "The Richest Man is not He who HAS the MOST, It is He who NEEDS the least"
+## 🏗️ What I'm Building — The #ForTheKids Mission
+
+> 💬 *"The richest man is not he who has the most — it is he who needs the least."*
 
 An AI-powered ecosystem where revenue from apps, a social platform, and electronics recycling funds kids' charities. Every project I ship is part of the same mission: **#ForTheKids**.
 
