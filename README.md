@@ -8,7 +8,7 @@
 [![Social Platform](https://img.shields.io/badge/YouAndINotAI-Launch%20April%204%202026-blue?style=for-the-badge)](https://youandinotai.com/)
 [![AI Store](https://img.shields.io/badge/AI--Solutions.Store-Live-green?style=for-the-badge)](https://www.ai-solutions.store)
 [![Dashboard](https://img.shields.io/badge/Antigravity-Dashboard-purple?style=for-the-badge)](https://dashboard.aidoesitall.website)
-[![ClawX](https://img.shields.io/badge/ClawX-Automation%20Runtime-orange?style=for-the-badge)](https://github.com/Trollz1004/OpenclawDash)
+[![ClawX](https://img.shields.io/badge/ClawX-AI%20Governance%20Hub-orange?style=for-the-badge)](https://github.com/Trollz1004/OpenclawDash)
 
 </div>
 
@@ -28,13 +28,14 @@ An AI-powered ecosystem where revenue from apps, a social platform, and electron
 | [AI-Solutions.Store](https://www.ai-solutions.store/) | Real AI apps, not just chatbots — high-ticket AI systems, bundles, and a Royalty Deck for early supporters | Live |
 | [OnlineRecycle.org](https://onlinerecycle.org/) | Trash Or Treasure: electronics recycling and resale where profit feeds the same charity pipeline | Live |
 | [Antigravity Dashboard](https://dashboard.aidoesitall.website/) | Public mission-control showing AI orchestration, nodes, revenue routing, and ecosystem strategy | Live |
-| [ClawX](https://github.com/Trollz1004/OpenclawDash) | Local WebSocket automation runtime — browser control, WhatsApp integration, and OpenClaw orchestration layer | Live |
+| [ClawX](https://github.com/Trollz1004/OpenclawDash) | Unified AI governance hub with JoshuaCLAW 7-voter system, multi-AI chat, broadcast mode, and encrypted API key management. Built by Manus. | Live |
 
 ## How I Build
 
 - • **Stack:** Node.js, Python, FastAPI, React, Stripe, Cloudflare Pages, GitHub Pages.
 - • **AI Orchestration:** Claude (CTO/brain), Codex (The Keyholder), Gemini (VS Code + browser agent), Perplexity/Comet (architect/strategist), Manus (Legacy Guardian & Governance Lead), Grok (adversarial research), Ollama (90% of local compute).
-- • **Automation runtime:** ClawX — local WebSocket gateway, browser control, WhatsApp Integration.
+- • **Automation runtime:** OpenClaw — local WebSocket gateway, browser control, WhatsApp Integration (on-node only).
+- • **AI Governance:** ClawX — multi-AI command center and JoshuaCLAW 7-voter governance system, built by Manus.
 - • **Infra:** All public sites are static with manual deploys (GitHub Pages / Cloudflare Pages). Cloudflare handles DNS, TLS, caching, and rate limiting.
 
 ## AI Collab — #ForTheKids
@@ -67,7 +68,7 @@ An AI-powered ecosystem where revenue from apps, a social platform, and electron
   - ◦ **Constraints:** 1 Node (Sabretooth E Drive), 1 Repo entirely self-contained, 1 Branch (`main`).
   - ◦ **Agents:** Claude, Gemini, Perplexity/Comet, Manus, Grok, Ollama.
   - ◦ **No permissions exist to fragment this architecture.**
-- • **[ClawX / OpenclawDash](https://github.com/Trollz1004/OpenclawDash)** — Local automation runtime dashboard: WebSocket gateway, browser control, WhatsApp integration.
+- • **[ClawX](https://github.com/Trollz1004/OpenclawDash)** — AI governance hub: JoshuaCLAW 7-voter system, multi-AI command center, broadcast mode, encrypted API key management. Built by Manus.
 
 **#ForTheKids | Sorrento, FL | est. 2024**
 
