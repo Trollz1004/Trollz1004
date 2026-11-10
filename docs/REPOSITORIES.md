@@ -18,15 +18,15 @@ The older standalone Hermes, OnlineRecycle, crosslisting, and Jules dashboard re
 
 [Open the repository](https://github.com/Trollz1004/dream-online).
 
-- [Playable slice](https://github.com/Trollz1004/dream-online/tree/main/game/godot/DreamSlice).
-- [Server prototypes](https://github.com/Trollz1004/dream-online/tree/main/game/server).
+- [Playable slice](https://github.com/Trollz1004/dream-online/tree/main/src/engine) — in-house WebGPU/WebGL2 combat slice.
+- [Server](https://github.com/Trollz1004/dream-online/blob/main/server.ts).
 - [Design and technical documents](https://github.com/Trollz1004/dream-online/tree/main/docs).
 - [Current state](https://github.com/Trollz1004/dream-online/blob/main/STATE.md).
 - [Repository instructions](https://github.com/Trollz1004/dream-online/blob/main/AGENTS.md).
 
 ## DREAM Engine
 
-[Open the repository](https://github.com/Trollz1004/dream-engine). This is the companion engine and editor project. Its [build handoff](https://github.com/Trollz1004/dream-online/blob/main/docs/handoffs/GEMINI-DREAM-ENGINE-2026-09-30.md) lives in DREAM Online. The repository currently contains introductory material and assets; this directory does not claim a completed engine.
+[Open the repository](https://github.com/Trollz1004/dream-engine). This is the companion in-house WebGPU engine and editor project. Its [build handoff](https://github.com/Trollz1004/dream-online/blob/main/docs/handoffs/GEMINI-DREAM-ENGINE-2026-09-30.md) lives in DREAM Online.
 
 ## Misses Trollz
 
